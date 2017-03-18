@@ -219,7 +219,8 @@ DIST          = /opt/Qt/5.8/gcc_64/mkspecs/features/spec_pre.prf \
 		/opt/Qt/5.8/gcc_64/mkspecs/features/yacc.prf \
 		/opt/Qt/5.8/gcc_64/mkspecs/features/lex.prf \
 		../Vehicles/Vehicles.pro ../Vehicles/vehicle.h \
-		../Vehicles/bicycle.h ../Vehicles/main.cpp
+		../Vehicles/bicycle.h \
+		../Vehicles/motorvehicle.h ../Vehicles/main.cpp
 QMAKE_TARGET  = Vehicles
 DESTDIR       = 
 TARGET        = Vehicles
@@ -587,7 +588,7 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /opt/Qt/5.8/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../Vehicles/vehicle.h ../Vehicles/bicycle.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../Vehicles/vehicle.h ../Vehicles/bicycle.h ../Vehicles/motorvehicle.h $(DISTDIR)/
 	$(COPY_FILE) --parents ../Vehicles/main.cpp $(DISTDIR)/
 
 

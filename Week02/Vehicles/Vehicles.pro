@@ -24,4 +24,5 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 HEADERS += \
     vehicle.h \
-    bicycle.h
+    bicycle.h \
+    motorvehicle.h
