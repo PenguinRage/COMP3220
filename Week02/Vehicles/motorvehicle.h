@@ -11,8 +11,7 @@ namespace transport {
             int numberOfWheels,
             double kilometresPerLitre)
             : Vehicle(numberOfPassengers, topSpeed,numberOfWheels),
-              m_kmpl(kilometresPerLitre) {
-        }
+              m_kmpl(kilometresPerLitre) {}
 
         MotorVehicle(int numberOfPassengers,
             int topSpeed,
@@ -25,7 +24,7 @@ namespace transport {
 
         }
 
-        virtual double getKilometresPerLitre() { return m_kmpl; }
+        double getKilometresPerLitre() { return m_kmpl; }
 
     protected:
         double m_kmpl;

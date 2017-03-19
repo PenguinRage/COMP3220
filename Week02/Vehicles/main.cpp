@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "bicycle.h"
+#include "bus.h"
 
 using namespace transport;
 using namespace std;
@@ -20,6 +21,16 @@ int main(int argc, char* argv[]) {
     cout << bicycle4.getSafetyRating() << endl;
     cout << bicycle5.getSafetyRating() << endl;
     cout << bicycle6.getSafetyRating() << endl;
+
+    Bus bus1(1, 75, 10, true, false);
+    Bus bus2(1, 75, 10, string("Blue"), true, true);
+    Bus bus3(1, 75, 10);
+    Bus bus4(1, 75, 10, false, true);
+
+    cout << bus1.getSafetyRating() << endl;
+    cout << bus2.getSafetyRating() << endl;
+    cout << bus3.getSafetyRating() << endl;
+    cout << bus4.getSafetyRating() << endl;
 
     return 0;
 }
