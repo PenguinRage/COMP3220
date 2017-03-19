@@ -10,7 +10,8 @@ CONFIG -= app_bundle
 TEMPLATE = app
 
 SOURCES += main.cpp \
-    bus.cpp
+    bus.cpp \
+    car.cpp
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked deprecated (the exact warnings
@@ -27,4 +28,5 @@ HEADERS += \
     vehicle.h \
     bicycle.h \
     motorvehicle.h \
-    bus.h
+    bus.h \
+    car.h

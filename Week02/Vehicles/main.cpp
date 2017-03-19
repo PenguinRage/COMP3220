@@ -2,6 +2,7 @@
 
 #include "bicycle.h"
 #include "bus.h"
+#include "car.h"
 
 using namespace transport;
 using namespace std;
@@ -31,6 +32,19 @@ int main(int argc, char* argv[]) {
     cout << bus2.getSafetyRating() << endl;
     cout << bus3.getSafetyRating() << endl;
     cout << bus4.getSafetyRating() << endl;
+
+    Car car1(1, 75, 10, 4);
+    Car car2(1, 75, 10, string("Blue"));
+    Car car3(1, 75, 10);
+    Car car4(1, 75, 10, 6, true, 4);
+    Car car5(1, 75, 10, string("Green"), 6, true, 4);
+
+    cout << car1.getSafetyRating() << endl;
+    cout << car2.getSafetyRating() << endl;
+    cout << car3.getSafetyRating() << endl;
+    cout << car4.getSafetyRating() << endl;
+    cout << car5.getSafetyRating() << endl;
+
 
     return 0;
 }
