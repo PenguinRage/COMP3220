@@ -8,6 +8,7 @@ void io::IOFile::readFile(){
     string buffer;
     string buffer2;
 
+    // No config case
     if (file.fail()) {
         cout << "No configuration file found" << std::endl;
         exit(0);
@@ -21,6 +22,8 @@ void io::IOFile::readFile(){
             if (buffer.length()) contine;
             // ignore comments
             if (buffer[0] =='#') contine;
+            // find delimiter index
+            int indexOfColon = buffer.find(":");
 
         }
     }
