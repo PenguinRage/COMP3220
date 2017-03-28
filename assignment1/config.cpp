@@ -1,9 +1,13 @@
 #include "config.h"
 
 using namespace std;
-// Constructors and Destructors declared in the
 
-// Using Singleton's for configuration implementation as it seems ideal for this situation
+// Constructors and Destructors implemented in the header.
+// Using Singleton's for configuration implementation as it seems ideal for this situation.
+// Providing an access point for the Hashmap I intend to create.
+// This will also make it easier to access and update the config information.
+
+// Singleton's implementation
 Config* Config::instance = 0;
 
 Config* Config::get_instance()
@@ -38,12 +42,13 @@ void Config::open()
         config_file.open(filename.c_str(), fstream::in | fstream::out);
 }
 
-
+// loads information
 void Config::load()
 {
     string line;
-    string property;
+    string key;
     string value;
+
     open();
 
     if(config_file.is_open())
@@ -54,10 +59,10 @@ void Config::load()
             size_t position = line.find("=");
             if(position > 0)
             {
-                property = line.substr(0, position);
+                key = line.substr(0, position);
                 value = line.substr(position+1, line.length()-1);
-                keys.push_back(property);
-                config_map[property] = value;
+                keys.push_back(key);
+                config_map[key] = value;
             }
         }
     }
