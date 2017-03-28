@@ -21,6 +21,8 @@ BattleSphere::BattleSphere(QWidget *parent) : QDialog(parent), sound(":/sounds/e
         timer = new QTimer(this);
 
         try {
+            int test = getNumber("posx");
+            cout << test << endl;
             setStyleSheet("background-color: #000000;");
             defender.load(":/images/defender.png");
             bullet.load(":/images/fireball.png");
