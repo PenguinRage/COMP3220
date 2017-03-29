@@ -2,6 +2,7 @@
 #define SPACEITEMFACTORY_H
 #include "spaceitem.h"
 #include "spaceship.h"
+#include "laser.h"
 #include <iostream>
 
 enum SpaceTypes { SPACESHIP, LASER };

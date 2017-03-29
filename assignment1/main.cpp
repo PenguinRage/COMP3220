@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
     w.show();
 
     a.exec();
-
+    delete ship;
     config->destroy();
     return 0;
 }

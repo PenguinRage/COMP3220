@@ -9,7 +9,7 @@ SpaceItem * SpaceItemFactory::make(SpaceTypes type, int posx, int posy, int spee
         return new SpaceShip(posx, posy, speed);
 
     } else if (type == LASER) {
-        return nullptr;
+        return new Laser(posx, posy, speed);
     }
     else {
         return nullptr;

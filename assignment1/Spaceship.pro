@@ -20,14 +20,16 @@ SOURCES += main.cpp\
     spaceship.cpp \
     config.cpp \
     spaceitem.cpp \
-    spaceitemfactory.cpp
+    spaceitemfactory.cpp \
+    laser.cpp
 
 HEADERS  += \
     battlesphere.h \
     spaceship.h \
     config.h \
     spaceitem.h \
-    spaceitemfactory.h
+    spaceitemfactory.h \
+    laser.h
 
 RESOURCES += \
     resources.qrc
