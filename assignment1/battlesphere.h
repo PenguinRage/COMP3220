@@ -18,7 +18,6 @@ namespace si {
         QPixmap bullet;
         QSound sound;
         QTimer* timer;
-        Config* config;
         int dx = 0;
         int dy = 350;
         int ds = 3;
@@ -28,8 +27,7 @@ namespace si {
     public:
         BattleSphere(QWidget *parent = nullptr);
         ~BattleSphere();
-        int getNumber(string key);
-        bool validateInt(const string input);
+        void setDefender(QPixmap ship);
     protected:
         void paintEvent(QPaintEvent *event);
     public slots:
