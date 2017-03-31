@@ -24,9 +24,9 @@ public:
 protected:
     std::string size;
     QPixmap defender;
-    int ds;
-    int dx;
-    int dy;
+    int dx = 0;
+    int dy = 350;
+    int ds = 3;
 };
 
 

@@ -24,9 +24,9 @@ public:
 
 protected:
     QPixmap laser;
-    int ls;
-    int lx;
-    int ly;
+    int lx = -1000;
+    int ly = -1000;
+    int ls = 10;
 };
 
 

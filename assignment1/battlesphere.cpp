@@ -37,7 +37,8 @@ BattleSphere::BattleSphere(QWidget *parent) : QDialog(parent), sound(":/sounds/e
 
     void BattleSphere::nextFrame() {
         // animate the defender
-        int maxX = this->width()-ship->getDefender().width();
+        int ship_width = ship->getDefender().width();
+        int maxX = this->width()-ship_width;
         dx += ds;
         if(dx >= maxX){
             dx = (2*maxX)-dx;
@@ -49,7 +50,7 @@ BattleSphere::BattleSphere(QWidget *parent) : QDialog(parent), sound(":/sounds/e
 
         // shoot or animate the bullet
         if(by <= -100){
-            bx = dx + (ship->getDefender().width()/2) - (ship->getDefender().width()/2);
+            bx = dx + (ship_width/2) - (ship_width/2);
             by = dy - bullet.height();
             //sound.play();
         } else {
