@@ -11,7 +11,7 @@ class Laser : public SpaceItem
 {
 
 public:
-    Laser(int posx, int posy, int speed);
+    Laser(int posx=-1000, int posy=-1000, int speed=10);
     ~Laser();
     QPixmap getLaser();
     int getSpeed();

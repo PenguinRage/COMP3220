@@ -5,6 +5,10 @@
 #include <fstream>
 #include <map>
 #include <vector>
+#include <sstream>
+#include <algorithm>
+#include <cstring>
+
 using namespace std;
 
 class Config
@@ -19,7 +23,9 @@ public:
     void destroy();
     void save();
     void change_file(string filename);
-
+    bool validateInt(const string input);
+    int getNumber(string key);
+    vector<string> getCommands(string key);
 
 private:
     Config(){}

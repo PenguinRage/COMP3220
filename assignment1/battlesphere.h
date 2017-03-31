@@ -6,15 +6,17 @@
 #include <QPixmap>
 #include <QSound>
 #include <QTimer>
-
+#include "spaceship.h"
+#include "laser.h"
 #include <config.h>
 
 namespace si {
+    enum {LEFT, RIGHT, FIRE};
 
     class BattleSphere : public QDialog
     {
         Q_OBJECT
-        QPixmap defender;
+        SpaceShip * ship;
         QPixmap bullet;
         QSound sound;
         QTimer* timer;
@@ -27,7 +29,7 @@ namespace si {
     public:
         BattleSphere(QWidget *parent = nullptr);
         ~BattleSphere();
-        void setDefender(QPixmap ship);
+        void setDefender(SpaceShip * ship);
     protected:
         void paintEvent(QPaintEvent *event);
     public slots:

@@ -31,13 +31,13 @@ BattleSphere::BattleSphere(QWidget *parent) : QDialog(parent), sound(":/sounds/e
 
     void BattleSphere::paintEvent(QPaintEvent *event) {
         QPainter painter(this);
-        painter.drawPixmap(dx, dy, defender);
+        painter.drawPixmap(dx, dy, ship->getDefender());
         painter.drawPixmap(bx, by, bullet);
     }
 
     void BattleSphere::nextFrame() {
         // animate the defender
-        int maxX = this->width()-defender.width();
+        int maxX = this->width()-ship->getDefender().width();
         dx += ds;
         if(dx >= maxX){
             dx = (2*maxX)-dx;
@@ -49,9 +49,9 @@ BattleSphere::BattleSphere(QWidget *parent) : QDialog(parent), sound(":/sounds/e
 
         // shoot or animate the bullet
         if(by <= -100){
-            bx = dx + (defender.width()/2) - (bullet.width()/2);
+            bx = dx + (ship->getDefender().width()/2) - (ship->getDefender().width()/2);
             by = dy - bullet.height();
-            sound.play();
+            //sound.play();
         } else {
             by -= bs;
         }
@@ -59,8 +59,8 @@ BattleSphere::BattleSphere(QWidget *parent) : QDialog(parent), sound(":/sounds/e
         update();
     }
 
-    void BattleSphere::setDefender(QPixmap ship) {
-        this->defender = ship;
+    void BattleSphere::setDefender(SpaceShip * ship) {
+        this->ship = ship;
     }
 
 

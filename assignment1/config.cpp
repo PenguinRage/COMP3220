@@ -91,6 +91,7 @@ void Config::save()
     close();
 }
 
+// Gets value from hashmaps
 string Config::get_value(string key)
 {
     if (config_map.end() == config_map.find(key)){
@@ -99,21 +100,57 @@ string Config::get_value(string key)
     return config_map[key];
 }
 
+// Sets value in Hashmaps
 void Config::set_value(string key, string value)
 {
     config_map[key] = value;
 }
 
+// Closes config
 void Config::close()
 {
     if(config_file.is_open())
         config_file.close();
 }
 
+// Close config and deletes instance
 void Config::destroy()
 {
     close();
     delete instance;
 }
 
+// Validation for Integers returns false to throw error
+bool Config::validateInt(const string input) {
+    // The number of negative signs in string
+    int negative_count =count(input.begin(), input.end(), '-');
+    // if only '-'
+    if((signed int) input.size() == negative_count) return false;
+    // if '---1'
+    else if (negative_count > 1) return false;
+    //if negative sign is in wrong place
+    else if (negative_count == 1 && input[0] != '-') return false;
+    // The string contains a character that isn't within "-0123456789"
+    else if (strspn(input.c_str(), "-0123456789") != input.size()) return false;
+    return true;
+}
 
+// Command to retreive intergers
+int Config::getNumber(string key) {
+    string value = get_value(key);
+
+    if (validateInt(value)) {
+        return (int) strtod(value.c_str(), NULL);
+    } else throw "The value for key: \"" + key + "\" should be a number. ";
+}
+
+vector<string> Config::getCommands(string key) {
+    string value = get_value(key);
+    vector<string> array;
+    stringstream ss(value);
+    string tmp;
+
+    while (getline(ss,tmp,','))
+        array.push_back(tmp);
+    return array;
+}
