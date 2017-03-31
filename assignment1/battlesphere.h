@@ -6,8 +6,7 @@
 #include <QPixmap>
 #include <QSound>
 #include <QTimer>
-#include "spaceship.h"
-#include "laser.h"
+#include "spaceitemfactory.h"
 #include <config.h>
 
 namespace si {
@@ -16,8 +15,10 @@ namespace si {
     class BattleSphere : public QDialog
     {
         Q_OBJECT
+        SpaceItemFactory factory;
         SpaceShip * ship;
         QPixmap bullet;
+        Config * config;
         QSound sound;
         QTimer* timer;
         int dx = 0;
@@ -26,6 +27,8 @@ namespace si {
         int bx = -1000;
         int by = -1000;
         int bs = 10;
+        int counter;
+
     public:
         BattleSphere(QWidget *parent = nullptr);
         ~BattleSphere();

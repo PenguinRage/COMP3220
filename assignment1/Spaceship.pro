@@ -35,3 +35,6 @@ RESOURCES += \
     resources.qrc
 
 OTHER_FILES +=
+
+DISTFILES += \
+    1.png

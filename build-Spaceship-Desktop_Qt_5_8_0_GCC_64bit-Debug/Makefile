@@ -65,7 +65,8 @@ OBJECTS       = main.o \
 		laser.o \
 		qrc_resources.o \
 		moc_battlesphere.o
-DIST          = /opt/Qt/5.8/gcc_64/mkspecs/features/spec_pre.prf \
+DIST          = ../assignment1/1.png \
+		/opt/Qt/5.8/gcc_64/mkspecs/features/spec_pre.prf \
 		/opt/Qt/5.8/gcc_64/mkspecs/common/unix.conf \
 		/opt/Qt/5.8/gcc_64/mkspecs/common/linux.conf \
 		/opt/Qt/5.8/gcc_64/mkspecs/common/sanitize.conf \
@@ -660,6 +661,7 @@ compiler_rcc_clean:
 qrc_resources.cpp: ../assignment1/resources.qrc \
 		/opt/Qt/5.8/gcc_64/bin/rcc \
 		../assignment1/fireball.png \
+		../assignment1/1.png \
 		../assignment1/defender.png \
 		../assignment1/explosion_x.wav
 	/opt/Qt/5.8/gcc_64/bin/rcc -name resources ../assignment1/resources.qrc -o qrc_resources.cpp

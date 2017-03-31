@@ -1,14 +1,27 @@
 #include <iostream>
 #include "battlesphere.h"
 #include "config.h"
-
+#include "spaceitemfactory.h"
 using namespace std;
 
+
+
+// Easy way to setup on Windows || Linux
+string CONFIG_PATH = "/home/penguinrage/repositories/COMP3220/assignment1/invaders.cfg";
 
 namespace si {
 BattleSphere::BattleSphere(QWidget *parent) : QDialog(parent), sound(":/sounds/explosion_x.wav") {
         // Timer setup
         timer = new QTimer(this);
+        // Create Config instance
+        config = Config::get_instance();
+        // Config PATH directory to global variable filename
+        config->set_absolute_path(CONFIG_PATH);
+        //Config Load data from config
+        config->load();
+
+        // Use of Factory Method
+        ship = (SpaceShip *) factory.make(SPACESHIP,config->getNumber("defenderx"),config->getNumber("defendery"),config->getNumber("defenders"));
 
         try {
             setStyleSheet("background-color: #000000;");
@@ -26,6 +39,8 @@ BattleSphere::BattleSphere(QWidget *parent) : QDialog(parent), sound(":/sounds/e
     }
 
     BattleSphere::~BattleSphere() {
+        config->destroy();
+        delete ship;
         delete timer;
     }
 
@@ -50,7 +65,7 @@ BattleSphere::BattleSphere(QWidget *parent) : QDialog(parent), sound(":/sounds/e
 
         // shoot or animate the bullet
         if(by <= -100){
-            bx = dx + (ship_width/2) - (ship_width/2);
+            bx = dx + (ship_width/2) - (bullet.width()/2);
             by = dy - bullet.height();
             //sound.play();
         } else {
