@@ -10,7 +10,6 @@
 #include <config.h>
 
 namespace si {
-    enum {LEFT, RIGHT, FIRE};
 
     class BattleSphere : public QDialog
     {
@@ -23,16 +22,18 @@ namespace si {
         QTimer* timer;
         int dx = 0;
         int dy = 350;
-        int ds = 3;
+        int ds = 30;
         int bx = -1000;
         int by = -1000;
         int bs = 10;
-        int counter;
+        int counter = 0;
+        vector<string> commands;
 
     public:
         BattleSphere(QWidget *parent = nullptr);
         ~BattleSphere();
         void setDefender(SpaceShip * ship);
+        void spaceshipCommand();
     protected:
         void paintEvent(QPaintEvent *event);
     public slots:

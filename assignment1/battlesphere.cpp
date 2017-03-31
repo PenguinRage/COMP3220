@@ -19,7 +19,8 @@ BattleSphere::BattleSphere(QWidget *parent) : QDialog(parent), sound(":/sounds/e
         config->set_absolute_path(CONFIG_PATH);
         //Config Load data from config
         config->load();
-
+        // Get the commands for the application
+        commands = config->getCommands("commands");
         // Use of Factory Method
         ship = (SpaceShip *) factory.make(SPACESHIP,config->getNumber("defenderx"),config->getNumber("defendery"),config->getNumber("defenders"));
 
@@ -50,8 +51,36 @@ BattleSphere::BattleSphere(QWidget *parent) : QDialog(parent), sound(":/sounds/e
         painter.drawPixmap(bx, by, bullet);
     }
 
+    void BattleSphere::spaceshipCommand() {
+        string command = commands[counter];
+        // Adding borders to the game -> no out of bounds
+        int ship_width = ship->getDefender().width()/2;
+        // Adding borders to the game -> no out of bounds
+        int maxX = this->width()-ship_width;
+        if (!command.compare("LEFT") && dx > ship_width){
+            cout << command << endl;
+            dx -= ds;
+        }
+        else if (!command.compare("RIGHT") && dx < maxX) {
+            dx += ds;
+        }
+
+    }
+
     void BattleSphere::nextFrame() {
-        // animate the defender
+        int ship_width = ship->getDefender().width()/2;
+        // check when to finish frame capture
+        if (counter == (signed) commands.size())
+        {
+            timer->stop();
+            return;
+        }
+
+        // SpaceShip must make a choice :O
+        spaceshipCommand();
+
+
+/*
         int ship_width = ship->getDefender().width();
         int maxX = this->width()-ship_width;
         dx += ds;
@@ -62,7 +91,7 @@ BattleSphere::BattleSphere(QWidget *parent) : QDialog(parent), sound(":/sounds/e
             dx *= -1;
             ds *= -1;
         }
-
+*/
         // shoot or animate the bullet
         if(by <= -100){
             bx = dx + (ship_width/2) - (bullet.width()/2);
@@ -71,7 +100,7 @@ BattleSphere::BattleSphere(QWidget *parent) : QDialog(parent), sound(":/sounds/e
         } else {
             by -= bs;
         }
-
+        counter++;
         update();
     }
 
