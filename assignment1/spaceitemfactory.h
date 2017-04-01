@@ -3,9 +3,10 @@
 #include "spaceitem.h"
 #include "defender.h"
 #include "bullet.h"
+#include "star.h"
 #include <iostream>
 
-enum SpaceTypes { DEFENDER, BULLET };
+enum SpaceTypes { DEFENDER, BULLET, STAR };
 
 class SpaceItemFactory
 {

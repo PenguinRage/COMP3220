@@ -21,7 +21,8 @@ SOURCES += main.cpp\
     spaceitem.cpp \
     spaceitemfactory.cpp \
     defender.cpp \
-    bullet.cpp
+    bullet.cpp \
+    star.cpp
 
 HEADERS  += \
     battlesphere.h \
@@ -29,7 +30,8 @@ HEADERS  += \
     spaceitem.h \
     spaceitemfactory.h \
     defender.h \
-    bullet.h
+    bullet.h \
+    star.h
 
 RESOURCES += \
     resources.qrc

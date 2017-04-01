@@ -3,6 +3,7 @@
 #include "config.h"
 #include "spaceitemfactory.h"
 #include <QKeyEvent>
+#include <cstdlib>
 
 using namespace std;
 
@@ -15,23 +16,36 @@ namespace si {
 BattleSphere::BattleSphere(QWidget *parent) : QDialog(parent), sound(":/sounds/explosion_x.wav") {
     // Timer setup
     timer = new QTimer(this);
+
     // Create Config instance
     config = Config::getInstance();
+
     // Config PATH directory to global variable filename
     config->setAbsolutePath(CONFIG_PATH);
+
     //Config Load data from config
     config->load();
+
     // Get the commands for the application
     commands = config->getCommands("commands");
+
     // Use of Factory Method
     ship = (Defender *) factory.make(DEFENDER,config->getNumber("defenderx"),config->getNumber("defendery"),config->getNumber("defenders"), config->getValue("size"));
+
+    // Building Background stars
+    for (int i = 0; i < 50; i++) {
+        int x = rand() % 600;
+        int y = rand() % 400;
+        star = (Star *) factory.make(STAR,x,y,20, "none");
+        stars.push_back(star);
+    }
+
     // assign global variables values from ship class.
     dx = ship->getPosX();
     dy = ship->getPosY();
     ds = ship->getSpeed();
 
     try {
-        setStyleSheet("background-color: #000000;");
         this->resize(600, 400);
         update();
         connect(timer, SIGNAL(timeout()), this, SLOT(nextFrame()));
@@ -45,14 +59,30 @@ BattleSphere::BattleSphere(QWidget *parent) : QDialog(parent), sound(":/sounds/e
 
 BattleSphere::~BattleSphere() {
     config->destroy();
+    delete star;
     delete ship;
     delete timer;
 }
 
+
 void BattleSphere::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
-    painter.drawPixmap(dx, dy, ship->getDefender());
+    QPen pen;
+    pen.setWidth(3);
+    pen.setColor(Qt::black);
+    QBrush brush(Qt::white);
+    painter.setPen (pen);
+    painter.setBrush(brush);
 
+    for (int i = 0; i < (signed) stars.size(); i++) {
+        painter.drawEllipse(stars[i]->getPosX(), stars[i]->getPosY(), 6, 6);
+    }
+
+    this->setStyleSheet("background-color: #000000;");
+    painter.setPen (pen);
+    painter.setBrush(brush);
+
+    painter.drawPixmap(dx, dy, ship->getDefender());
 
     for (int i = 0; i < (signed) bullets.size(); i++)
     {

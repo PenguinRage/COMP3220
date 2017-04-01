@@ -17,8 +17,10 @@ namespace si {
         Config * config;
         SpaceItemFactory factory;
         Defender * ship;
+        Star * star;
         vector<Bullet *> bullets;
         vector<string> commands;
+        vector<Star *> stars;
         QSound sound;
         QTimer* timer;
         int dx = 0;
@@ -33,6 +35,7 @@ namespace si {
         ~BattleSphere();
         void setDefender(Defender * ship);
         void spaceshipCommand();
+
     protected:
         void paintEvent(QPaintEvent *event);
         void keyPressEvent(QKeyEvent *event);
