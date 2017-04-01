@@ -50,19 +50,19 @@ OBJECTS_DIR   = ./
 
 SOURCES       = ../assignment1/main.cpp \
 		../assignment1/battlesphere.cpp \
-		../assignment1/spaceship.cpp \
 		../assignment1/config.cpp \
 		../assignment1/spaceitem.cpp \
 		../assignment1/spaceitemfactory.cpp \
-		../assignment1/laser.cpp qrc_resources.cpp \
+		../assignment1/defender.cpp \
+		../assignment1/bullet.cpp qrc_resources.cpp \
 		moc_battlesphere.cpp
 OBJECTS       = main.o \
 		battlesphere.o \
-		spaceship.o \
 		config.o \
 		spaceitem.o \
 		spaceitemfactory.o \
-		laser.o \
+		defender.o \
+		bullet.o \
 		qrc_resources.o \
 		moc_battlesphere.o
 DIST          = ../assignment1/1.png \
@@ -237,17 +237,17 @@ DIST          = ../assignment1/1.png \
 		/opt/Qt/5.8/gcc_64/mkspecs/features/yacc.prf \
 		/opt/Qt/5.8/gcc_64/mkspecs/features/lex.prf \
 		../assignment1/Spaceship.pro ../assignment1/battlesphere.h \
-		../assignment1/spaceship.h \
 		../assignment1/config.h \
 		../assignment1/spaceitem.h \
 		../assignment1/spaceitemfactory.h \
-		../assignment1/laser.h ../assignment1/main.cpp \
+		../assignment1/defender.h \
+		../assignment1/bullet.h ../assignment1/main.cpp \
 		../assignment1/battlesphere.cpp \
-		../assignment1/spaceship.cpp \
 		../assignment1/config.cpp \
 		../assignment1/spaceitem.cpp \
 		../assignment1/spaceitemfactory.cpp \
-		../assignment1/laser.cpp
+		../assignment1/defender.cpp \
+		../assignment1/bullet.cpp
 QMAKE_TARGET  = Spaceship
 DESTDIR       = 
 TARGET        = Spaceship
@@ -630,8 +630,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../assignment1/resources.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /opt/Qt/5.8/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../assignment1/battlesphere.h ../assignment1/spaceship.h ../assignment1/config.h ../assignment1/spaceitem.h ../assignment1/spaceitemfactory.h ../assignment1/laser.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../assignment1/main.cpp ../assignment1/battlesphere.cpp ../assignment1/spaceship.cpp ../assignment1/config.cpp ../assignment1/spaceitem.cpp ../assignment1/spaceitemfactory.cpp ../assignment1/laser.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../assignment1/battlesphere.h ../assignment1/config.h ../assignment1/spaceitem.h ../assignment1/spaceitemfactory.h ../assignment1/defender.h ../assignment1/bullet.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../assignment1/main.cpp ../assignment1/battlesphere.cpp ../assignment1/config.cpp ../assignment1/spaceitem.cpp ../assignment1/spaceitemfactory.cpp ../assignment1/defender.cpp ../assignment1/bullet.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -789,11 +789,12 @@ moc_battlesphere.cpp: /opt/Qt/5.8/gcc_64/include/QtWidgets/QDialog \
 		/opt/Qt/5.8/gcc_64/include/QtCore/QTimer \
 		/opt/Qt/5.8/gcc_64/include/QtCore/qtimer.h \
 		/opt/Qt/5.8/gcc_64/include/QtCore/qbasictimer.h \
-		../assignment1/spaceship.h \
+		../assignment1/spaceitemfactory.h \
 		../assignment1/spaceitem.h \
 		/opt/Qt/5.8/gcc_64/include/QtWidgets/QGraphicsScene \
 		/opt/Qt/5.8/gcc_64/include/QtWidgets/qgraphicsscene.h \
-		../assignment1/laser.h \
+		../assignment1/defender.h \
+		../assignment1/bullet.h \
 		../assignment1/config.h \
 		../assignment1/battlesphere.h \
 		moc_predefs.h \
@@ -929,11 +930,12 @@ main.o: ../assignment1/main.cpp ../assignment1/battlesphere.h \
 		/opt/Qt/5.8/gcc_64/include/QtCore/QTimer \
 		/opt/Qt/5.8/gcc_64/include/QtCore/qtimer.h \
 		/opt/Qt/5.8/gcc_64/include/QtCore/qbasictimer.h \
-		../assignment1/spaceship.h \
+		../assignment1/spaceitemfactory.h \
 		../assignment1/spaceitem.h \
 		/opt/Qt/5.8/gcc_64/include/QtWidgets/QGraphicsScene \
 		/opt/Qt/5.8/gcc_64/include/QtWidgets/qgraphicsscene.h \
-		../assignment1/laser.h \
+		../assignment1/defender.h \
+		../assignment1/bullet.h \
 		../assignment1/config.h \
 		/opt/Qt/5.8/gcc_64/include/QtWidgets/QApplication \
 		/opt/Qt/5.8/gcc_64/include/QtWidgets/qapplication.h \
@@ -941,8 +943,7 @@ main.o: ../assignment1/main.cpp ../assignment1/battlesphere.h \
 		/opt/Qt/5.8/gcc_64/include/QtCore/qeventloop.h \
 		/opt/Qt/5.8/gcc_64/include/QtWidgets/qdesktopwidget.h \
 		/opt/Qt/5.8/gcc_64/include/QtGui/qguiapplication.h \
-		/opt/Qt/5.8/gcc_64/include/QtGui/qinputmethod.h \
-		../assignment1/spaceitemfactory.h
+		/opt/Qt/5.8/gcc_64/include/QtGui/qinputmethod.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../assignment1/main.cpp
 
 battlesphere.o: ../assignment1/battlesphere.cpp ../assignment1/battlesphere.h \
@@ -1060,100 +1061,14 @@ battlesphere.o: ../assignment1/battlesphere.cpp ../assignment1/battlesphere.h \
 		/opt/Qt/5.8/gcc_64/include/QtCore/QTimer \
 		/opt/Qt/5.8/gcc_64/include/QtCore/qtimer.h \
 		/opt/Qt/5.8/gcc_64/include/QtCore/qbasictimer.h \
-		../assignment1/spaceship.h \
+		../assignment1/spaceitemfactory.h \
 		../assignment1/spaceitem.h \
 		/opt/Qt/5.8/gcc_64/include/QtWidgets/QGraphicsScene \
 		/opt/Qt/5.8/gcc_64/include/QtWidgets/qgraphicsscene.h \
-		../assignment1/laser.h \
+		../assignment1/defender.h \
+		../assignment1/bullet.h \
 		../assignment1/config.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o battlesphere.o ../assignment1/battlesphere.cpp
-
-spaceship.o: ../assignment1/spaceship.cpp ../assignment1/spaceship.h \
-		../assignment1/spaceitem.h \
-		/opt/Qt/5.8/gcc_64/include/QtWidgets/QGraphicsScene \
-		/opt/Qt/5.8/gcc_64/include/QtWidgets/qgraphicsscene.h \
-		/opt/Qt/5.8/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
-		/opt/Qt/5.8/gcc_64/include/QtGui/qtguiglobal.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qglobal.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qconfig-bootstrapped.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qconfig.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qtcore-config.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qsystemdetection.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qprocessordetection.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qcompilerdetection.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qtypeinfo.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qsysinfo.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qlogging.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qflags.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qtypetraits.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qatomic.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qbasicatomic.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qatomic_bootstrap.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qgenericatomic.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qatomic_cxx11.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qatomic_msvc.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qglobalstatic.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qmutex.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qnumeric.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qversiontagging.h \
-		/opt/Qt/5.8/gcc_64/include/QtGui/qtgui-config.h \
-		/opt/Qt/5.8/gcc_64/include/QtWidgets/qtwidgets-config.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qobject.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qobjectdefs.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qnamespace.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qobjectdefs_impl.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qstring.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qchar.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qbytearray.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qrefcount.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qarraydata.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qstringbuilder.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qlist.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qalgorithms.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qiterator.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qhashfunctions.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qpair.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qbytearraylist.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qstringlist.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qregexp.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qstringmatcher.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qcoreevent.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qscopedpointer.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qmetatype.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qvarlengtharray.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qcontainerfwd.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qobject_impl.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qpoint.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qrect.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qmargins.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qsize.h \
-		/opt/Qt/5.8/gcc_64/include/QtGui/qbrush.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qvector.h \
-		/opt/Qt/5.8/gcc_64/include/QtGui/qcolor.h \
-		/opt/Qt/5.8/gcc_64/include/QtGui/qrgb.h \
-		/opt/Qt/5.8/gcc_64/include/QtGui/qrgba64.h \
-		/opt/Qt/5.8/gcc_64/include/QtGui/qmatrix.h \
-		/opt/Qt/5.8/gcc_64/include/QtGui/qpolygon.h \
-		/opt/Qt/5.8/gcc_64/include/QtGui/qregion.h \
-		/opt/Qt/5.8/gcc_64/include/QtGui/qwindowdefs.h \
-		/opt/Qt/5.8/gcc_64/include/QtGui/qwindowdefs_win.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qdatastream.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qiodevice.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qline.h \
-		/opt/Qt/5.8/gcc_64/include/QtGui/qtransform.h \
-		/opt/Qt/5.8/gcc_64/include/QtGui/qpainterpath.h \
-		/opt/Qt/5.8/gcc_64/include/QtGui/qimage.h \
-		/opt/Qt/5.8/gcc_64/include/QtGui/qpaintdevice.h \
-		/opt/Qt/5.8/gcc_64/include/QtGui/qpixelformat.h \
-		/opt/Qt/5.8/gcc_64/include/QtGui/qpixmap.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qsharedpointer.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qshareddata.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qhash.h \
-		/opt/Qt/5.8/gcc_64/include/QtCore/qsharedpointer_impl.h \
-		/opt/Qt/5.8/gcc_64/include/QtGui/qfont.h \
-		/opt/Qt/5.8/gcc_64/include/QtGui/qpen.h \
-		/opt/Qt/5.8/gcc_64/include/QtGui/QPixmap
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o spaceship.o ../assignment1/spaceship.cpp
 
 config.o: ../assignment1/config.cpp ../assignment1/config.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o config.o ../assignment1/config.cpp
@@ -1327,12 +1242,12 @@ spaceitemfactory.o: ../assignment1/spaceitemfactory.cpp ../assignment1/spaceitem
 		/opt/Qt/5.8/gcc_64/include/QtCore/qsharedpointer_impl.h \
 		/opt/Qt/5.8/gcc_64/include/QtGui/qfont.h \
 		/opt/Qt/5.8/gcc_64/include/QtGui/qpen.h \
-		../assignment1/spaceship.h \
+		../assignment1/defender.h \
 		/opt/Qt/5.8/gcc_64/include/QtGui/QPixmap \
-		../assignment1/laser.h
+		../assignment1/bullet.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o spaceitemfactory.o ../assignment1/spaceitemfactory.cpp
 
-laser.o: ../assignment1/laser.cpp ../assignment1/laser.h \
+defender.o: ../assignment1/defender.cpp ../assignment1/defender.h \
 		../assignment1/spaceitem.h \
 		/opt/Qt/5.8/gcc_64/include/QtWidgets/QGraphicsScene \
 		/opt/Qt/5.8/gcc_64/include/QtWidgets/qgraphicsscene.h \
@@ -1417,7 +1332,94 @@ laser.o: ../assignment1/laser.cpp ../assignment1/laser.h \
 		/opt/Qt/5.8/gcc_64/include/QtGui/qfont.h \
 		/opt/Qt/5.8/gcc_64/include/QtGui/qpen.h \
 		/opt/Qt/5.8/gcc_64/include/QtGui/QPixmap
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o laser.o ../assignment1/laser.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o defender.o ../assignment1/defender.cpp
+
+bullet.o: ../assignment1/bullet.cpp ../assignment1/bullet.h \
+		../assignment1/spaceitem.h \
+		/opt/Qt/5.8/gcc_64/include/QtWidgets/QGraphicsScene \
+		/opt/Qt/5.8/gcc_64/include/QtWidgets/qgraphicsscene.h \
+		/opt/Qt/5.8/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		/opt/Qt/5.8/gcc_64/include/QtGui/qtguiglobal.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qglobal.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qconfig.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qtcore-config.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qlogging.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qflags.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qtypetraits.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qatomic.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qatomic_msvc.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qmutex.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qnumeric.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qversiontagging.h \
+		/opt/Qt/5.8/gcc_64/include/QtGui/qtgui-config.h \
+		/opt/Qt/5.8/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qnamespace.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qbytearray.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qrefcount.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qhashfunctions.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qpair.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qbytearraylist.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qregexp.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qobject_impl.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qpoint.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qrect.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qmargins.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qsize.h \
+		/opt/Qt/5.8/gcc_64/include/QtGui/qbrush.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qvector.h \
+		/opt/Qt/5.8/gcc_64/include/QtGui/qcolor.h \
+		/opt/Qt/5.8/gcc_64/include/QtGui/qrgb.h \
+		/opt/Qt/5.8/gcc_64/include/QtGui/qrgba64.h \
+		/opt/Qt/5.8/gcc_64/include/QtGui/qmatrix.h \
+		/opt/Qt/5.8/gcc_64/include/QtGui/qpolygon.h \
+		/opt/Qt/5.8/gcc_64/include/QtGui/qregion.h \
+		/opt/Qt/5.8/gcc_64/include/QtGui/qwindowdefs.h \
+		/opt/Qt/5.8/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qdatastream.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qiodevice.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qline.h \
+		/opt/Qt/5.8/gcc_64/include/QtGui/qtransform.h \
+		/opt/Qt/5.8/gcc_64/include/QtGui/qpainterpath.h \
+		/opt/Qt/5.8/gcc_64/include/QtGui/qimage.h \
+		/opt/Qt/5.8/gcc_64/include/QtGui/qpaintdevice.h \
+		/opt/Qt/5.8/gcc_64/include/QtGui/qpixelformat.h \
+		/opt/Qt/5.8/gcc_64/include/QtGui/qpixmap.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qsharedpointer.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qshareddata.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qhash.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/opt/Qt/5.8/gcc_64/include/QtGui/qfont.h \
+		/opt/Qt/5.8/gcc_64/include/QtGui/qpen.h \
+		/opt/Qt/5.8/gcc_64/include/QtGui/QPixmap
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o bullet.o ../assignment1/bullet.cpp
 
 qrc_resources.o: qrc_resources.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_resources.o qrc_resources.cpp

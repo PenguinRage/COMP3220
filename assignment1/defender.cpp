@@ -3,18 +3,12 @@
 Defender::Defender(int posx, int posy, int speed, std::string size) :
     dx(posx),
     dy(posy),
-    ds(speed),
-    dsize(size)
+    ds(speed)
 {
-    defender.load(":/images/defender.png");
-
+    defender = setSize(size);
 }
 
 Defender::~Defender(){}
-
-QPixmap Defender::getDefender() {
-    return this->defender;
-}
 
 // Get Methods
 int Defender::getPosX() {
@@ -29,6 +23,10 @@ int Defender::getSpeed() {
     return this->ds;
 }
 
+QPixmap Defender::getDefender() {
+    return this->defender;
+}
+
 // Set Methods
 void Defender::setPosX(int x) {
     this->dx = x;
@@ -41,3 +39,22 @@ void Defender::setPosY(int y) {
 void Defender::setSpeed(int speed) {
     this->ds = speed;
 }
+
+QPixmap Defender::setSize(std::string size){
+    QPixmap image;
+    image.load(":/images/defender.png");
+
+    this->dsize = size;
+    if (!size.compare("tiny")) {
+        image = image.scaledToWidth(image.width()/2);
+    }
+    else if (!size.compare("large")) {
+        image = image.scaledToWidth(image.width()*2);
+    }
+    else if (!size.compare("giant")) {
+        image = image.scaledToWidth(image.width()*3);
+    }
+
+    return image;
+}
+

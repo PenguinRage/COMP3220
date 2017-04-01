@@ -19,6 +19,8 @@ public:
     void setSpeed(int speed);
     void setPosX(int x);
     void setPosY(int y);
+    QPixmap setSize(std::string size);
+
 
 
 protected:
