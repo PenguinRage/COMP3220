@@ -55,7 +55,6 @@ void Config::load()
     {
         while(getline(config_file, line))
         {
-
             size_t position = line.find("=");
             if(position > 0)
             {
@@ -150,7 +149,10 @@ vector<string> Config::getCommands(string key) {
     stringstream ss(value);
     string tmp;
 
-    while (getline(ss,tmp,','))
+    while (getline(ss,tmp,',')) {
+        for (auto & c: tmp) c = toupper(c);
+        // transform string to upper case
         array.push_back(tmp);
+    }
     return array;
 }

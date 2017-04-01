@@ -45,16 +45,22 @@ QPixmap Defender::setSize(std::string size){
     image.load(":/images/defender.png");
 
     this->dsize = size;
-    if (!size.compare("tiny")) {
+    if (!size.compare("normal") || !size.compare("NORMAL")) {
+        return image;
+    }
+    else if (!size.compare("tiny") || !size.compare("TINY")) {
         image = image.scaledToWidth(image.width()/2);
+        return image;
     }
-    else if (!size.compare("large")) {
+    else if (!size.compare("large") || !size.compare("LARGE")) {
         image = image.scaledToWidth(image.width()*2);
+        return image;
     }
-    else if (!size.compare("giant")) {
+    else if (!size.compare("giant") || !size.compare("GIANT")) {
         image = image.scaledToWidth(image.width()*3);
+        return image;
+    } else {
+        throw "Value of \"size\" was not given correctly in config file!";
     }
-
-    return image;
 }
 

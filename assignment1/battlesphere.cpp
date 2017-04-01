@@ -2,6 +2,8 @@
 #include "battlesphere.h"
 #include "config.h"
 #include "spaceitemfactory.h"
+#include <QKeyEvent>
+
 using namespace std;
 
 
@@ -30,8 +32,6 @@ BattleSphere::BattleSphere(QWidget *parent) : QDialog(parent), sound(":/sounds/e
 
     try {
         setStyleSheet("background-color: #000000;");
-
-        bullet.load(":/images/fireball.png");
         this->resize(600, 400);
         update();
         connect(timer, SIGNAL(timeout()), this, SLOT(nextFrame()));
@@ -52,6 +52,7 @@ BattleSphere::~BattleSphere() {
 void BattleSphere::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
     painter.drawPixmap(dx, dy, ship->getDefender());
+
 
     for (int i = 0; i < (signed) bullets.size(); i++)
     {
@@ -81,62 +82,69 @@ void BattleSphere::spaceshipCommand() {
 }
 
 void BattleSphere::nextFrame() {
-    int ship_width = ship->getDefender().width()/2;
-    // check when to finish frame capture
-    if (counter >= (signed) commands.size() && bullets.size() == 0)
-    {
-        timer->stop();
-        return;
-    }
-
-    // SpaceShip must make a choice :O
-    if (counter < (signed) commands.size()) {
-        spaceshipCommand();
-    }
-
-    /*
-        int ship_width = ship->getDefender().width();
-        int maxX = this->width()-ship_width;
-        dx += ds;
-        if(dx >= maxX){
-            dx = (2*maxX)-dx;
-            ds *= -1;
-        } else if (dx <= 0) {
-            dx *= -1;
-            ds *= -1;
+    if (gamerunner) {
+        int ship_width = ship->getDefender().width()/2;
+        // check when to finish frame capture
+        if (counter >= (signed) commands.size() && bullets.size() == 0)
+        {
+            timer->stop();
+            return;
         }
-*/
-    for (int i =0; i < (signed) bullets.size(); i++)
-    {
-        Bullet * bullet = bullets[i];
-        int by = bullet->getPosY();
-        int bx = bullet->getPosX();
-        int bs = bullet->getSpeed();
-        // shoot or animate the bullet
-        if(by <= -100){
-            bx = dx + (ship_width/2) - (bullet->getBulletWidth()/2);
-            by = dy - bullet->getBulletHeight();
-            sound.play();
-        } else {
-            by -= bs;
-        }
-        bullet->setPosX(bx);
-        bullet->setPosY(by);
 
-        if (bullet->getPosY() < 0) {
-            delete bullet;
-            bullets.erase(bullets.begin()+i);
+        // SpaceShip must make a choice :O
+        if (counter < (signed) commands.size()) {
+            spaceshipCommand();
         }
+
+        for (int i =0; i < (signed) bullets.size(); i++)
+        {
+            Bullet * bullet = bullets[i];
+            int by = bullet->getPosY();
+            int bx = bullet->getPosX();
+            int bs = bullet->getSpeed();
+            // shoot or animate the bullet
+            if(by <= -100){
+                bx = dx + (ship_width/2) - (bullet->getBulletWidth()/2);
+                by = dy - bullet->getBulletHeight();
+                sound.play();
+            } else {
+                by -= bs;
+            }
+            bullet->setPosX(bx);
+            bullet->setPosY(by);
+
+            if (bullet->getPosY() < 0) {
+                delete bullet;
+                bullets.erase(bullets.begin()+i);
+            }
+        }
+
+        counter++;
+        update();
     }
-
-    counter++;
-    update();
 }
 
+// sets the ship as a global from our class
 void BattleSphere::setDefender(Defender * ship) {
     this->ship = ship;
 }
 
+// Pauses the game when P is pressed
+void BattleSphere::keyPressEvent(QKeyEvent * event) {
+    if (event->key() == Qt::Key_P) {
+        if (gamerunner) {
+            cout << "Paused" << endl;
+        }
+        else {
+            cout << "Unpaused" << endl;
+        }
+        togglePause();
+    }
+}
+// Is the game paused or unpaused true = unpaused
+void BattleSphere::togglePause() {
+    gamerunner = !gamerunner;
+}
 
 } // end namespace si
 

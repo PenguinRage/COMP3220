@@ -18,17 +18,14 @@ namespace si {
         SpaceItemFactory factory;
         Defender * ship;
         vector<Bullet *> bullets;
-        QPixmap bullet;
+        vector<string> commands;
         QSound sound;
         QTimer* timer;
         int dx = 0;
         int dy = 350;
         int ds = 30;
-        int bx = -1000;
-        int by = -1000;
-        int bs = 10;
         int counter = 0;
-        vector<string> commands;
+
 
 
     public:
@@ -38,6 +35,10 @@ namespace si {
         void spaceshipCommand();
     protected:
         void paintEvent(QPaintEvent *event);
+        void keyPressEvent(QKeyEvent *event);
+        void togglePause();
+    private:
+        bool gamerunner = true;
     public slots:
         void nextFrame();
     };
