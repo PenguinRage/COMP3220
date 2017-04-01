@@ -14,10 +14,11 @@ namespace si {
     class BattleSphere : public QDialog
     {
         Q_OBJECT
-        SpaceItemFactory factory;
-        SpaceShip * ship;
-        QPixmap bullet;
         Config * config;
+        SpaceItemFactory factory;
+        Defender * ship;
+        vector<Bullet *> bullets;
+        QPixmap bullet;
         QSound sound;
         QTimer* timer;
         int dx = 0;
@@ -29,10 +30,11 @@ namespace si {
         int counter = 0;
         vector<string> commands;
 
+
     public:
         BattleSphere(QWidget *parent = nullptr);
         ~BattleSphere();
-        void setDefender(SpaceShip * ship);
+        void setDefender(Defender * ship);
         void spaceshipCommand();
     protected:
         void paintEvent(QPaintEvent *event);

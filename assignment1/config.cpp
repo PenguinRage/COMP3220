@@ -10,7 +10,7 @@ using namespace std;
 // Singleton's implementation
 Config* Config::instance = 0;
 
-Config* Config::get_instance()
+Config* Config::getInstance()
 {
     if(instance == 0)
         instance = new Config();
@@ -22,14 +22,14 @@ Config* Config::get_instance()
 // Sets the directory path for config
 
 
-void Config::set_absolute_path(string file)
+void Config::setAbsolutePath(string file)
 {
     filename = file;
 }
 
 
 // Gets the directory path for config
-string Config::get_absolute_path()
+string Config::getAbsolutePath()
 {
     return filename;
 }
@@ -69,7 +69,7 @@ void Config::load()
     close();
 }
 
-void Config::change_file(string file)
+void Config::changeFile(string file)
 {
     close();
     config_map.clear();
@@ -91,8 +91,8 @@ void Config::save()
     close();
 }
 
-// Gets value from hashmaps
-string Config::get_value(string key)
+// Gets value from hashmaps or throws exception
+string Config::getValue(string key)
 {
     if (config_map.end() == config_map.find(key)){
         throw "Key \"" + key + "\" was not given in config file!";
@@ -101,7 +101,7 @@ string Config::get_value(string key)
 }
 
 // Sets value in Hashmaps
-void Config::set_value(string key, string value)
+void Config::setValue(string key, string value)
 {
     config_map[key] = value;
 }
@@ -137,7 +137,7 @@ bool Config::validateInt(const string input) {
 
 // Command to retreive intergers
 int Config::getNumber(string key) {
-    string value = get_value(key);
+    string value = getValue(key);
 
     if (validateInt(value)) {
         return (int) strtod(value.c_str(), NULL);
@@ -145,7 +145,7 @@ int Config::getNumber(string key) {
 }
 
 vector<string> Config::getCommands(string key) {
-    string value = get_value(key);
+    string value = getValue(key);
     vector<string> array;
     stringstream ss(value);
     string tmp;

@@ -1,7 +1,5 @@
 #include "battlesphere.h"
 #include <QApplication>
-#include "config.h"
-#include "spaceitemfactory.h"
 
 using namespace si;
 

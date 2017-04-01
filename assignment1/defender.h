@@ -6,12 +6,12 @@
 #include <QPixmap>
 
 
-class SpaceShip : public SpaceItem
+class Defender : public SpaceItem
 {
 
 public:
-    SpaceShip(int posx, int posy, int speed);
-    ~SpaceShip();
+    Defender(int posx, int posy, int speed, std::string size);
+    ~Defender();
     QPixmap getDefender();
     int getSpeed();
     int getPosX();
@@ -27,6 +27,7 @@ protected:
     int dx = 0;
     int dy = 350;
     int ds = 3;
+    std::string dsize;
 };
 
 

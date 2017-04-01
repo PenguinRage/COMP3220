@@ -17,19 +17,19 @@ CONFIG += c++11
 
 SOURCES += main.cpp\
     battlesphere.cpp \
-    spaceship.cpp \
     config.cpp \
     spaceitem.cpp \
     spaceitemfactory.cpp \
-    laser.cpp
+    defender.cpp \
+    bullet.cpp
 
 HEADERS  += \
     battlesphere.h \
-    spaceship.h \
     config.h \
     spaceitem.h \
     spaceitemfactory.h \
-    laser.h
+    defender.h \
+    bullet.h
 
 RESOURCES += \
     resources.qrc

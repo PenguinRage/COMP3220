@@ -7,13 +7,15 @@
 #include <QPixmap>
 
 
-class Laser : public SpaceItem
+class Bullet : public SpaceItem
 {
 
 public:
-    Laser(int posx=-1000, int posy=-1000, int speed=10);
-    ~Laser();
-    QPixmap getLaser();
+    Bullet(int posx=-1000, int posy=-1000, int speed=10);
+    ~Bullet();
+    QPixmap getBullet();
+    int getBulletWidth();
+    int getBulletHeight();
     int getSpeed();
     int getPosX();
     int getPosY();
@@ -23,7 +25,7 @@ public:
 
 
 protected:
-    QPixmap laser;
+    QPixmap bullet;
     int lx = -1000;
     int ly = -1000;
     int ls = 10;

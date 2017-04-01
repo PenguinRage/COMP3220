@@ -14,15 +14,15 @@ using namespace std;
 class Config
 {
 public:
-    static Config* get_instance();
-    void set_absolute_path(string filename);
+    static Config* getInstance();
+    void setAbsolutePath(string filename);
     void load();
-    string get_value(string key);
-    string get_absolute_path();
-    void set_value(string key, string value);
+    string getValue(string key);
+    string getAbsolutePath();
+    void setValue(string key, string value);
     void destroy();
     void save();
-    void change_file(string filename);
+    void changeFile(string filename);
     bool validateInt(const string input);
     int getNumber(string key);
     vector<string> getCommands(string key);

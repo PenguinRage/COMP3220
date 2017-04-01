@@ -2,14 +2,19 @@
 
 
 
-SpaceItem * SpaceItemFactory::make(SpaceTypes type, int posx, int posy, int speed)
+SpaceItem * SpaceItemFactory::make(
+        SpaceTypes type,
+        int posx,
+        int posy,
+        int speed,
+        std::string size)
 {
-    if (type == SPACESHIP)
+    if (type == DEFENDER)
     {
-        return new SpaceShip(posx, posy, speed);
+        return new Defender(posx, posy, speed, size);
 
-    } else if (type == LASER) {
-        return new Laser(posx, posy, speed);
+    } else if (type == BULLET) {
+        return new Bullet(posx, posy, speed);
     }
     else {
         return nullptr;
