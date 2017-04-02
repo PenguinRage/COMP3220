@@ -1,6 +1,6 @@
 #include "defender.h"
 // Defender class
-Defender::Defender(int posx, int posy, int speed, std::string size) :
+Defender::Defender(int posx, int posy, int speed, std::string size):
     dx(posx),
     dy(posy),
     ds(speed)
@@ -27,6 +27,11 @@ QPixmap Defender::getDefender() {
     return this->defender;
 }
 
+std::string Defender::getSize() {
+    return this->dsize;
+}
+
+
 // Set Methods
 void Defender::setPosX(int x) {
     this->dx = x;
@@ -40,9 +45,12 @@ void Defender::setSpeed(int speed) {
     this->ds = speed;
 }
 
+// sets the Size of the Defender
 QPixmap Defender::setSize(std::string size){
+    dsize = size;
     QPixmap image;
     image.load(":/images/defender.png");
+
 
     this->dsize = size;
     if (!size.compare("normal") || !size.compare("NORMAL")) {
@@ -64,3 +72,10 @@ QPixmap Defender::setSize(std::string size){
     }
 }
 
+// Changes color of the spaceship
+void Defender::setColor(QColor color) {
+    QPixmap pxr(defender.size());
+    pxr.fill(color);
+    pxr.setMask(defender.createMaskFromColor(Qt::transparent));
+    defender = pxr;
+}

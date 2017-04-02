@@ -45,7 +45,7 @@ BattleSphere::BattleSphere(QWidget *parent) : QDialog(parent), sound(":/sounds/e
         dy = ship->getPosY();
         ds = ship->getSpeed();
 
-
+        //changeShipColor(config->getValue("color"));
         setStyleSheet("background-color: #000000;");
         this->resize(screen_width, screen_height);
         update();
@@ -63,6 +63,7 @@ BattleSphere::~BattleSphere() {
     config->setValue("defenderx",to_string(dx));
     config->setValue("defendery",to_string(dy));
     config->setValue("defenders",to_string(ds));
+    config->setValue("size",ship->getSize());
     config->save();
     // Clean up
     config->destroy();
@@ -158,6 +159,7 @@ void BattleSphere::nextFrame() {
         // check when to finish frame capture
         if (counter >= (signed) commands.size() && bullets.size() == 0)
         {
+            changeShipColor("red");
             timer->stop();
             return;
         }
@@ -175,10 +177,12 @@ void BattleSphere::nextFrame() {
         update();
     }
 }
-
-// sets the ship as a global from our class
-void BattleSphere::setDefender(Defender * ship) {
-    this->ship = ship;
+// Changes the ship color
+void BattleSphere::changeShipColor(string c) {
+    config->setValue("color",c);
+    QColor color = (QColor) c.c_str();
+    ship->setColor(color);
+    update();
 }
 
 // Makes the stars fall downwards

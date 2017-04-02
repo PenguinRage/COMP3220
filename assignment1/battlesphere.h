@@ -6,6 +6,7 @@
 #include <QPixmap>
 #include <QSound>
 #include <QTimer>
+#include <QColor>
 #include "spaceitemfactory.h"
 #include "config.h"
 #include <QKeyEvent>
@@ -40,6 +41,7 @@ namespace si {
         void spaceshipCommand();
         void fallingStars();
         void firingBullets(int ship_width);
+        void changeShipColor(string c);
 
     protected:
         void paintEvent(QPaintEvent *event);
