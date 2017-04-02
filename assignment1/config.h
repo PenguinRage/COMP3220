@@ -27,6 +27,7 @@ public:
     bool validateInt(const string input);
     int getNumber(string key);
     vector<string> getCommands(string key);
+    string removeSpace(string line);
 
 private:
     Config(){}

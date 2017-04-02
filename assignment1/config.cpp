@@ -1,4 +1,6 @@
 #include "config.h"
+#include <QDebug>
+
 
 using namespace std;
 
@@ -48,13 +50,14 @@ void Config::load()
     string line;
     string key;
     string value;
-
+    int counter;
     open();
 
     if(config_file.is_open())
     {
         while(getline(config_file, line))
         {
+            removeSpace(line);
             size_t position = line.find("=");
             if(position > 0)
             {
@@ -77,6 +80,15 @@ void Config::changeFile(string file)
     open();
 }
 
+string Config::removeSpace(string line) {
+    string new_line;
+    for (int i = 0; i< line.length(); i++) {
+        if (line.at(i) != ' '){
+            new_line += line.at(i);
+        }
+    }
+    return new_line;
+}
 void Config::save()
 {
     open();
@@ -84,7 +96,9 @@ void Config::save()
     {
         for(unsigned i = 0; i < keys.size(); i++)
         {
+
             config_file << keys[i] << "=" << config_map[keys[i]] << endl;
+
         }
     }
     close();

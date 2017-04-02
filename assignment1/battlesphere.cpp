@@ -19,33 +19,33 @@ BattleSphere::BattleSphere(QWidget *parent) : QDialog(parent), sound(":/sounds/e
 
     // Create Config instance
     config = Config::getInstance();
-
-    // Config PATH directory to global variable filename
-    config->setAbsolutePath(CONFIG_PATH);
-
-    //Config Load data from config
-    config->load();
-
-    // Get the commands for the application
-    commands = config->getCommands("commands");
-
-    // Use of Factory Method
-    ship = (Defender *) factory.make(DEFENDER,config->getNumber("defenderx"),config->getNumber("defendery"),config->getNumber("defenders"), config->getValue("size"));
-
-    // Building Background stars
-    for (int i = 0; i < 50; i++) {
-        int x = rand() % screen_width;
-        int y = rand() % screen_height;
-        star = (Star *) factory.make(STAR,x,y,20, "none");
-        stars.push_back(star);
-    }
-
-    // assign global variables values from ship class.
-    dx = ship->getPosX();
-    dy = ship->getPosY();
-    ds = ship->getSpeed();
-
     try {
+        // Config PATH directory to global variable filename
+        config->setAbsolutePath(CONFIG_PATH);
+
+        //Config Load data from config
+        config->load();
+
+        // Get the commands for the application
+        commands = config->getCommands("commands");
+
+        // Use of Factory Method
+        ship = (Defender *) factory.make(DEFENDER,config->getNumber("defenderx"),config->getNumber("defendery"),config->getNumber("defenders"), config->getValue("size"));
+
+        // Building Background stars
+        for (int i = 0; i < 50; i++) {
+            int x = rand() % screen_width;
+            int y = rand() % screen_height;
+            star = (Star *) factory.make(STAR,x,y,20, "none");
+            stars.push_back(star);
+        }
+
+        // assign global variables values from ship class.
+        dx = ship->getPosX();
+        dy = ship->getPosY();
+        ds = ship->getSpeed();
+
+
         setStyleSheet("background-color: #000000;");
         this->resize(screen_width, screen_height);
         update();
@@ -75,7 +75,7 @@ BattleSphere::~BattleSphere() {
 
 
 void BattleSphere::paintEvent(QPaintEvent *event) {
-    QPainter painter(this); 
+    QPainter painter(this);
 
     // Painting stars
     QPen pen;
