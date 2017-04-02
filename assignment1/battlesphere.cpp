@@ -60,7 +60,10 @@ BattleSphere::BattleSphere(QWidget *parent) : QDialog(parent), sound(":/sounds/e
 
 BattleSphere::~BattleSphere() {
     config->destroy();
-    delete star;
+    for (int i = 0; i < stars.size(); i++)
+    {
+        delete stars[i];
+    }
     delete ship;
     delete timer;
 }
