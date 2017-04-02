@@ -40,3 +40,9 @@ OTHER_FILES +=
 
 DISTFILES += \
     1.png
+
+copydata.commands = $(COPY_DIR) $$PWD/invaders.cfg $$OUT_PWD
+first.depends = $(first) copydata
+export(first.depends)
+export(copydata.commands)
+QMAKE_EXTRA_TARGETS += first copydata

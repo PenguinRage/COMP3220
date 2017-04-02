@@ -6,9 +6,9 @@ using namespace std;
 
 
 
-// Easy way to setup on Windows || Linux
-string CONFIG_PATH = "/home/penguinrage/repositories/COMP3220/assignment1/invaders.cfg";
-
+// Easy way to setup on Windows || Linux - Later changed absolute directory to relative filepath but just case left it as it is
+//string CONFIG_PATH = "/home/penguinrage/repositories/COMP3220/assignment1/invaders.cfg";
+string CONFIG_PATH = "./invaders.cfg";
 namespace si {
 BattleSphere::BattleSphere(QWidget *parent) : QDialog(parent), sound(":/sounds/explosion_x.wav") {
     // Screen size for widget can be altered or moved to config (in future development)

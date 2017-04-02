@@ -651,6 +651,11 @@ distclean: clean
 
 ####### Sub-libraries
 
+first: $(first) copydata
+
+copydata:
+	$(COPY_DIR) /home/penguinrage/repositories/COMP3220/assignment1/invaders.cfg /home/penguinrage/repositories/COMP3220/build-Spaceship-Desktop_Qt_5_8_0_GCC_64bit-Debug
+
 mocclean: compiler_moc_header_clean compiler_moc_source_clean
 
 mocables: compiler_moc_header_make_all compiler_moc_source_make_all
@@ -801,6 +806,7 @@ moc_battlesphere.cpp: /opt/Qt/5.8/gcc_64/include/QtWidgets/QDialog \
 		../assignment1/bullet.h \
 		../assignment1/star.h \
 		../assignment1/config.h \
+		/opt/Qt/5.8/gcc_64/include/QtGui/QKeyEvent \
 		../assignment1/battlesphere.h \
 		moc_predefs.h \
 		/opt/Qt/5.8/gcc_64/bin/moc
@@ -943,6 +949,7 @@ main.o: ../assignment1/main.cpp ../assignment1/battlesphere.h \
 		../assignment1/bullet.h \
 		../assignment1/star.h \
 		../assignment1/config.h \
+		/opt/Qt/5.8/gcc_64/include/QtGui/QKeyEvent \
 		/opt/Qt/5.8/gcc_64/include/QtWidgets/QApplication \
 		/opt/Qt/5.8/gcc_64/include/QtWidgets/qapplication.h \
 		/opt/Qt/5.8/gcc_64/include/QtCore/qcoreapplication.h \
@@ -1078,7 +1085,69 @@ battlesphere.o: ../assignment1/battlesphere.cpp ../assignment1/battlesphere.h \
 		/opt/Qt/5.8/gcc_64/include/QtGui/QKeyEvent
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o battlesphere.o ../assignment1/battlesphere.cpp
 
-config.o: ../assignment1/config.cpp ../assignment1/config.h
+config.o: ../assignment1/config.cpp ../assignment1/config.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/QDebug \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qdebug.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qglobal.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qconfig.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qtcore-config.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qlogging.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qflags.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qtypetraits.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qatomic.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qatomic_msvc.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qmutex.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qnumeric.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qversiontagging.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qhash.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qrefcount.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qhashfunctions.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qpair.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qbytearraylist.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qbytearray.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qnamespace.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qregexp.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qmap.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qtextstream.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qiodevice.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qobject_impl.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qlocale.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qvariant.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qshareddata.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qvector.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qpoint.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qset.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qcontiguouscache.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qsharedpointer.h \
+		/opt/Qt/5.8/gcc_64/include/QtCore/qsharedpointer_impl.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o config.o ../assignment1/config.cpp
 
 spaceitem.o: ../assignment1/spaceitem.cpp ../assignment1/spaceitem.h \
