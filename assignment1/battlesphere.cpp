@@ -59,11 +59,12 @@ BattleSphere::BattleSphere(QWidget *parent) : QDialog(parent), sound(":/sounds/e
 }
 
 BattleSphere::~BattleSphere() {
+    // Saves final config details back into config file
     config->setValue("defenderx",to_string(dx));
     config->setValue("defendery",to_string(dy));
     config->setValue("defenders",to_string(ds));
     config->save();
-
+    // Clean up
     config->destroy();
     for (int i = 0; i < (signed) stars.size(); i++)
     {
@@ -84,12 +85,12 @@ void BattleSphere::paintEvent(QPaintEvent *event) {
     QBrush brush(Qt::white);
     painter.setPen (pen);
     painter.setBrush(brush);
-
     for (int i = 0; i < (signed) stars.size(); i++) {
         painter.drawEllipse(stars[i]->getPosX(), stars[i]->getPosY(), 6, 6);
     }
     painter.setPen (pen);
     painter.setBrush(brush);
+
     // Draw Spaceship
     painter.drawPixmap(dx, dy, ship->getDefender());
 
@@ -122,6 +123,35 @@ void BattleSphere::spaceshipCommand() {
 
 }
 
+// Fires the bullets and handles clean up
+void BattleSphere::firingBullets(int ship_width) {
+    // For each bullet adjust the distance, once off screen delete bullet
+    for (int i =0; i < (signed) bullets.size(); i++)
+    {
+        Bullet * bullet = bullets[i];
+        int by = bullet->getPosY();
+        int bx = bullet->getPosX();
+        int bs = bullet->getSpeed();
+        // shoot or animate the bullet
+        if(by <= -100){
+            bx = dx + (ship_width/2) - (bullet->getBulletWidth()/2);
+            by = dy - bullet->getBulletHeight();
+            sound.play();
+        } else {
+            by -= bs;
+        }
+        bullet->setPosX(bx);
+        bullet->setPosY(by);
+
+        // if bullet is out-of-bounds, remove it
+        if (bullet->getPosY() < 0) {
+            delete bullet;
+            bullets.erase(bullets.begin()+i);
+        }
+    }
+
+}
+
 void BattleSphere::nextFrame() {
     if (gamerunner) {
         int ship_width = ship->getDefender().width()/2;
@@ -139,28 +169,7 @@ void BattleSphere::nextFrame() {
 
         fallingStars();
 
-        for (int i =0; i < (signed) bullets.size(); i++)
-        {
-            Bullet * bullet = bullets[i];
-            int by = bullet->getPosY();
-            int bx = bullet->getPosX();
-            int bs = bullet->getSpeed();
-            // shoot or animate the bullet
-            if(by <= -100){
-                bx = dx + (ship_width/2) - (bullet->getBulletWidth()/2);
-                by = dy - bullet->getBulletHeight();
-                sound.play();
-            } else {
-                by -= bs;
-            }
-            bullet->setPosX(bx);
-            bullet->setPosY(by);
-
-            if (bullet->getPosY() < 0) {
-                delete bullet;
-                bullets.erase(bullets.begin()+i);
-            }
-        }
+        firingBullets(ship_width);
 
         counter++;
         update();

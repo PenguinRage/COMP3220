@@ -39,6 +39,7 @@ namespace si {
         void setDefender(Defender * ship);
         void spaceshipCommand();
         void fallingStars();
+        void firingBullets(int ship_width);
 
     protected:
         void paintEvent(QPaintEvent *event);
