@@ -22,8 +22,6 @@ Config* Config::getInstance()
 
 /*             Configuratiion Methods             */
 // Sets the directory path for config
-
-
 void Config::setAbsolutePath(string file)
 {
     filename = file;
@@ -62,6 +60,8 @@ void Config::load()
             if(position > 0)
             {
                 key = line.substr(0, position);
+                // make all keys lower
+                for (auto & c: key) c = tolower(c);
                 value = line.substr(position+1, line.length()-1);
                 keys.push_back(key);
                 config_map[key] = value;
