@@ -46,6 +46,7 @@ BattleSphere::BattleSphere(QWidget *parent) : QDialog(parent), sound(":/sounds/e
     ds = ship->getSpeed();
 
     try {
+        setStyleSheet("background-color: #000000;");
         this->resize(600, 400);
         update();
         connect(timer, SIGNAL(timeout()), this, SLOT(nextFrame()));
@@ -66,7 +67,8 @@ BattleSphere::~BattleSphere() {
 
 
 void BattleSphere::paintEvent(QPaintEvent *event) {
-    QPainter painter(this);
+    QPainter painter(this); 
+    // Painting stars
     QPen pen;
     pen.setWidth(3);
     pen.setColor(Qt::black);
@@ -77,13 +79,12 @@ void BattleSphere::paintEvent(QPaintEvent *event) {
     for (int i = 0; i < (signed) stars.size(); i++) {
         painter.drawEllipse(stars[i]->getPosX(), stars[i]->getPosY(), 6, 6);
     }
-
-    this->setStyleSheet("background-color: #000000;");
     painter.setPen (pen);
     painter.setBrush(brush);
-
+    // Draw Spaceship
     painter.drawPixmap(dx, dy, ship->getDefender());
 
+    // Draw Bullets that have been fired
     for (int i = 0; i < (signed) bullets.size(); i++)
     {
         Bullet * bullet = bullets[i];
@@ -121,10 +122,14 @@ void BattleSphere::nextFrame() {
             return;
         }
 
+
+
         // SpaceShip must make a choice :O
         if (counter < (signed) commands.size()) {
             spaceshipCommand();
         }
+
+        fallingStars();
 
         for (int i =0; i < (signed) bullets.size(); i++)
         {
@@ -157,6 +162,18 @@ void BattleSphere::nextFrame() {
 // sets the ship as a global from our class
 void BattleSphere::setDefender(Defender * ship) {
     this->ship = ship;
+}
+
+void BattleSphere::fallingStars() {
+    for (int i =0; i < (signed) stars.size(); i++) {
+        int staPos = stars[i]->getPosY();
+        if(staPos < this->height()) {
+            int sy = staPos + stars[i]->getSpeed();
+            stars[i]->setPosY(sy);
+        } else {
+            stars[i]->setPosY(0);
+        }
+    }
 }
 
 // Pauses the game when P is pressed

@@ -35,6 +35,7 @@ namespace si {
         ~BattleSphere();
         void setDefender(Defender * ship);
         void spaceshipCommand();
+        void fallingStars();
 
     protected:
         void paintEvent(QPaintEvent *event);
