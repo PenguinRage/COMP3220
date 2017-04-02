@@ -7,7 +7,10 @@
 #include <QSound>
 #include <QTimer>
 #include "spaceitemfactory.h"
-#include <config.h>
+#include "config.h"
+#include <QKeyEvent>
+#include <cstdlib>
+#include <iostream>
 
 namespace si {
 

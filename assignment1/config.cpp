@@ -84,7 +84,7 @@ void Config::save()
     {
         for(unsigned i = 0; i < keys.size(); i++)
         {
-            config_file << keys[i] << "=" << config_map[keys[i]];
+            config_file << keys[i] << "=" << config_map[keys[i]] << endl;
         }
     }
     close();

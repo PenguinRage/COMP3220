@@ -1,9 +1,6 @@
-#include <iostream>
+
 #include "battlesphere.h"
-#include "config.h"
-#include "spaceitemfactory.h"
-#include <QKeyEvent>
-#include <cstdlib>
+
 
 using namespace std;
 
@@ -14,6 +11,9 @@ string CONFIG_PATH = "/home/penguinrage/repositories/COMP3220/assignment1/invade
 
 namespace si {
 BattleSphere::BattleSphere(QWidget *parent) : QDialog(parent), sound(":/sounds/explosion_x.wav") {
+    // Screen size for widget can be altered or moved to config (in future development)
+    int screen_width = 600;
+    int screen_height = 400;
     // Timer setup
     timer = new QTimer(this);
 
@@ -34,8 +34,8 @@ BattleSphere::BattleSphere(QWidget *parent) : QDialog(parent), sound(":/sounds/e
 
     // Building Background stars
     for (int i = 0; i < 50; i++) {
-        int x = rand() % 600;
-        int y = rand() % 400;
+        int x = rand() % screen_width;
+        int y = rand() % screen_height;
         star = (Star *) factory.make(STAR,x,y,20, "none");
         stars.push_back(star);
     }
@@ -47,7 +47,7 @@ BattleSphere::BattleSphere(QWidget *parent) : QDialog(parent), sound(":/sounds/e
 
     try {
         setStyleSheet("background-color: #000000;");
-        this->resize(600, 400);
+        this->resize(screen_width, screen_height);
         update();
         connect(timer, SIGNAL(timeout()), this, SLOT(nextFrame()));
         timer->start(32);
@@ -59,8 +59,13 @@ BattleSphere::BattleSphere(QWidget *parent) : QDialog(parent), sound(":/sounds/e
 }
 
 BattleSphere::~BattleSphere() {
+    config->setValue("defenderx",to_string(dx));
+    config->setValue("defendery",to_string(dy));
+    config->setValue("defenders",to_string(ds));
+    config->save();
+
     config->destroy();
-    for (int i = 0; i < stars.size(); i++)
+    for (int i = 0; i < (signed) stars.size(); i++)
     {
         delete stars[i];
     }
@@ -71,6 +76,7 @@ BattleSphere::~BattleSphere() {
 
 void BattleSphere::paintEvent(QPaintEvent *event) {
     QPainter painter(this); 
+
     // Painting stars
     QPen pen;
     pen.setWidth(3);
@@ -95,12 +101,13 @@ void BattleSphere::paintEvent(QPaintEvent *event) {
     }
 }
 
+// Operates the spaceship commands LEFT, RIGHT, FIRE
 void BattleSphere::spaceshipCommand() {
     string command = commands[counter];
     // Adding borders to the game -> no out of bounds
     int ship_width = ship->getDefender().width()/2;
     // Adding borders to the game -> no out of bounds
-    int maxX = this->width()-ship_width;
+    int maxX = this->width()-ship_width*2;
 
     // Commands to operate the Spaceship Defender
     if (!command.compare("LEFT") && dx > ship_width){
@@ -124,8 +131,6 @@ void BattleSphere::nextFrame() {
             timer->stop();
             return;
         }
-
-
 
         // SpaceShip must make a choice :O
         if (counter < (signed) commands.size()) {
@@ -167,6 +172,7 @@ void BattleSphere::setDefender(Defender * ship) {
     this->ship = ship;
 }
 
+// Makes the stars fall downwards
 void BattleSphere::fallingStars() {
     for (int i =0; i < (signed) stars.size(); i++) {
         int staPos = stars[i]->getPosY();
