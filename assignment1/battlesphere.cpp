@@ -159,7 +159,7 @@ void BattleSphere::nextFrame() {
         // check when to finish frame capture
         if (counter >= (signed) commands.size() && bullets.size() == 0)
         {
-            changeShipColor("red");
+            //changeShipColor("red");
             timer->stop();
             return;
         }
