@@ -1,7 +1,7 @@
 #ifndef ALIENADAPTER_H
 #define ALIENADAPTER_H
 
-#include "alien.h"
+
 #include "gameelement.h"
 
 // Class Adapter

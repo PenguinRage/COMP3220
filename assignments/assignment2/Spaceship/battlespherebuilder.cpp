@@ -31,13 +31,23 @@ namespace si {
     }
 
     /**
+     * \brief: Builds the user interface buffer (an IOFile in this case
+     *         but could be used to store events entered on keyboard).
+     * \param: commandCentre
+     */
+    void BattlesphereBuilder::buildSwarm(const std::vector<SwarmComposite>& swarm)
+    {
+        m_swarm = swarm;
+    }
+
+    /**
      * \brief: Returns a game instance from our builder
      * \result: an instance of the BattleSphere game
      */
     BattleSphere* BattlesphereBuilder::getBattlesphere()
     {
         si::BattleSphere* battlesphere = new
-                si::BattleSphere(nullptr, m_defender, m_bulletSpeed, m_commandCentre);
+                si::BattleSphere(nullptr, m_defender, m_bulletSpeed, m_commandCentre, m_swarm);
         return battlesphere;
     }
 

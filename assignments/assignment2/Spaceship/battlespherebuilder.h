@@ -5,8 +5,8 @@
 
 #include "battlesphere.h"
 #include "defender.h"
-#include "alien.h"
 #include "commandcentre.h"
+#include "swarmcomposite.h"
 
 namespace si {
 
@@ -21,12 +21,15 @@ namespace si {
 
         void buildCommandCentre(const CommandCentre& commandCentre);
 
+        void buildSwarm(const std::vector<SwarmComposite>& swarm);
+
         si::BattleSphere* getBattlesphere();
 
     private:
         Defender m_defender;
         int m_bulletSpeed;
         CommandCentre m_commandCentre;
+        std::vector<SwarmComposite> m_swarm;
     };
 
 } // end namespace si

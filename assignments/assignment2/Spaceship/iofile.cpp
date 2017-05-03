@@ -98,6 +98,23 @@ bool IOFile::processLines(const std::vector<std::string>& lines)
     // Extension to import alien swarms from config
     if (lines.at(line_count) == "[ Aliens ]") {
         line_count++;
+        int num_of_swarms;
+        if (isValidCommand(lines.at(line_count), "swarms")) {
+            num_of_swarms = getCoordinate(lines.at(line_count));
+            std::cout << "number of swarms is : " << num_of_swarms << std::endl;
+        }
+        // Check swarms are actually available given the flag aliens
+        if (num_of_swarms==0)
+        {
+            std::cout << "ERROR: Number of swarms must be greater than 0" << std::endl;
+            return false;
+        }
+        for (int i = 0; i < num_of_swarms; i++)
+        {
+            m_swarm.push_back(SwarmComposite());
+        }
+
+        line_count++;
         int XMat, YMat, XDel, YDel;
         if (isValidCommand(lines.at(line_count), "XMat")) {
             XMat = getCoordinate(lines.at(line_count));
@@ -137,8 +154,7 @@ bool IOFile::processLines(const std::vector<std::string>& lines)
                 int x = XMat + count_x * XDel;
                 if (c == '1')
                 {
-                    Alien* a = new AlienAdapter(x, y);
-                    m_aliens.push_back(a);
+                    m_swarm[0].add(new Alien(x,y,c));
                 }
                 else if (c == '0')
                 {
@@ -270,6 +286,11 @@ const CommandCentre& IOFile::getCommandCentre() const
 const Defender& IOFile::getDefender() const
 {
     return m_defender;
+}
+
+const std::vector<SwarmComposite>& IOFile::getSwarm() const
+{
+    return m_swarm;
 }
 
 } // end namespace si

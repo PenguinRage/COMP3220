@@ -9,11 +9,10 @@
 #include <QPushButton>
 
 #include <vector>
-
+#include "swarmcomposite.h"
 #include "commandcentre.h"
 #include "defender.h"
 #include "iofile.h"
-#include "alien.h"
 #include "bullet.h"
 #include "star.h"
 
@@ -22,7 +21,7 @@ namespace si {
     class BattleSphere : public QDialog
     {
     public:
-        BattleSphere(QWidget *parent, Defender d, int bulletSpeed, CommandCentre cc);
+        BattleSphere(QWidget *parent, Defender d, int bulletSpeed, CommandCentre cc, std::vector<SwarmComposite> s);
         ~BattleSphere();
 
     private:

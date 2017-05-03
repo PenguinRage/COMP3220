@@ -13,7 +13,7 @@ namespace si {
      * \result: the person
      */
     BattleSphere::BattleSphere(QWidget *parent,
-                           Defender d, int bulletSpeed, CommandCentre cc)
+                           Defender d, int bulletSpeed, CommandCentre cc, std::vector<SwarmComposite> s)
         : QDialog(parent),
           m_defender(d),
           m_bulletSpeed(bulletSpeed),

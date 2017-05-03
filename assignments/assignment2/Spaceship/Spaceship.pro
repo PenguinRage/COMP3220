@@ -22,7 +22,9 @@ SOURCES += main.cpp\
     bullet.cpp \
     battlespherebuilder.cpp \
     gamedirector.cpp \
-    star.cpp
+    star.cpp \
+    alien.cpp \
+    swarmcomposite.cpp
 
 HEADERS  += \
     battlesphere.h \
@@ -35,7 +37,8 @@ HEADERS  += \
     star.h \
     gameelement.h \
     alien.h \
-    alienadapter.h
+    swarmcomponent.h \
+    swarmcomposite.h
 
 RESOURCES += \
     resources.qrc
