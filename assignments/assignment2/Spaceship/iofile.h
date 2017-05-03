@@ -9,6 +9,7 @@
 
 #include "commandcentre.h"
 #include "defender.h"
+#include "alienadapter.h"
 
 namespace si {
 
@@ -26,7 +27,7 @@ namespace si {
         std::string& getElement(std::string section, std::string key);
 
         const CommandCentre& getCommandCentre() const;
-
+        const std::vector<Alien>& getAliens() const;
         const Defender& getDefender() const;
 
     protected:
@@ -38,8 +39,7 @@ namespace si {
 
         // Checks that coordinate lines are in correct format (XPos = 140)
         // is isX, then uses "XPos" as label, otherwise uses "YPos" as label
-        static bool isValidCoordinateCommand(std::string line, bool isX);
-
+        static bool isValidCommand(std::string line, std::string label);
         static bool isValidScaleCommand(std::string line);
 
         // Gets '140' from 'XPos = 140' or 'YPos = 140'
@@ -50,7 +50,7 @@ namespace si {
         int m_numberOfLines;
         Defender m_defender;
         CommandCentre m_commandCentre;
-
+        std::vector<Alien*> m_aliens;
         std::string m_fileName;
     };
 

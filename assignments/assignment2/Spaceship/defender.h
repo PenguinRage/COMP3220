@@ -10,7 +10,7 @@ namespace si {
     class Defender : public GameElement
     {
     public:
-        Defender(int xPos, int yPos, std::string m_scale, int speed);
+        Defender(int xPos, int yPos, std::string m_scale="normal", int speed=10);
         Defender();
         ~Defender(){}
 
@@ -22,7 +22,7 @@ namespace si {
 
     private:
         std::string m_scale;
-        int m_speed = 10;
+        int m_speed;
     };
 
 } // end namespace si

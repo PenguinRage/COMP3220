@@ -29,18 +29,21 @@ namespace si {
             m_stars.push_back(curStar);
         }
 
-        m_defenderImg.load(":/images/defender.png");
+        m_defenderImg.load(":/images/player.png");
         m_bulletImg.load(":/images/fireball.png");
         m_starImg.load(":/images/star.png");
+        m_invader1.load(":/images/invader_1.png");
+        m_invader2.load(":/images/invader_2.png");
+        m_invader3.load(":/images/invader_3.png");
 
         m_starImg = m_starImg.scaledToWidth(5);
 
         if (d.getScale() == "tiny") {
-            m_defenderImg = m_defenderImg.scaledToWidth(80);
+            m_defenderImg = m_defenderImg.scaledToWidth(40);
         } else if (d.getScale() == "normal") {
-            m_defenderImg = m_defenderImg.scaledToWidth(100);
+            m_defenderImg = m_defenderImg.scaledToWidth(80);
         } else if (d.getScale() == "large") {
-            m_defenderImg = m_defenderImg.scaledToWidth(120);
+            m_defenderImg = m_defenderImg.scaledToWidth(100);
         } else if (d.getScale() == "giant") {
             m_defenderImg = m_defenderImg.scaledToWidth(140);
         }

@@ -3,6 +3,11 @@
         <file>defender.png</file>
         <file>fireball.png</file>
         <file>star.png</file>
+        <file>invader_1.png</file>
+        <file>invader_2.png</file>
+        <file>invader_3.png</file>
+        <file>player.png</file>
+        <file>ufo.png</file>
     </qresource>
     <qresource prefix="/sounds">
         <file>explosion_x.wav</file>

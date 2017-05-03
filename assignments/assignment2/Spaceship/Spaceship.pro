@@ -33,7 +33,9 @@ HEADERS  += \
     battlespherebuilder.h \
     gamedirector.h \
     star.h \
-    gameelement.h
+    gameelement.h \
+    alien.h \
+    alienadapter.h
 
 RESOURCES += \
     resources.qrc

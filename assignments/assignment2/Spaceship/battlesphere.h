@@ -13,6 +13,7 @@
 #include "commandcentre.h"
 #include "defender.h"
 #include "iofile.h"
+#include "alien.h"
 #include "bullet.h"
 #include "star.h"
 
@@ -29,19 +30,22 @@ namespace si {
         QPixmap m_defenderImg;
         QPixmap m_bulletImg;
         QPixmap m_starImg;
+        QPixmap m_invader1;
+        QPixmap m_invader2;
+        QPixmap m_invader3;
+
         QTimer* m_timer;
         QPushButton *m_button;
 
         std::vector<Bullet> m_bullets;
-
         std::vector<Star> m_stars;
 
         int m_numStars = 30;
 
         int m_bulletSpeed;
 
-        int m_screenWidth = 600;
-        int m_screenHeight = 400;
+        int m_screenWidth = 800;
+        int m_screenHeight = 600;
 
         CommandCentre m_commandCentre;
 

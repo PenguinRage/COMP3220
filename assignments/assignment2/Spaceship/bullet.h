@@ -10,8 +10,8 @@ namespace si {
     public:
         Bullet(int bulletStartX, int bulletStartY);
 
-        void updateX(int updateAmount);
-        void updateY(int updateAmount);
+        virtual void updateX(int updateAmount);
+        virtual void updateY(int updateAmount);
     };
 
 } // end namespace si

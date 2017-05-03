@@ -19,7 +19,7 @@ namespace si {
      */
     Defender::Defender()
         : GameElement(0, 0),
-          m_scale("tiny"),
+          m_scale("normal"),
           m_speed(10)
     {}
 

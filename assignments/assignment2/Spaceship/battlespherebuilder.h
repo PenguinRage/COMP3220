@@ -5,6 +5,7 @@
 
 #include "battlesphere.h"
 #include "defender.h"
+#include "alien.h"
 #include "commandcentre.h"
 
 namespace si {
