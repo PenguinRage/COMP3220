@@ -9,7 +9,7 @@
 
 #include "commandcentre.h"
 #include "defender.h"
-#include "swarmcomposite.h"
+#include "swarm.h"
 #include "alien.h"
 
 
@@ -30,7 +30,7 @@ namespace si {
 
         const CommandCentre& getCommandCentre() const;
         const Defender& getDefender() const;
-        const std::vector<SwarmComposite>& getSwarm() const;
+        const std::vector<Swarm>& getSwarm() const;
 
     protected:
         IOFile(std::string fileName);
@@ -51,7 +51,7 @@ namespace si {
         int m_numberOfLines;
         Defender m_defender;
         CommandCentre m_commandCentre;
-        std::vector<SwarmComposite> m_swarm;
+        std::vector<Swarm> m_swarm;
         std::string m_fileName;
     };
 

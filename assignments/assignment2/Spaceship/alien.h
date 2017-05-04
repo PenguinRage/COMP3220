@@ -6,18 +6,18 @@
 
 namespace si {
 
-class Alien : public GameElement, public SwarmComponent
+class Alien : public GameElement
     {
     public:
 
-        Alien(int x, int y, char id);
-        void setSwarmID(char id);
-        char getSwarmID();
+        Alien(int x, int y, int id);
+        void setSwarmID(int id);
+        int getSwarmID();
         bool isAlive();
 
 
     private:
-        char m_swarmID;
+        int m_swarmID;
         bool m_alive = true;
 
     };

@@ -6,11 +6,11 @@
 
 namespace si {
 
-    class SwarmComposite : public SwarmComponent
+    class SwarmComposite : public Alien
     {
-        std::vector < SwarmComponent * > children;
     public:
-        void add(SwarmComponent * ele);
+        void add(Alien * ele);
+        std::vector < Alien * > children;
         void move();
     };
 }

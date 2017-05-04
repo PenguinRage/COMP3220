@@ -17,7 +17,7 @@ namespace si {
         IOFile* ioFile = IOFile::getInstance("../Spaceship/config.ini");
         CommandCentre commandCentre = ioFile->getCommandCentre();
         Defender defender = ioFile->getDefender();
-        std::vector<SwarmComposite> swarm = ioFile->getSwarm();
+        std::vector<Swarm> swarm = ioFile->getSwarm();
 
         builder.buildDefender(defender);
         builder.buildBulletParameters(40);

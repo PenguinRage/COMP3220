@@ -111,7 +111,7 @@ bool IOFile::processLines(const std::vector<std::string>& lines)
         }
         for (int i = 0; i < num_of_swarms; i++)
         {
-            m_swarm.push_back(SwarmComposite());
+            m_swarm.push_back(Swarm());
         }
 
         line_count++;
@@ -152,14 +152,17 @@ bool IOFile::processLines(const std::vector<std::string>& lines)
             for (char &c : curLine)
             {
                 int x = XMat + count_x * XDel;
-                if (c == '1')
+                int a = c - '0';
+                if ((a-1) == -1)
                 {
-                    m_swarm[0].add(new Alien(x,y,c));
-                }
-                else if (c == '0')
-                {
+
                     count_x++;
                     continue;
+                }
+                else if ((a-1) > -1 && (a-1) < 9)
+                {
+                    Alien curAlien(x,y,a);
+                    m_swarm[(a-1)].add(curAlien);
                 }
                 else
                 {
@@ -288,7 +291,7 @@ const Defender& IOFile::getDefender() const
     return m_defender;
 }
 
-const std::vector<SwarmComposite>& IOFile::getSwarm() const
+const std::vector<Swarm>& IOFile::getSwarm() const
 {
     return m_swarm;
 }

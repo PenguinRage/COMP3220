@@ -1,7 +1,7 @@
 #include "swarmcomposite.h"
 
 namespace si {
-    void SwarmComposite::add(SwarmComponent *ele)
+    void SwarmComposite::add(Alien *ele)
     {
         children.push_back(ele);
     }

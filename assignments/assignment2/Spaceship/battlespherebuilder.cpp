@@ -35,7 +35,7 @@ namespace si {
      *         but could be used to store events entered on keyboard).
      * \param: commandCentre
      */
-    void BattlesphereBuilder::buildSwarm(const std::vector<SwarmComposite>& swarm)
+    void BattlesphereBuilder::buildSwarm(const std::vector<Swarm>& swarm)
     {
         m_swarm = swarm;
     }

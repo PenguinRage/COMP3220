@@ -58,7 +58,8 @@ SOURCES       = ../Spaceship/main.cpp \
 		../Spaceship/gamedirector.cpp \
 		../Spaceship/star.cpp \
 		../Spaceship/alien.cpp \
-		../Spaceship/swarmcomposite.cpp qrc_resources.cpp \
+		../Spaceship/swarmcomposite.cpp \
+		../Spaceship/swarm.cpp qrc_resources.cpp \
 		moc_battlesphere.cpp
 OBJECTS       = main.o \
 		battlesphere.o \
@@ -71,6 +72,7 @@ OBJECTS       = main.o \
 		star.o \
 		alien.o \
 		swarmcomposite.o \
+		swarm.o \
 		qrc_resources.o \
 		moc_battlesphere.o
 DIST          = /opt/Qt/5.8/gcc_64/mkspecs/features/spec_pre.prf \
@@ -254,7 +256,8 @@ DIST          = /opt/Qt/5.8/gcc_64/mkspecs/features/spec_pre.prf \
 		../Spaceship/gameelement.h \
 		../Spaceship/alien.h \
 		../Spaceship/swarmcomponent.h \
-		../Spaceship/swarmcomposite.h ../Spaceship/main.cpp \
+		../Spaceship/swarmcomposite.h \
+		../Spaceship/swarm.h ../Spaceship/main.cpp \
 		../Spaceship/battlesphere.cpp \
 		../Spaceship/iofile.cpp \
 		../Spaceship/defender.cpp \
@@ -264,7 +267,8 @@ DIST          = /opt/Qt/5.8/gcc_64/mkspecs/features/spec_pre.prf \
 		../Spaceship/gamedirector.cpp \
 		../Spaceship/star.cpp \
 		../Spaceship/alien.cpp \
-		../Spaceship/swarmcomposite.cpp
+		../Spaceship/swarmcomposite.cpp \
+		../Spaceship/swarm.cpp
 QMAKE_TARGET  = Spaceship
 DESTDIR       = 
 TARGET        = Spaceship
@@ -643,8 +647,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../Spaceship/resources.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /opt/Qt/5.8/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../Spaceship/battlesphere.h ../Spaceship/iofile.h ../Spaceship/defender.h ../Spaceship/commandcentre.h ../Spaceship/bullet.h ../Spaceship/battlespherebuilder.h ../Spaceship/gamedirector.h ../Spaceship/star.h ../Spaceship/gameelement.h ../Spaceship/alien.h ../Spaceship/swarmcomponent.h ../Spaceship/swarmcomposite.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../Spaceship/main.cpp ../Spaceship/battlesphere.cpp ../Spaceship/iofile.cpp ../Spaceship/defender.cpp ../Spaceship/commandcentre.cpp ../Spaceship/bullet.cpp ../Spaceship/battlespherebuilder.cpp ../Spaceship/gamedirector.cpp ../Spaceship/star.cpp ../Spaceship/alien.cpp ../Spaceship/swarmcomposite.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../Spaceship/battlesphere.h ../Spaceship/iofile.h ../Spaceship/defender.h ../Spaceship/commandcentre.h ../Spaceship/bullet.h ../Spaceship/battlespherebuilder.h ../Spaceship/gamedirector.h ../Spaceship/star.h ../Spaceship/gameelement.h ../Spaceship/alien.h ../Spaceship/swarmcomponent.h ../Spaceship/swarmcomposite.h ../Spaceship/swarm.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../Spaceship/main.cpp ../Spaceship/battlesphere.cpp ../Spaceship/iofile.cpp ../Spaceship/defender.cpp ../Spaceship/commandcentre.cpp ../Spaceship/bullet.cpp ../Spaceship/battlespherebuilder.cpp ../Spaceship/gamedirector.cpp ../Spaceship/star.cpp ../Spaceship/alien.cpp ../Spaceship/swarmcomposite.cpp ../Spaceship/swarm.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -814,10 +818,14 @@ moc_battlesphere.cpp: /opt/Qt/5.8/gcc_64/include/QtWidgets/QDialog \
 		/opt/Qt/5.8/gcc_64/include/QtWidgets/qpushbutton.h \
 		/opt/Qt/5.8/gcc_64/include/QtWidgets/qabstractbutton.h \
 		/opt/Qt/5.8/gcc_64/include/QtGui/qicon.h \
+		../Spaceship/swarmcomposite.h \
+		../Spaceship/alien.h \
+		../Spaceship/gameelement.h \
+		../Spaceship/swarmcomponent.h \
 		../Spaceship/commandcentre.h \
 		../Spaceship/defender.h \
-		../Spaceship/gameelement.h \
 		../Spaceship/iofile.h \
+		../Spaceship/swarm.h \
 		../Spaceship/bullet.h \
 		../Spaceship/star.h \
 		../Spaceship/battlesphere.h \
@@ -961,10 +969,14 @@ main.o: ../Spaceship/main.cpp ../Spaceship/battlesphere.h \
 		/opt/Qt/5.8/gcc_64/include/QtWidgets/qpushbutton.h \
 		/opt/Qt/5.8/gcc_64/include/QtWidgets/qabstractbutton.h \
 		/opt/Qt/5.8/gcc_64/include/QtGui/qicon.h \
+		../Spaceship/swarmcomposite.h \
+		../Spaceship/alien.h \
+		../Spaceship/gameelement.h \
+		../Spaceship/swarmcomponent.h \
 		../Spaceship/commandcentre.h \
 		../Spaceship/defender.h \
-		../Spaceship/gameelement.h \
 		../Spaceship/iofile.h \
+		../Spaceship/swarm.h \
 		../Spaceship/bullet.h \
 		../Spaceship/star.h \
 		../Spaceship/battlespherebuilder.h \
@@ -1093,10 +1105,14 @@ battlesphere.o: ../Spaceship/battlesphere.cpp ../Spaceship/battlesphere.h \
 		/opt/Qt/5.8/gcc_64/include/QtWidgets/qpushbutton.h \
 		/opt/Qt/5.8/gcc_64/include/QtWidgets/qabstractbutton.h \
 		/opt/Qt/5.8/gcc_64/include/QtGui/qicon.h \
+		../Spaceship/swarmcomposite.h \
+		../Spaceship/alien.h \
+		../Spaceship/gameelement.h \
+		../Spaceship/swarmcomponent.h \
 		../Spaceship/commandcentre.h \
 		../Spaceship/defender.h \
-		../Spaceship/gameelement.h \
 		../Spaceship/iofile.h \
+		../Spaceship/swarm.h \
 		../Spaceship/bullet.h \
 		../Spaceship/star.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o battlesphere.o ../Spaceship/battlesphere.cpp
@@ -1104,7 +1120,10 @@ battlesphere.o: ../Spaceship/battlesphere.cpp ../Spaceship/battlesphere.h \
 iofile.o: ../Spaceship/iofile.cpp ../Spaceship/iofile.h \
 		../Spaceship/commandcentre.h \
 		../Spaceship/defender.h \
-		../Spaceship/gameelement.h
+		../Spaceship/gameelement.h \
+		../Spaceship/swarm.h \
+		../Spaceship/alien.h \
+		../Spaceship/swarmcomponent.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o iofile.o ../Spaceship/iofile.cpp
 
 defender.o: ../Spaceship/defender.cpp ../Spaceship/defender.h \
@@ -1241,10 +1260,14 @@ battlespherebuilder.o: ../Spaceship/battlespherebuilder.cpp ../Spaceship/battles
 		/opt/Qt/5.8/gcc_64/include/QtWidgets/qpushbutton.h \
 		/opt/Qt/5.8/gcc_64/include/QtWidgets/qabstractbutton.h \
 		/opt/Qt/5.8/gcc_64/include/QtGui/qicon.h \
+		../Spaceship/swarmcomposite.h \
+		../Spaceship/alien.h \
+		../Spaceship/gameelement.h \
+		../Spaceship/swarmcomponent.h \
 		../Spaceship/commandcentre.h \
 		../Spaceship/defender.h \
-		../Spaceship/gameelement.h \
 		../Spaceship/iofile.h \
+		../Spaceship/swarm.h \
 		../Spaceship/bullet.h \
 		../Spaceship/star.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o battlespherebuilder.o ../Spaceship/battlespherebuilder.cpp
@@ -1372,10 +1395,14 @@ gamedirector.o: ../Spaceship/gamedirector.cpp ../Spaceship/gamedirector.h \
 		/opt/Qt/5.8/gcc_64/include/QtWidgets/qpushbutton.h \
 		/opt/Qt/5.8/gcc_64/include/QtWidgets/qabstractbutton.h \
 		/opt/Qt/5.8/gcc_64/include/QtGui/qicon.h \
+		../Spaceship/swarmcomposite.h \
+		../Spaceship/alien.h \
+		../Spaceship/gameelement.h \
+		../Spaceship/swarmcomponent.h \
 		../Spaceship/commandcentre.h \
 		../Spaceship/defender.h \
-		../Spaceship/gameelement.h \
 		../Spaceship/iofile.h \
+		../Spaceship/swarm.h \
 		../Spaceship/bullet.h \
 		../Spaceship/star.h \
 		../Spaceship/battlespherebuilder.h
@@ -1395,6 +1422,12 @@ swarmcomposite.o: ../Spaceship/swarmcomposite.cpp ../Spaceship/swarmcomposite.h 
 		../Spaceship/gameelement.h \
 		../Spaceship/swarmcomponent.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o swarmcomposite.o ../Spaceship/swarmcomposite.cpp
+
+swarm.o: ../Spaceship/swarm.cpp ../Spaceship/swarm.h \
+		../Spaceship/alien.h \
+		../Spaceship/gameelement.h \
+		../Spaceship/swarmcomponent.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o swarm.o ../Spaceship/swarm.cpp
 
 qrc_resources.o: qrc_resources.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_resources.o qrc_resources.cpp

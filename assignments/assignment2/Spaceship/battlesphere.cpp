@@ -13,11 +13,12 @@ namespace si {
      * \result: the person
      */
     BattleSphere::BattleSphere(QWidget *parent,
-                           Defender d, int bulletSpeed, CommandCentre cc, std::vector<SwarmComposite> s)
+                           Defender d, int bulletSpeed, CommandCentre cc, std::vector<Swarm> s)
         : QDialog(parent),
           m_defender(d),
           m_bulletSpeed(bulletSpeed),
-          m_commandCentre(cc)
+          m_commandCentre(cc),
+          m_swarms(s)
     {
         for (int i=0; i<m_numStars; ++i) {
             int randX = rand() % m_screenWidth;
@@ -37,6 +38,9 @@ namespace si {
         m_invader3.load(":/images/invader_3.png");
 
         m_starImg = m_starImg.scaledToWidth(5);
+        m_invader1 = m_invader1.scaledToWidth(80);
+        m_invader2 = m_invader2.scaledToWidth(80);
+        m_invader3 = m_invader3.scaledToWidth(80);
 
         if (d.getScale() == "tiny") {
             m_defenderImg = m_defenderImg.scaledToWidth(40);
@@ -81,6 +85,20 @@ namespace si {
         QPainter painter(this);
 
         painter.drawPixmap(m_defender.getX(), m_defender.getY(), m_defenderImg);
+
+        for (auto &curSwarm : m_swarms) {
+            for (auto &curAlien : curSwarm.children)
+            {
+                if (curAlien.getSwarmID() == 1 )
+                {
+                    painter.drawPixmap(curAlien.getX(), curAlien.getY(), m_invader1);
+                }
+                else
+                {
+                    painter.drawPixmap(curAlien.getX(), curAlien.getY(), m_invader2);
+                }
+            }
+        }
 
         for (auto &curBullet : m_bullets) {
             painter.drawPixmap(curBullet.getX(), curBullet.getY(), m_bulletImg);
