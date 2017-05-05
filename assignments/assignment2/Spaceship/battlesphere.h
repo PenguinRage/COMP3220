@@ -48,8 +48,8 @@ namespace si {
 
         int m_bulletSpeed;
 
-        int m_screenWidth = 800;
-        int m_screenHeight = 600;
+        int m_screenWidth = 1000;
+        int m_screenHeight = 700;
 
         CommandCentre m_commandCentre;
 

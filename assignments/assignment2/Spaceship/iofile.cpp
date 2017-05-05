@@ -95,6 +95,8 @@ bool IOFile::processLines(const std::vector<std::string>& lines)
     }
     int line_count = 4;
 
+    std::regex e ("Left|Right|Fire");
+
     // Extension to import alien swarms from config
     if (lines.at(line_count) == "[ Aliens ]") {
         line_count++;
@@ -102,6 +104,7 @@ bool IOFile::processLines(const std::vector<std::string>& lines)
         if (isValidCommand(lines.at(line_count), "swarms")) {
             num_of_swarms = getCoordinate(lines.at(line_count));
             std::cout << "number of swarms is : " << num_of_swarms << std::endl;
+            std::cout << "Alien ids are in the range between 1 and " << num_of_swarms << " inclusive" << std::endl;
         }
         // Check swarms are actually available given the flag aliens
         if (num_of_swarms==0)
@@ -116,22 +119,26 @@ bool IOFile::processLines(const std::vector<std::string>& lines)
 
         line_count++;
         int XMat, YMat, XDel, YDel;
+        // Get starting X position of Matrix Swarms
         if (isValidCommand(lines.at(line_count), "XMat")) {
             XMat = getCoordinate(lines.at(line_count));
             std::cout << "Matrix Start X is : " << XMat << std::endl;
         }
         line_count++;
+        // Get starting Y position of Matrix Swarms
         if (isValidCommand(lines.at(line_count), "YMat")) {
             YMat = getCoordinate(lines.at(line_count));
             std::cout << "Matrix Start Y is : " << YMat << std::endl;
         }
 
         line_count++;
+        // Get X Delimiter
         if (isValidCommand(lines.at(line_count), "XDel")) {
             XDel = getCoordinate(lines.at(line_count));
             std::cout << "Matrix delimiter X is : " << XDel << std::endl;
         }
         line_count++;
+        // Get Y Delimiter
         if (isValidCommand(lines.at(line_count), "YDel")) {
             YDel = getCoordinate(lines.at(line_count));
             std::cout << "Matrix delimiter Y is : " << YDel << std::endl;
@@ -143,7 +150,7 @@ bool IOFile::processLines(const std::vector<std::string>& lines)
         int count_y = 0;
         for (auto &curLine : swarm)
         {
-            if (curLine == "[ Commands ]") break;
+            if (curLine == "[ 1 ]") break;
 
             line_count++;
 
@@ -173,9 +180,35 @@ bool IOFile::processLines(const std::vector<std::string>& lines)
             }
             count_y++;
         }
+
+        // Get Trajectory for each swarm
+        std::vector<std::string> trajectory(lines.begin()+line_count, lines.end());
+        int i = 1;
+        for (auto &curLine : trajectory)
+        {
+            if (curLine == "[ Commands ]") break;
+
+            std::stringstream ss;
+            ss << "[ " << i << " ]";
+            if (curLine != ss.str())
+            {
+                if (!std::regex_match(curLine, e)) {
+                    if (i == m_swarm.size())
+                    {
+                        std::cout << "ERROR: Line " << line_count << " swarm trajectory for swarm id: " << (i+1) << " is unsupported" << std::endl;
+                        return false;
+                    }
+                    i++;
+                }
+                {
+                    m_swarm[(i-1)].addTrajectory(curLine);
+                }
+            }
+
+            line_count++;
+        }
     }
-
-
+    // Get the commands
     if (lines.at(line_count) != "[ Commands ]") {
         std::cout << "ERROR: Line " << line_count << " must read [ Commands ]" << std::endl;
         return false;
@@ -184,7 +217,7 @@ bool IOFile::processLines(const std::vector<std::string>& lines)
     line_count++;
     std::vector<std::string> commands(lines.begin()+line_count, lines.end());
 
-    std::regex e ("Left|Right|Fire");
+
     for (auto &curLine : commands) {
         if (!std::regex_match(curLine, e)) {
             std::cout << "Error: Commands must only be 'Left', 'Right', or 'Fire'" << std::endl;

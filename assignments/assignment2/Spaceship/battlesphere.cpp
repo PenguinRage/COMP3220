@@ -49,7 +49,7 @@ namespace si {
         if (d.getScale() == "tiny") {
             m_defenderImg = m_defenderImg.scaledToWidth(40);
         } else if (d.getScale() == "normal") {
-            m_defenderImg = m_defenderImg.scaledToWidth(80);
+            m_defenderImg = m_defenderImg.scaledToWidth(70);
         } else if (d.getScale() == "large") {
             m_defenderImg = m_defenderImg.scaledToWidth(100);
         } else if (d.getScale() == "giant") {
@@ -150,6 +150,7 @@ namespace si {
 
         // check for alien kills
         for (auto &curSwarm : m_swarms) {
+            curSwarm.move();
             for (auto &curAlien : curSwarm.children)
             {
                 if (!curAlien.isAlive()) continue;

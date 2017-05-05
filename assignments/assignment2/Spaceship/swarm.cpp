@@ -1,26 +1,51 @@
 #include "swarm.h"
 
 namespace si {
-    Swarm::Swarm() {}
+Swarm::Swarm() {}
 
-    void Swarm::add(Alien& alien) {
-        children.push_back(alien);
-    }
+void Swarm::add(Alien& alien) {
+    children.push_back(alien);
+}
 
-    int Swarm::getSize() const
+int Swarm::getSize() const
+{
+    return children.size();
+}
+
+bool Swarm::isHit(int x, int y, int width, int height)
+{
+    for (auto &curAlien : children)
     {
-        return children.size();
-    }
-
-    bool Swarm::isHit(int x, int y, int width, int height)
-    {
-        for (auto &curAlien : children)
+        if (curAlien.isHit(x,y, width, height))
         {
-            if (curAlien.isHit(x,y, width, height))
+            return true;
+        }
+    }
+    return false;
+}
+
+void Swarm::addTrajectory(std::string s) {
+    m_commandCentre.addToBuffer(s);
+}
+
+void Swarm::move()
+{
+    if (m_commandCentre.hasNext()) {
+        std::string nextCommand = m_commandCentre.popNext();
+        if (nextCommand == "Left") {
+            for (auto &curAlien : children)
             {
-                return true;
+                curAlien.setX(curAlien.getX() - m_speed);
+            }
+        } else if (nextCommand == "Right") {
+            for (auto &curAlien : children)
+            {
+                curAlien.setX(curAlien.getX() + m_speed);
             }
         }
-        return false;
+        m_commandCentre.addToBuffer(nextCommand);
     }
 }
+
+}
+
