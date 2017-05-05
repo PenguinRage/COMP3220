@@ -32,6 +32,7 @@ namespace si {
         QPixmap m_invader1;
         QPixmap m_invader2;
         QPixmap m_invader3;
+        QPixmap m_explosion;
 
         QTimer* m_timer;
         QPushButton *m_button;

@@ -7,8 +7,28 @@ namespace si {
 
     int Alien::getSwarmID(){return m_swarmID;}
 
-    bool Alien::isAlive(){return m_swarmID;}
+    bool Alien::isAlive(){return m_alive;}
 
+    bool Alien::isHit(int x, int y, int width, int height)
+    {
+        if (x > getX() && x < (getX() + width) && y < (getY() + height))
+        {
+            m_alive = false;
+            return true;
+        }
+
+        return false;
+    }
+
+    void Alien::setDestroyed(bool value)
+    {
+        m_destroyed = value;
+    }
+
+    bool Alien::isBlown()
+    {
+        return m_destroyed;
+    }
 
 }
 

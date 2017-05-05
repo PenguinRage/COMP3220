@@ -14,11 +14,15 @@ class Alien : public GameElement
         void setSwarmID(int id);
         int getSwarmID();
         bool isAlive();
+        bool isBlown();
+        void setDestroyed(bool value);
+        bool isHit(int x, int y, int width, int height);
 
 
     private:
         int m_swarmID;
         bool m_alive = true;
+        bool m_destroyed = false;
 
     };
 }

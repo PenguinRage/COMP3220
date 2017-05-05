@@ -37,10 +37,12 @@ namespace si {
         m_invader2.load(":/images/invader_2.png");
         m_invader3.load(":/images/invader_3.png");
 
-        m_starImg = m_starImg.scaledToWidth(5);
+        m_bulletImg = m_bulletImg.scaledToHeight(15);
         m_invader1 = m_invader1.scaledToWidth(80);
         m_invader2 = m_invader2.scaledToWidth(80);
         m_invader3 = m_invader3.scaledToWidth(80);
+        m_explosion = m_starImg.scaledToHeight(m_invader1.height());
+        m_starImg = m_starImg.scaledToWidth(5);
 
         if (d.getScale() == "tiny") {
             m_defenderImg = m_defenderImg.scaledToWidth(40);
@@ -86,25 +88,37 @@ namespace si {
 
         painter.drawPixmap(m_defender.getX(), m_defender.getY(), m_defenderImg);
 
-        for (auto &curSwarm : m_swarms) {
-            for (auto &curAlien : curSwarm.children)
-            {
-                if (curAlien.getSwarmID() == 1 )
-                {
-                    painter.drawPixmap(curAlien.getX(), curAlien.getY(), m_invader1);
-                }
-                else
-                {
-                    painter.drawPixmap(curAlien.getX(), curAlien.getY(), m_invader2);
-                }
-            }
-        }
-
         for (auto &curBullet : m_bullets) {
             painter.drawPixmap(curBullet.getX(), curBullet.getY(), m_bulletImg);
             curBullet.updateX(m_bulletSpeed);
             curBullet.updateY(m_bulletSpeed);
         }
+
+        for (auto &curSwarm : m_swarms) {
+            for (auto &curAlien : curSwarm.children)
+            {
+                if (curAlien.isBlown())
+                {
+                    painter.drawPixmap(curAlien.getX(), curAlien.getY(), m_explosion);
+                    curAlien.setDestroyed(false);
+                }
+                if (!curAlien.isAlive()) continue;
+                int type = curAlien.getSwarmID() % 3;
+                if (type == 1)
+                {
+                    painter.drawPixmap(curAlien.getX(), curAlien.getY(), m_invader1);
+                }
+                else if (type == 2)
+                {
+                    painter.drawPixmap(curAlien.getX(), curAlien.getY(), m_invader2);
+                }
+                else
+                {
+                    painter.drawPixmap(curAlien.getX(), curAlien.getY(), m_invader3);
+                }
+            }
+        }
+
         for (auto &curStar : m_stars) {
             if (curStar.getOpacity() > 0.6 && curStar.getOpacityDelta() > 0) {
                 curStar.toggleOpacityDelta();
@@ -122,6 +136,28 @@ namespace si {
      *         function in the input
      */
     void BattleSphere::nextFrame() {
+
+        // check for alien kills
+        for (auto &curSwarm : m_swarms) {
+            for (auto &curAlien : curSwarm.children)
+            {
+                if (!curAlien.isAlive()) continue;
+                int pos = 0;
+                bool hit = false;
+                if (m_bullets.empty()) continue;
+                for (auto &curBullet : m_bullets)
+                {
+                    if (curAlien.isHit(curBullet.getX(), curBullet.getY(), m_invader1.width(), m_invader1.height()))
+                    {
+                        curAlien.setDestroyed(true);
+                        hit = true;
+                        break;
+                    }
+                    pos++;
+                }
+                if (hit) m_bullets.erase(m_bullets.cbegin() + pos);
+            }
+        }
 
         // animate the defender
         int maxX = this->width() - m_defenderImg.width();

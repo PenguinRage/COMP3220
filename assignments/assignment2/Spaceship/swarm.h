@@ -11,7 +11,7 @@ namespace si {
         std::vector<Alien> children;
         void add(Alien& alien);
         int getSize() const;
-
+        bool isHit(int x, int y, int width, int height);
     };
 }
 
