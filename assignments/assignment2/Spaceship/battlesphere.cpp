@@ -20,6 +20,8 @@ namespace si {
           m_commandCentre(cc),
           m_swarms(s)
     {
+        m_score = new Score();
+
         for (int i=0; i<m_numStars; ++i) {
             int randX = rand() % m_screenWidth;
             int randY = rand() % m_screenHeight;
@@ -77,6 +79,7 @@ namespace si {
     BattleSphere::~BattleSphere() {
         delete m_timer;
         delete m_button;
+        delete m_score;
     }
 
     /**
@@ -86,7 +89,6 @@ namespace si {
     void BattleSphere::paintEvent(QPaintEvent *event) {
         QPainter painter(this);
 
-        painter.drawPixmap(m_defender.getX(), m_defender.getY(), m_defenderImg);
 
         for (auto &curBullet : m_bullets) {
             painter.drawPixmap(curBullet.getX(), curBullet.getY(), m_bulletImg);
@@ -118,6 +120,14 @@ namespace si {
                 }
             }
         }
+        std::stringstream ss;
+        ss << "Score: " << m_score->getScore();
+
+        painter.setFont({"Helvetica", 30});
+        painter.setPen({255, 170, 50, 208});
+        painter.drawText(QPoint((m_screenWidth-200), 50), ss.str().c_str());
+
+        painter.drawPixmap(m_defender.getX(), m_defender.getY(), m_defenderImg);
 
         for (auto &curStar : m_stars) {
             if (curStar.getOpacity() > 0.6 && curStar.getOpacityDelta() > 0) {
@@ -129,6 +139,7 @@ namespace si {
             painter.setOpacity(curStar.getOpacity());
             painter.drawPixmap(curStar.getX(), curStar.getY(), m_starImg);
         }
+
     }
 
     /**
@@ -149,6 +160,7 @@ namespace si {
                 {
                     if (curAlien.isHit(curBullet.getX(), curBullet.getY(), m_invader1.width(), m_invader1.height()))
                     {
+                        m_score->increment();
                         curAlien.setDestroyed(true);
                         hit = true;
                         break;

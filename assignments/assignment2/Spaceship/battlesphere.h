@@ -7,6 +7,7 @@
 #include <QTimer>
 #include <QApplication>
 #include <QPushButton>
+#include <QLabel>
 
 #include <vector>
 #include "swarm.h"
@@ -15,6 +16,7 @@
 #include "iofile.h"
 #include "bullet.h"
 #include "star.h"
+#include "score.h"
 
 namespace si {
 
@@ -36,6 +38,7 @@ namespace si {
 
         QTimer* m_timer;
         QPushButton *m_button;
+        Score * m_score;
 
         std::vector<Bullet> m_bullets;
         std::vector<Star> m_stars;
