@@ -95,7 +95,7 @@ bool IOFile::processLines(const std::vector<std::string>& lines)
     }
     int line_count = 4;
 
-    std::regex e ("Left|Right|Fire");
+    std::regex r ("Left|Right|Up|Down");
 
     // Extension to import alien swarms from config
     if (lines.at(line_count) == "[ Aliens ]") {
@@ -192,7 +192,7 @@ bool IOFile::processLines(const std::vector<std::string>& lines)
             ss << "[ " << i << " ]";
             if (curLine != ss.str())
             {
-                if (!std::regex_match(curLine, e)) {
+                if (!std::regex_match(curLine, r)) {
                     if (i == m_swarm.size())
                     {
                         std::cout << "ERROR: Line " << line_count << " swarm trajectory for swarm id: " << (i+1) << " is unsupported" << std::endl;
@@ -208,6 +208,8 @@ bool IOFile::processLines(const std::vector<std::string>& lines)
             line_count++;
         }
     }
+
+    std::regex e ("Left|Right|Fire");
     // Get the commands
     if (lines.at(line_count) != "[ Commands ]") {
         std::cout << "ERROR: Line " << line_count << " must read [ Commands ]" << std::endl;

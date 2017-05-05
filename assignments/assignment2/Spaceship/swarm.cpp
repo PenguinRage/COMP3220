@@ -42,6 +42,16 @@ void Swarm::move()
             {
                 curAlien.setX(curAlien.getX() + m_speed);
             }
+        } else if (nextCommand == "Up") {
+            for (auto &curAlien : children)
+            {
+                curAlien.setY(curAlien.getY() - m_speed);
+            }
+        } else if (nextCommand == "Down") {
+            for (auto &curAlien : children)
+            {
+                curAlien.setY(curAlien.getY() + m_speed);
+            }
         }
         m_commandCentre.addToBuffer(nextCommand);
     }

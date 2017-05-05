@@ -24,7 +24,6 @@ SOURCES += main.cpp\
     gamedirector.cpp \
     star.cpp \
     alien.cpp \
-    swarmcomposite.cpp \
     swarm.cpp \
     score.cpp
 
@@ -39,8 +38,6 @@ HEADERS  += \
     star.h \
     gameelement.h \
     alien.h \
-    swarmcomponent.h \
-    swarmcomposite.h \
     swarm.h \
     score.h
 

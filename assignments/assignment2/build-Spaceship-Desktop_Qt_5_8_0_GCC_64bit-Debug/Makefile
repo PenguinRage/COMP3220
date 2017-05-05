@@ -58,7 +58,6 @@ SOURCES       = ../Spaceship/main.cpp \
 		../Spaceship/gamedirector.cpp \
 		../Spaceship/star.cpp \
 		../Spaceship/alien.cpp \
-		../Spaceship/swarmcomposite.cpp \
 		../Spaceship/swarm.cpp \
 		../Spaceship/score.cpp qrc_resources.cpp \
 		moc_battlesphere.cpp
@@ -72,7 +71,6 @@ OBJECTS       = main.o \
 		gamedirector.o \
 		star.o \
 		alien.o \
-		swarmcomposite.o \
 		swarm.o \
 		score.o \
 		qrc_resources.o \
@@ -257,8 +255,6 @@ DIST          = /opt/Qt/5.8/gcc_64/mkspecs/features/spec_pre.prf \
 		../Spaceship/star.h \
 		../Spaceship/gameelement.h \
 		../Spaceship/alien.h \
-		../Spaceship/swarmcomponent.h \
-		../Spaceship/swarmcomposite.h \
 		../Spaceship/swarm.h \
 		../Spaceship/score.h ../Spaceship/main.cpp \
 		../Spaceship/battlesphere.cpp \
@@ -270,7 +266,6 @@ DIST          = /opt/Qt/5.8/gcc_64/mkspecs/features/spec_pre.prf \
 		../Spaceship/gamedirector.cpp \
 		../Spaceship/star.cpp \
 		../Spaceship/alien.cpp \
-		../Spaceship/swarmcomposite.cpp \
 		../Spaceship/swarm.cpp \
 		../Spaceship/score.cpp
 QMAKE_TARGET  = Spaceship
@@ -651,8 +646,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../Spaceship/resources.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /opt/Qt/5.8/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../Spaceship/battlesphere.h ../Spaceship/iofile.h ../Spaceship/defender.h ../Spaceship/commandcentre.h ../Spaceship/bullet.h ../Spaceship/battlespherebuilder.h ../Spaceship/gamedirector.h ../Spaceship/star.h ../Spaceship/gameelement.h ../Spaceship/alien.h ../Spaceship/swarmcomponent.h ../Spaceship/swarmcomposite.h ../Spaceship/swarm.h ../Spaceship/score.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../Spaceship/main.cpp ../Spaceship/battlesphere.cpp ../Spaceship/iofile.cpp ../Spaceship/defender.cpp ../Spaceship/commandcentre.cpp ../Spaceship/bullet.cpp ../Spaceship/battlespherebuilder.cpp ../Spaceship/gamedirector.cpp ../Spaceship/star.cpp ../Spaceship/alien.cpp ../Spaceship/swarmcomposite.cpp ../Spaceship/swarm.cpp ../Spaceship/score.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../Spaceship/battlesphere.h ../Spaceship/iofile.h ../Spaceship/defender.h ../Spaceship/commandcentre.h ../Spaceship/bullet.h ../Spaceship/battlespherebuilder.h ../Spaceship/gamedirector.h ../Spaceship/star.h ../Spaceship/gameelement.h ../Spaceship/alien.h ../Spaceship/swarm.h ../Spaceship/score.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../Spaceship/main.cpp ../Spaceship/battlesphere.cpp ../Spaceship/iofile.cpp ../Spaceship/defender.cpp ../Spaceship/commandcentre.cpp ../Spaceship/bullet.cpp ../Spaceship/battlespherebuilder.cpp ../Spaceship/gamedirector.cpp ../Spaceship/star.cpp ../Spaceship/alien.cpp ../Spaceship/swarm.cpp ../Spaceship/score.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -822,15 +817,18 @@ moc_battlesphere.cpp: /opt/Qt/5.8/gcc_64/include/QtWidgets/QDialog \
 		/opt/Qt/5.8/gcc_64/include/QtWidgets/qpushbutton.h \
 		/opt/Qt/5.8/gcc_64/include/QtWidgets/qabstractbutton.h \
 		/opt/Qt/5.8/gcc_64/include/QtGui/qicon.h \
+		/opt/Qt/5.8/gcc_64/include/QtWidgets/QLabel \
+		/opt/Qt/5.8/gcc_64/include/QtWidgets/qlabel.h \
+		/opt/Qt/5.8/gcc_64/include/QtWidgets/qframe.h \
 		../Spaceship/swarm.h \
 		../Spaceship/alien.h \
 		../Spaceship/gameelement.h \
-		../Spaceship/swarmcomponent.h \
 		../Spaceship/commandcentre.h \
 		../Spaceship/defender.h \
 		../Spaceship/iofile.h \
 		../Spaceship/bullet.h \
 		../Spaceship/star.h \
+		../Spaceship/score.h \
 		../Spaceship/battlesphere.h \
 		moc_predefs.h \
 		/opt/Qt/5.8/gcc_64/bin/moc
@@ -972,15 +970,18 @@ main.o: ../Spaceship/main.cpp ../Spaceship/battlesphere.h \
 		/opt/Qt/5.8/gcc_64/include/QtWidgets/qpushbutton.h \
 		/opt/Qt/5.8/gcc_64/include/QtWidgets/qabstractbutton.h \
 		/opt/Qt/5.8/gcc_64/include/QtGui/qicon.h \
+		/opt/Qt/5.8/gcc_64/include/QtWidgets/QLabel \
+		/opt/Qt/5.8/gcc_64/include/QtWidgets/qlabel.h \
+		/opt/Qt/5.8/gcc_64/include/QtWidgets/qframe.h \
 		../Spaceship/swarm.h \
 		../Spaceship/alien.h \
 		../Spaceship/gameelement.h \
-		../Spaceship/swarmcomponent.h \
 		../Spaceship/commandcentre.h \
 		../Spaceship/defender.h \
 		../Spaceship/iofile.h \
 		../Spaceship/bullet.h \
 		../Spaceship/star.h \
+		../Spaceship/score.h \
 		../Spaceship/battlespherebuilder.h \
 		../Spaceship/gamedirector.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../Spaceship/main.cpp
@@ -1107,15 +1108,18 @@ battlesphere.o: ../Spaceship/battlesphere.cpp ../Spaceship/battlesphere.h \
 		/opt/Qt/5.8/gcc_64/include/QtWidgets/qpushbutton.h \
 		/opt/Qt/5.8/gcc_64/include/QtWidgets/qabstractbutton.h \
 		/opt/Qt/5.8/gcc_64/include/QtGui/qicon.h \
+		/opt/Qt/5.8/gcc_64/include/QtWidgets/QLabel \
+		/opt/Qt/5.8/gcc_64/include/QtWidgets/qlabel.h \
+		/opt/Qt/5.8/gcc_64/include/QtWidgets/qframe.h \
 		../Spaceship/swarm.h \
 		../Spaceship/alien.h \
 		../Spaceship/gameelement.h \
-		../Spaceship/swarmcomponent.h \
 		../Spaceship/commandcentre.h \
 		../Spaceship/defender.h \
 		../Spaceship/iofile.h \
 		../Spaceship/bullet.h \
-		../Spaceship/star.h
+		../Spaceship/star.h \
+		../Spaceship/score.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o battlesphere.o ../Spaceship/battlesphere.cpp
 
 iofile.o: ../Spaceship/iofile.cpp ../Spaceship/iofile.h \
@@ -1123,8 +1127,7 @@ iofile.o: ../Spaceship/iofile.cpp ../Spaceship/iofile.h \
 		../Spaceship/defender.h \
 		../Spaceship/gameelement.h \
 		../Spaceship/swarm.h \
-		../Spaceship/alien.h \
-		../Spaceship/swarmcomponent.h
+		../Spaceship/alien.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o iofile.o ../Spaceship/iofile.cpp
 
 defender.o: ../Spaceship/defender.cpp ../Spaceship/defender.h \
@@ -1261,15 +1264,18 @@ battlespherebuilder.o: ../Spaceship/battlespherebuilder.cpp ../Spaceship/battles
 		/opt/Qt/5.8/gcc_64/include/QtWidgets/qpushbutton.h \
 		/opt/Qt/5.8/gcc_64/include/QtWidgets/qabstractbutton.h \
 		/opt/Qt/5.8/gcc_64/include/QtGui/qicon.h \
+		/opt/Qt/5.8/gcc_64/include/QtWidgets/QLabel \
+		/opt/Qt/5.8/gcc_64/include/QtWidgets/qlabel.h \
+		/opt/Qt/5.8/gcc_64/include/QtWidgets/qframe.h \
 		../Spaceship/swarm.h \
 		../Spaceship/alien.h \
 		../Spaceship/gameelement.h \
-		../Spaceship/swarmcomponent.h \
 		../Spaceship/commandcentre.h \
 		../Spaceship/defender.h \
 		../Spaceship/iofile.h \
 		../Spaceship/bullet.h \
-		../Spaceship/star.h
+		../Spaceship/star.h \
+		../Spaceship/score.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o battlespherebuilder.o ../Spaceship/battlespherebuilder.cpp
 
 gamedirector.o: ../Spaceship/gamedirector.cpp ../Spaceship/gamedirector.h \
@@ -1395,15 +1401,18 @@ gamedirector.o: ../Spaceship/gamedirector.cpp ../Spaceship/gamedirector.h \
 		/opt/Qt/5.8/gcc_64/include/QtWidgets/qpushbutton.h \
 		/opt/Qt/5.8/gcc_64/include/QtWidgets/qabstractbutton.h \
 		/opt/Qt/5.8/gcc_64/include/QtGui/qicon.h \
+		/opt/Qt/5.8/gcc_64/include/QtWidgets/QLabel \
+		/opt/Qt/5.8/gcc_64/include/QtWidgets/qlabel.h \
+		/opt/Qt/5.8/gcc_64/include/QtWidgets/qframe.h \
 		../Spaceship/swarm.h \
 		../Spaceship/alien.h \
 		../Spaceship/gameelement.h \
-		../Spaceship/swarmcomponent.h \
 		../Spaceship/commandcentre.h \
 		../Spaceship/defender.h \
 		../Spaceship/iofile.h \
 		../Spaceship/bullet.h \
 		../Spaceship/star.h \
+		../Spaceship/score.h \
 		../Spaceship/battlespherebuilder.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o gamedirector.o ../Spaceship/gamedirector.cpp
 
@@ -1412,20 +1421,13 @@ star.o: ../Spaceship/star.cpp ../Spaceship/star.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o star.o ../Spaceship/star.cpp
 
 alien.o: ../Spaceship/alien.cpp ../Spaceship/alien.h \
-		../Spaceship/gameelement.h \
-		../Spaceship/swarmcomponent.h
+		../Spaceship/gameelement.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o alien.o ../Spaceship/alien.cpp
-
-swarmcomposite.o: ../Spaceship/swarmcomposite.cpp ../Spaceship/swarmcomposite.h \
-		../Spaceship/alien.h \
-		../Spaceship/gameelement.h \
-		../Spaceship/swarmcomponent.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o swarmcomposite.o ../Spaceship/swarmcomposite.cpp
 
 swarm.o: ../Spaceship/swarm.cpp ../Spaceship/swarm.h \
 		../Spaceship/alien.h \
 		../Spaceship/gameelement.h \
-		../Spaceship/swarmcomponent.h
+		../Spaceship/commandcentre.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o swarm.o ../Spaceship/swarm.cpp
 
 score.o: ../Spaceship/score.cpp ../Spaceship/score.h

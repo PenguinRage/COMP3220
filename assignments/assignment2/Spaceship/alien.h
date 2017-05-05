@@ -2,7 +2,6 @@
 #define ALIEN_H
 
 #include "gameelement.h"
-#include "swarmcomponent.h"
 
 namespace si {
 
