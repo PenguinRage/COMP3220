@@ -16,6 +16,7 @@ class Alien : public GameElement
         bool isBlown();
         void setDestroyed(bool value);
         bool isHit(int x, int y, int width, int height);
+        bool shoot();
 
 
     private:

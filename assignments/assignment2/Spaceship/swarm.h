@@ -8,12 +8,14 @@
 namespace si {
     class Swarm
     {
+        std::vector<Alien> children;
+
     public:
         Swarm();
         ~Swarm(){}
-        std::vector<Alien> children;
         void add(Alien& alien);
         int getSize() const;
+        Alien* getAlien(int i);
         bool isHit(int x, int y, int width, int height);
         void addTrajectory(std::string s);
         void move();

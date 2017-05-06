@@ -1,5 +1,5 @@
 #include "alien.h"
-
+#include <random>
 namespace si {
     Alien::Alien(int x, int y, int id) : GameElement(x,y), m_swarmID(id) {}
 
@@ -30,5 +30,14 @@ namespace si {
         return m_destroyed;
     }
 
+    bool Alien::shoot()
+    {
+        if ((rand() % 100) > 85)
+        {
+            return true;
+        }
+
+        return false;
+    }
 }
 

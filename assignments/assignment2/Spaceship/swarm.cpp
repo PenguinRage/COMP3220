@@ -12,6 +12,11 @@ int Swarm::getSize() const
     return children.size();
 }
 
+Alien* Swarm::getAlien(int i)
+{
+        return &children[i];
+}
+
 bool Swarm::isHit(int x, int y, int width, int height)
 {
     for (auto &curAlien : children)

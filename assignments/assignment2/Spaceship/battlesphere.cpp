@@ -97,26 +97,27 @@ namespace si {
         }
 
         for (auto &curSwarm : m_swarms) {
-            for (auto &curAlien : curSwarm.children)
+            for (int i = 0; i < curSwarm.getSize(); i++)
             {
-                if (curAlien.isBlown())
+                Alien* curAlien = curSwarm.getAlien(i);
+                if (curAlien->isBlown())
                 {
-                    painter.drawPixmap(curAlien.getX(), curAlien.getY(), m_explosion);
-                    curAlien.setDestroyed(false);
+                    painter.drawPixmap(curAlien->getX(), curAlien->getY(), m_explosion);
+                    curAlien->setDestroyed(false);
                 }
-                if (!curAlien.isAlive()) continue;
-                int type = curAlien.getSwarmID() % 3;
+                if (!curAlien->isAlive()) continue;
+                int type = curAlien->getSwarmID() % 3;
                 if (type == 1)
                 {
-                    painter.drawPixmap(curAlien.getX(), curAlien.getY(), m_invader1);
+                    painter.drawPixmap(curAlien->getX(), curAlien->getY(), m_invader1);
                 }
                 else if (type == 2)
                 {
-                    painter.drawPixmap(curAlien.getX(), curAlien.getY(), m_invader2);
+                    painter.drawPixmap(curAlien->getX(), curAlien->getY(), m_invader2);
                 }
                 else
                 {
-                    painter.drawPixmap(curAlien.getX(), curAlien.getY(), m_invader3);
+                    painter.drawPixmap(curAlien->getX(), curAlien->getY(), m_invader3);
                 }
             }
         }
@@ -151,18 +152,19 @@ namespace si {
         // check for alien kills
         for (auto &curSwarm : m_swarms) {
             curSwarm.move();
-            for (auto &curAlien : curSwarm.children)
+            for (int i = 0; i < curSwarm.getSize(); i++)
             {
-                if (!curAlien.isAlive()) continue;
+                Alien* curAlien = curSwarm.getAlien(i);
+                if (!curAlien->isAlive()) continue;
                 int pos = 0;
                 bool hit = false;
                 if (m_bullets.empty()) continue;
                 for (auto &curBullet : m_bullets)
                 {
-                    if (curAlien.isHit(curBullet.getX(), curBullet.getY(), m_invader1.width(), m_invader1.height()))
+                    if (curAlien->isHit(curBullet.getX(), curBullet.getY(), m_invader1.width(), m_invader1.height()))
                     {
                         m_score->increment();
-                        curAlien.setDestroyed(true);
+                        curAlien->setDestroyed(true);
                         hit = true;
                         break;
                     }
