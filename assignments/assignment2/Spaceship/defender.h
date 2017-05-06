@@ -19,7 +19,7 @@ namespace si {
 
         void setScale(std::string scale);
         void setSpeed(int speed);
-        bool isHit(int x, int y, int width);
+        bool isHit(int x, int y, int width, int height);
 
     private:
         std::string m_scale;

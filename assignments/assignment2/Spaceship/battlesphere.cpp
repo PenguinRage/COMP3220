@@ -172,7 +172,7 @@ namespace si {
         // Check to see if gameover
         for (auto& curLaser : m_lasers)
         {
-            if (m_defender.isHit(curLaser.getX(),curLaser.getY(), m_defenderImg.width()))
+            if (m_defender.isHit(curLaser.getX(),curLaser.getY(), m_defenderImg.width(), m_defenderImg.height()))
             {
                 m_gameover = true;
                 update();

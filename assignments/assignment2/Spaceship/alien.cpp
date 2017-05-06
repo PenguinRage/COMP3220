@@ -11,7 +11,7 @@ namespace si {
 
     bool Alien::isHit(int x, int y, int width, int height)
     {
-        if (x > getX() && x < (getX() + width) && y < (getY() + height))
+        if (x > getX() && x < (getX() + width) && y > getY() && y < (getY() + height))
         {
             m_alive = false;
             return true;
