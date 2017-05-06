@@ -21,6 +21,8 @@ namespace si {
           m_swarms(s)
     {
         m_score = new Score();
+        srand(time(NULL));
+
 
         for (int i=0; i<m_numStars; ++i) {
             int randX = rand() % m_screenWidth;
@@ -89,11 +91,23 @@ namespace si {
     void BattleSphere::paintEvent(QPaintEvent *event) {
         QPainter painter(this);
 
+        if (m_gameover)
+        {
+            painter.setFont({"Helvetica", 40});
+            painter.setPen({255, 170, 50, 208});
+            painter.drawText(QPoint((400), 400), "Game Over");
+        }
 
         for (auto &curBullet : m_bullets) {
             painter.drawPixmap(curBullet.getX(), curBullet.getY(), m_bulletImg);
             curBullet.updateX(m_bulletSpeed);
             curBullet.updateY(m_bulletSpeed);
+        }
+
+        for (auto &curLaser : m_lasers) {
+            painter.drawPixmap(curLaser.getX(), curLaser.getY(), m_bulletImg);
+            curLaser.updateX(m_laserSpeed);
+            curLaser.updateY(m_laserSpeed);
         }
 
         for (auto &curSwarm : m_swarms) {
@@ -127,8 +141,15 @@ namespace si {
         painter.setFont({"Helvetica", 30});
         painter.setPen({255, 170, 50, 208});
         painter.drawText(QPoint((m_screenWidth-200), 50), ss.str().c_str());
+        if (m_gameover)
+        {
+            painter.drawPixmap(m_defender.getX(), m_defender.getY(), m_explosion);
+        }
+        else
+        {
+            painter.drawPixmap(m_defender.getX(), m_defender.getY(), m_defenderImg);
+        }
 
-        painter.drawPixmap(m_defender.getX(), m_defender.getY(), m_defenderImg);
 
         for (auto &curStar : m_stars) {
             if (curStar.getOpacity() > 0.6 && curStar.getOpacityDelta() > 0) {
@@ -148,6 +169,18 @@ namespace si {
      *         function in the input
      */
     void BattleSphere::nextFrame() {
+        // Check to see if gameover
+        for (auto& curLaser : m_lasers)
+        {
+            if (m_defender.isHit(curLaser.getX(),curLaser.getY(), m_defenderImg.width()))
+            {
+                m_gameover = true;
+                update();
+                m_timer->stop();
+                return;
+            }
+        }
+
 
         // check for alien kills
         for (auto &curSwarm : m_swarms) {
@@ -155,9 +188,12 @@ namespace si {
             for (int i = 0; i < curSwarm.getSize(); i++)
             {
                 Alien* curAlien = curSwarm.getAlien(i);
+
                 if (!curAlien->isAlive()) continue;
+
                 int pos = 0;
                 bool hit = false;
+
                 if (m_bullets.empty()) continue;
                 for (auto &curBullet : m_bullets)
                 {
@@ -172,6 +208,22 @@ namespace si {
                 }
                 if (hit) m_bullets.erase(m_bullets.cbegin() + pos);
             }
+        }
+        if ((m_frame % m_tolerance) == 0) {
+        for (auto &curSwarm : m_swarms) {
+            for (int i = 0; i < curSwarm.getSize(); i++)
+            {
+                Alien* curAlien = curSwarm.getAlien(i);
+
+                if (curAlien->shoot() && curAlien->isAlive())
+                {
+                    int bx = curAlien->getX() + (m_invader1.width()) - (m_invader1.width()/1.7);
+                    int by = curAlien->getY() + m_invader1.height();
+                    Laser b(bx, by);
+                    m_lasers.push_back(b);
+                }
+            }
+        }
         }
 
         // animate the defender
@@ -196,7 +248,9 @@ namespace si {
                 m_bullets.push_back(b);
             }
         }
+
         update();
+        m_frame++;
     }
 
     void BattleSphere::screenshot()

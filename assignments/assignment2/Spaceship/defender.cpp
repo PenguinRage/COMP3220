@@ -59,4 +59,14 @@ namespace si {
         return m_speed;
     }
 
+    bool Defender::isHit(int x, int y, int width)
+    {
+        if (x > getX() && x < (getX() + width - 20) && y > getY())
+        {
+            return true;
+        }
+
+        return false;
+    }
+
 } // end namespace si

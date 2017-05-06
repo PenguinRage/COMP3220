@@ -256,7 +256,8 @@ DIST          = /opt/Qt/5.8/gcc_64/mkspecs/features/spec_pre.prf \
 		../Spaceship/gameelement.h \
 		../Spaceship/alien.h \
 		../Spaceship/swarm.h \
-		../Spaceship/score.h ../Spaceship/main.cpp \
+		../Spaceship/score.h \
+		../Spaceship/laser.h ../Spaceship/main.cpp \
 		../Spaceship/battlesphere.cpp \
 		../Spaceship/iofile.cpp \
 		../Spaceship/defender.cpp \
@@ -646,7 +647,7 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../Spaceship/resources.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /opt/Qt/5.8/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../Spaceship/battlesphere.h ../Spaceship/iofile.h ../Spaceship/defender.h ../Spaceship/commandcentre.h ../Spaceship/bullet.h ../Spaceship/battlespherebuilder.h ../Spaceship/gamedirector.h ../Spaceship/star.h ../Spaceship/gameelement.h ../Spaceship/alien.h ../Spaceship/swarm.h ../Spaceship/score.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../Spaceship/battlesphere.h ../Spaceship/iofile.h ../Spaceship/defender.h ../Spaceship/commandcentre.h ../Spaceship/bullet.h ../Spaceship/battlespherebuilder.h ../Spaceship/gamedirector.h ../Spaceship/star.h ../Spaceship/gameelement.h ../Spaceship/alien.h ../Spaceship/swarm.h ../Spaceship/score.h ../Spaceship/laser.h $(DISTDIR)/
 	$(COPY_FILE) --parents ../Spaceship/main.cpp ../Spaceship/battlesphere.cpp ../Spaceship/iofile.cpp ../Spaceship/defender.cpp ../Spaceship/commandcentre.cpp ../Spaceship/bullet.cpp ../Spaceship/battlespherebuilder.cpp ../Spaceship/gamedirector.cpp ../Spaceship/star.cpp ../Spaceship/alien.cpp ../Spaceship/swarm.cpp ../Spaceship/score.cpp $(DISTDIR)/
 
 

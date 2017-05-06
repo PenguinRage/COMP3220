@@ -39,7 +39,8 @@ HEADERS  += \
     gameelement.h \
     alien.h \
     swarm.h \
-    score.h
+    score.h \
+    laser.h
 
 RESOURCES += \
     resources.qrc

@@ -22,7 +22,7 @@ namespace si {
 
     private:
         CommandCentre m_commandCentre;
-        int m_speed = 20;
+        int m_speed = 10;
     };
 }
 

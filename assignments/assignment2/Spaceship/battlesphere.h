@@ -17,6 +17,7 @@
 #include "bullet.h"
 #include "star.h"
 #include "score.h"
+#include "laser.h"
 
 namespace si {
 
@@ -41,15 +42,19 @@ namespace si {
         Score * m_score;
 
         std::vector<Bullet> m_bullets;
+        std::vector<Laser> m_lasers;
         std::vector<Star> m_stars;
         std::vector<Swarm> m_swarms;
 
         int m_numStars = 30;
 
         int m_bulletSpeed;
-
-        int m_screenWidth = 1000;
+        int m_laserSpeed = 10;
+        int m_screenWidth = 1100;
         int m_screenHeight = 700;
+        int m_frame = 0;
+        int m_tolerance = 2;
+        bool m_gameover = false;
 
         CommandCentre m_commandCentre;
 
