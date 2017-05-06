@@ -32,6 +32,7 @@ namespace si {
         QPixmap m_defenderImg;
         QPixmap m_bulletImg;
         QPixmap m_starImg;
+        QPixmap m_ufo;
         QPixmap m_invader1;
         QPixmap m_invader2;
         QPixmap m_invader3;
@@ -50,10 +51,11 @@ namespace si {
 
         int m_bulletSpeed;
         int m_laserSpeed = 10;
-        int m_screenWidth = 1100;
+        int m_screenWidth = 820;
         int m_screenHeight = 700;
         int m_frame = 0;
-        int m_tolerance = 2;
+        int m_tolerance =12;
+        int m_gamePace = 8;
         bool m_gameover = false;
 
         CommandCentre m_commandCentre;

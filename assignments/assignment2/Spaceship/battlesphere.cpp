@@ -37,14 +37,16 @@ namespace si {
         m_defenderImg.load(":/images/player.png");
         m_bulletImg.load(":/images/fireball.png");
         m_starImg.load(":/images/star.png");
+        m_ufo.load(":/images/ufo.png");
         m_invader1.load(":/images/invader_1.png");
         m_invader2.load(":/images/invader_2.png");
         m_invader3.load(":/images/invader_3.png");
 
         m_bulletImg = m_bulletImg.scaledToHeight(15);
-        m_invader1 = m_invader1.scaledToWidth(80);
-        m_invader2 = m_invader2.scaledToWidth(80);
-        m_invader3 = m_invader3.scaledToWidth(80);
+        m_ufo = m_ufo.scaledToWidth(70);
+        m_invader1 = m_invader1.scaledToWidth(70);
+        m_invader2 = m_invader2.scaledToWidth(70);
+        m_invader3 = m_invader3.scaledToWidth(70);
         m_explosion = m_starImg.scaledToHeight(m_invader1.height());
         m_starImg = m_starImg.scaledToWidth(5);
 
@@ -91,13 +93,6 @@ namespace si {
     void BattleSphere::paintEvent(QPaintEvent *event) {
         QPainter painter(this);
 
-        if (m_gameover)
-        {
-            painter.setFont({"Helvetica", 40});
-            painter.setPen({255, 170, 50, 208});
-            painter.drawText(QPoint((400), 400), "Game Over");
-        }
-
         for (auto &curBullet : m_bullets) {
             painter.drawPixmap(curBullet.getX(), curBullet.getY(), m_bulletImg);
             curBullet.updateX(m_bulletSpeed);
@@ -120,12 +115,16 @@ namespace si {
                     curAlien->setDestroyed(false);
                 }
                 if (!curAlien->isAlive()) continue;
-                int type = curAlien->getSwarmID() % 3;
+                int type = curAlien->getSwarmID() % 4;
                 if (type == 1)
+                {
+                    painter.drawPixmap(curAlien->getX(), curAlien->getY(), m_ufo);
+                }
+                else if (type == 2)
                 {
                     painter.drawPixmap(curAlien->getX(), curAlien->getY(), m_invader1);
                 }
-                else if (type == 2)
+                else if (type == 3)
                 {
                     painter.drawPixmap(curAlien->getX(), curAlien->getY(), m_invader2);
                 }
@@ -144,12 +143,14 @@ namespace si {
         if (m_gameover)
         {
             painter.drawPixmap(m_defender.getX(), m_defender.getY(), m_explosion);
+            painter.setFont({"Helvetica", 40});
+            painter.setPen({255, 170, 50, 208});
+            painter.drawText(QPoint((250), 400), "Game Over");
         }
         else
         {
             painter.drawPixmap(m_defender.getX(), m_defender.getY(), m_defenderImg);
         }
-
 
         for (auto &curStar : m_stars) {
             if (curStar.getOpacity() > 0.6 && curStar.getOpacityDelta() > 0) {
@@ -184,7 +185,6 @@ namespace si {
 
         // check for alien kills
         for (auto &curSwarm : m_swarms) {
-            curSwarm.move();
             for (int i = 0; i < curSwarm.getSize(); i++)
             {
                 Alien* curAlien = curSwarm.getAlien(i);
@@ -207,6 +207,11 @@ namespace si {
                     pos++;
                 }
                 if (hit) m_bullets.erase(m_bullets.cbegin() + pos);
+            }
+
+            if (m_frame % m_gamePace == 0)
+            {
+                curSwarm.move();
             }
         }
         if ((m_frame % m_tolerance) == 0) {

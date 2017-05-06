@@ -32,7 +32,7 @@ namespace si {
 
     bool Alien::shoot()
     {
-        if ((rand() % 10000) > 9900)
+        if ((rand() % 100000) > 99500)
         {
             return true;
         }
