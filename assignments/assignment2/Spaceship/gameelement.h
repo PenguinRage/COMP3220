@@ -1,6 +1,8 @@
 #ifndef GAMEELEMENT_H
 #define GAMEELEMENT_H
 
+#include "gameelement.h"
+
 namespace si {
     class GameElement
     {

@@ -54,8 +54,8 @@ namespace si {
         int m_screenWidth = 820;
         int m_screenHeight = 700;
         int m_frame = 0;
-        int m_tolerance =12;
-        int m_gamePace = 8;
+        int m_tolerance =5;
+        int m_gamePace = 6;
         bool m_gameover = false;
 
         CommandCentre m_commandCentre;

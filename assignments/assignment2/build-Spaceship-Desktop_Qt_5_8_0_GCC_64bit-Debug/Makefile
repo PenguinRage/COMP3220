@@ -257,7 +257,8 @@ DIST          = /opt/Qt/5.8/gcc_64/mkspecs/features/spec_pre.prf \
 		../Spaceship/alien.h \
 		../Spaceship/swarm.h \
 		../Spaceship/score.h \
-		../Spaceship/laser.h ../Spaceship/main.cpp \
+		../Spaceship/laser.h \
+		../Spaceship/component.h ../Spaceship/main.cpp \
 		../Spaceship/battlesphere.cpp \
 		../Spaceship/iofile.cpp \
 		../Spaceship/defender.cpp \
@@ -647,7 +648,7 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../Spaceship/resources.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /opt/Qt/5.8/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../Spaceship/battlesphere.h ../Spaceship/iofile.h ../Spaceship/defender.h ../Spaceship/commandcentre.h ../Spaceship/bullet.h ../Spaceship/battlespherebuilder.h ../Spaceship/gamedirector.h ../Spaceship/star.h ../Spaceship/gameelement.h ../Spaceship/alien.h ../Spaceship/swarm.h ../Spaceship/score.h ../Spaceship/laser.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../Spaceship/battlesphere.h ../Spaceship/iofile.h ../Spaceship/defender.h ../Spaceship/commandcentre.h ../Spaceship/bullet.h ../Spaceship/battlespherebuilder.h ../Spaceship/gamedirector.h ../Spaceship/star.h ../Spaceship/gameelement.h ../Spaceship/alien.h ../Spaceship/swarm.h ../Spaceship/score.h ../Spaceship/laser.h ../Spaceship/component.h $(DISTDIR)/
 	$(COPY_FILE) --parents ../Spaceship/main.cpp ../Spaceship/battlesphere.cpp ../Spaceship/iofile.cpp ../Spaceship/defender.cpp ../Spaceship/commandcentre.cpp ../Spaceship/bullet.cpp ../Spaceship/battlespherebuilder.cpp ../Spaceship/gamedirector.cpp ../Spaceship/star.cpp ../Spaceship/alien.cpp ../Spaceship/swarm.cpp ../Spaceship/score.cpp $(DISTDIR)/
 
 
@@ -830,6 +831,7 @@ moc_battlesphere.cpp: /opt/Qt/5.8/gcc_64/include/QtWidgets/QDialog \
 		../Spaceship/bullet.h \
 		../Spaceship/star.h \
 		../Spaceship/score.h \
+		../Spaceship/laser.h \
 		../Spaceship/battlesphere.h \
 		moc_predefs.h \
 		/opt/Qt/5.8/gcc_64/bin/moc
@@ -983,6 +985,7 @@ main.o: ../Spaceship/main.cpp ../Spaceship/battlesphere.h \
 		../Spaceship/bullet.h \
 		../Spaceship/star.h \
 		../Spaceship/score.h \
+		../Spaceship/laser.h \
 		../Spaceship/battlespherebuilder.h \
 		../Spaceship/gamedirector.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../Spaceship/main.cpp
@@ -1120,7 +1123,8 @@ battlesphere.o: ../Spaceship/battlesphere.cpp ../Spaceship/battlesphere.h \
 		../Spaceship/iofile.h \
 		../Spaceship/bullet.h \
 		../Spaceship/star.h \
-		../Spaceship/score.h
+		../Spaceship/score.h \
+		../Spaceship/laser.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o battlesphere.o ../Spaceship/battlesphere.cpp
 
 iofile.o: ../Spaceship/iofile.cpp ../Spaceship/iofile.h \
@@ -1276,7 +1280,8 @@ battlespherebuilder.o: ../Spaceship/battlespherebuilder.cpp ../Spaceship/battles
 		../Spaceship/iofile.h \
 		../Spaceship/bullet.h \
 		../Spaceship/star.h \
-		../Spaceship/score.h
+		../Spaceship/score.h \
+		../Spaceship/laser.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o battlespherebuilder.o ../Spaceship/battlespherebuilder.cpp
 
 gamedirector.o: ../Spaceship/gamedirector.cpp ../Spaceship/gamedirector.h \
@@ -1414,6 +1419,7 @@ gamedirector.o: ../Spaceship/gamedirector.cpp ../Spaceship/gamedirector.h \
 		../Spaceship/bullet.h \
 		../Spaceship/star.h \
 		../Spaceship/score.h \
+		../Spaceship/laser.h \
 		../Spaceship/battlespherebuilder.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o gamedirector.o ../Spaceship/gamedirector.cpp
 

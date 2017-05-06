@@ -40,7 +40,8 @@ HEADERS  += \
     alien.h \
     swarm.h \
     score.h \
-    laser.h
+    laser.h \
+    component.h
 
 RESOURCES += \
     resources.qrc
