@@ -33,7 +33,7 @@ namespace si {
     /**
      * \brief: Builds the user interface buffer (an IOFile in this case
      *         but could be used to store events entered on keyboard).
-     * \param: commandCentre
+     * \param: Swarm vector
      */
     void BattlesphereBuilder::buildSwarm(const std::vector<Swarm>& swarm)
     {

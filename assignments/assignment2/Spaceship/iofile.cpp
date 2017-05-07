@@ -102,7 +102,7 @@ bool IOFile::processLines(const std::vector<std::string>& lines)
         return false;
     }
     line_count++;
-    std::regex r ("Left|Right|Up|Down");
+    std::regex r ("Left|Right|Up|Down|Fire");
 
     // Extension to import alien swarms from config
     if (lines.at(line_count) == "[ Aliens ]") {
@@ -336,6 +336,10 @@ const Defender& IOFile::getDefender() const
     return m_defender;
 }
 
+    /**
+     * \brief: Returns a Swarm object based on information supplied in config.ini
+     * \result: a swarm instance, ready to be used in a BattleSphere
+     */
 const std::vector<Swarm>& IOFile::getSwarm() const
 {
     return m_swarm;

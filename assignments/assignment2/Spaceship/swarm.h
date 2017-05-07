@@ -11,7 +11,7 @@ namespace si {
         std::vector<Alien> children;
 
     public:
-        Swarm();
+        Swarm(){}
         ~Swarm(){}
         void add(Alien& alien);
         int getSize() const;
