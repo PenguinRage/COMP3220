@@ -64,16 +64,37 @@ namespace si {
         this->resize(m_screenWidth, m_screenHeight);
         update();
 
-        // Create the button, make "this" the parent
-        m_button = new QPushButton("Save Screenshot!", this);
-        // set size and location of the button
-        m_button->setGeometry(QRect(QPoint(0, 0),
-        QSize(150, 50)));
-        m_button->setStyleSheet("background-color: #FFFFFF;");
+        if (!m_commandCentre.m_valid)
+        {
+            // Create the button, make "this" the parent
+            m_button = new QPushButton("Exit", this);
+            // set size and location of the button
+            m_button->setGeometry(QRect(QPoint(350, 250),
+            QSize(150, 50)));
+            m_button->setStyleSheet("background-color: #FFFFFF;");
+        }
+        else
+        {
+            // Create the button, make "this" the parent
+            m_button = new QPushButton("Save Screenshot!", this);
+            // set size and location of the button
+            m_button->setGeometry(QRect(QPoint(0, 0),
+            QSize(150, 50)));
+            m_button->setStyleSheet("background-color: #FFFFFF;");
+
+        }
 
         m_timer = new QTimer(this);
         connect(m_timer, SIGNAL(timeout()), this, SLOT(nextFrame()));
-        connect(m_button, SIGNAL(released()), this, SLOT(screenshot()));
+        if (!m_commandCentre.m_valid)
+        {
+            connect(m_button, SIGNAL(released()), this, SLOT(close()));
+        }
+        else
+        {
+            connect(m_button, SIGNAL(released()), this, SLOT(screenshot()));
+        }
+
         m_timer->start(50);
     }
 
@@ -144,12 +165,20 @@ namespace si {
         {
             painter.drawPixmap(m_defender.getX(), m_defender.getY(), m_explosion);
             painter.setFont({"Helvetica", 40});
-            painter.setPen({255, 170, 50, 208});
-            painter.drawText(QPoint((250), 400), "Game Over");
+            painter.setPen({255, 255, 255, 255});
+            painter.drawText(QPoint((250), 70), "Game Over");
         }
         else
         {
             painter.drawPixmap(m_defender.getX(), m_defender.getY(), m_defenderImg);
+        }
+
+        if (!m_commandCentre.m_valid)
+        {
+            painter.drawPixmap(m_defender.getX(), m_defender.getY(), m_explosion);
+            painter.setFont({"Helvetica", 20});
+            painter.setPen({255, 255, 255, 255});
+            painter.drawText(QPoint((250), 200), "Invalid Config Please Exit");
         }
 
         for (auto &curStar : m_stars) {

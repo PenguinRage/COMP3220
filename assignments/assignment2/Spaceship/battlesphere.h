@@ -40,6 +40,7 @@ namespace si {
 
         QTimer* m_timer;
         QPushButton *m_button;
+        QPushButton *m_button2;
         Score * m_score;
 
         std::vector<Bullet> m_bullets;

@@ -41,7 +41,11 @@ IOFile::IOFile(std::string fileName)
             }
         }
         inputStream.close();
-        processLines(lines);
+        if (!processLines(lines))
+        {
+            m_commandCentre.m_valid = false;
+        }
+
     } else {
         std::cout << "Error opening file! Is" <<
                      " it called config.ini and is it " <<
@@ -62,39 +66,42 @@ bool IOFile::processLines(const std::vector<std::string>& lines)
         std::cout << "ERROR: Not enought lines in input file" << std::endl;
         return false;
     }
-
-    if (lines.at(0) != "[ Defender ]") {
+    int line_count = 0;
+    if (lines.at(line_count) != "[ Defender ]") {
         std::cout << "ERROR: First line must read [ Defender ]" << std::endl;
         return false;
     }
-
+    line_count++;
     // X coordinate check
-    if (isValidCommand(lines.at(1), "XPos")) {
-        int xCoordinate = getCoordinate(lines.at(1));
+    if (isValidCommand(lines.at(line_count), "XPos")) {
+        int xCoordinate = getCoordinate(lines.at(line_count));
         m_defender.setX(xCoordinate);
         std::cout << "X coord is : " << xCoordinate << std::endl;
     } else {
+        std::cout << "X coord not set properly on line: " << line_count << std::endl;
         return false;
     }
+    line_count++;
 
     // Y coordinate check
-    if (isValidCommand(lines.at(2), "YPos")) {
-        int yCoordinate = getCoordinate(lines.at(2));
+    if (isValidCommand(lines.at(line_count), "YPos")) {
+        int yCoordinate = getCoordinate(lines.at(line_count));
         m_defender.setY(yCoordinate);
         std::cout << "Y coord is: " << yCoordinate << std::endl;
     } else {
+        std::cout << "Y coord not set properly on line: " << line_count << std::endl;
         return false;
     }
-
+    line_count++;
     // Scale check
-    if (isValidScaleCommand((lines.at(3)))) {
-        std::string scale = getScale(lines.at(3));
+    if (isValidScaleCommand((lines.at(line_count)))) {
+        std::string scale = getScale(lines.at(line_count));
         m_defender.setScale(scale);
     } else {
+        std::cout << "Scale not set properly on line: " << line_count << std::endl;
         return false;
     }
-    int line_count = 4;
-
+    line_count++;
     std::regex r ("Left|Right|Up|Down");
 
     // Extension to import alien swarms from config
@@ -160,6 +167,8 @@ bool IOFile::processLines(const std::vector<std::string>& lines)
             {
                 int x = XMat + count_x * XDel;
                 int a = c - '0';
+                if (a > num_of_swarms)
+                    a=0;
                 if ((a-1) == -1)
                 {
 
@@ -187,6 +196,7 @@ bool IOFile::processLines(const std::vector<std::string>& lines)
         for (auto &curLine : trajectory)
         {
             if (curLine == "[ Commands ]") break;
+            if (i > num_of_swarms) continue;
 
             std::stringstream ss;
             ss << "[ " << i << " ]";

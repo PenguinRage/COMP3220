@@ -16,8 +16,11 @@ namespace si {
         bool hasNext() const;
         std::string popNext();
 
+        bool m_valid = true;
+
     private:
         std::vector<std::string> m_commandBuffer;
+
     };
 
 } // end namespace si
