@@ -44,7 +44,7 @@ namespace si {
         Score * m_score;
 
         std::vector<Bullet> m_bullets;
-        std::vector<Laser> m_lasers;
+        std::vector<Laser *> m_lasers;
         std::vector<Star> m_stars;
         std::vector<Swarm> m_swarms;
 

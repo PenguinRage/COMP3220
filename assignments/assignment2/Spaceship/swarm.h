@@ -6,12 +6,11 @@
 #include "commandcentre.h"
 
 namespace si {
-    class Swarm
+    class Swarm : public Alien
     {
         std::vector<Alien> children;
 
     public:
-        Swarm(){}
         ~Swarm(){}
         void add(Alien& alien);
         int getSize() const;

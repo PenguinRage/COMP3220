@@ -4,11 +4,22 @@
 #include "bullet.h"
 
 namespace si {
-    class Laser : public Bullet
+// Adapter for Laser
+class Laser {
+    public:
+        virtual void updateX(int)=0;
+        virtual void updateY(int)=0;
+        virtual int PosX()=0;
+        virtual int PosY()=0;
+
+};
+
+
+    class LaserAdapter : public Laser, public Bullet
     {
     public:
-        Laser(int x, int y) : Bullet(x,y) {}
-        ~Laser(){}
+        LaserAdapter(int x, int y) : Bullet(x,y) {}
+        ~LaserAdapter(){}
 
         /**
          * \brief: Determines the amount of x direction motion of the bullet
@@ -36,6 +47,13 @@ namespace si {
         {
             m_yPos += updateAmount;
         }
+
+        /**
+         * \brief: Determines the Position of Lasers
+         * \return: returns the values assigned to class
+         */
+        int PosX() {return Bullet::getX();}
+        int PosY() {return Bullet::getY();}
 
     private:
         int diagonal = 0;

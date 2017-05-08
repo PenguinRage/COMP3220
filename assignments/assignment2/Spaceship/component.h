@@ -7,6 +7,7 @@ namespace si {
 
     class Component
     {
+        virtual void move()=0;
 
     };
 

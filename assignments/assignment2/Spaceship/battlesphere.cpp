@@ -121,9 +121,9 @@ namespace si {
         }
 
         for (auto &curLaser : m_lasers) {
-            painter.drawPixmap(curLaser.getX(), curLaser.getY(), m_bulletImg);
-            curLaser.updateX(m_laserSpeed);
-            curLaser.updateY(m_laserSpeed);
+            painter.drawPixmap(curLaser->PosX(), curLaser->PosY(), m_bulletImg);
+            curLaser->updateX(m_laserSpeed);
+            curLaser->updateY(m_laserSpeed);
         }
 
         for (auto &curSwarm : m_swarms) {
@@ -202,7 +202,7 @@ namespace si {
         // Check to see if gameover
         for (auto& curLaser : m_lasers)
         {
-            if (m_defender.isHit(curLaser.getX(),curLaser.getY(), m_defenderImg.width(), m_defenderImg.height()))
+            if (m_defender.isHit(curLaser->PosX(),curLaser->PosY(), m_defenderImg.width(), m_defenderImg.height()))
             {
                 m_gameover = true;
                 update();
@@ -253,7 +253,7 @@ namespace si {
                 {
                     int bx = curAlien->getX() + (m_invader1.width()) - (m_invader1.width()/1.7);
                     int by = curAlien->getY() + m_invader1.height();
-                    Laser b(bx, by);
+                    Laser *b = new LaserAdapter(bx, by);
                     m_lasers.push_back(b);
                 }
             }
