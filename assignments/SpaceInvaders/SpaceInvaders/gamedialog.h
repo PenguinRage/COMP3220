@@ -1,10 +1,12 @@
 #pragma once
 
+
 #include "config.h"
 #include "menu.h"
 #include "ship.h"
 #include "swarm.h"
 #include "swarminfo.h"
+#include "controllerstate.h"
 #include <QDialog>
 #include <QSoundEffect>
 #include <QWidget>
@@ -52,6 +54,10 @@ protected:
     bool paused;
     void pauseStart();
     Menu* menu;
+
+    // keyboard & mouse
+    Controller * remote;
+    bool controls = true;
 
     // score
     int gameScore;  // this run's score.

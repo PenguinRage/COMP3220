@@ -3,6 +3,7 @@
 #include "ship.h"
 #include <QDebug>
 #include <QKeyEvent>
+#include <QMouseEvent>
 #include <QPainter>
 #include <QPixmap>
 #include <QSound>
@@ -23,6 +24,11 @@ GameDialog::GameDialog(QWidget* parent)
     // MENU
     QList<QPair<QString, int>> dummy;
     menu = new Menu(this, c->get_name(), this->gameScore, dummy);
+    remote = new Controller(new KeyboardState());
+    remote->getKeyboard();
+    remote->getMouse();
+
+
 
     // EXTENSION STAGE 1 PART 1 - RESCALE GAME SCREEN FOR SHIP SIZE
     this->setFixedWidth(SCALEDWIDTH);
@@ -41,7 +47,6 @@ GameDialog::GameDialog(QWidget* parent)
 
     // SET BACKGROUND
     setStyleSheet("background-color: #000000;");
-
     paused = false;
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(nextFrame()));
@@ -54,6 +59,7 @@ GameDialog::~GameDialog() {
     delete ship;
     delete timer;  // optional, don't have to do this apparently
     delete menu;
+    delete remote;
 
     // loop though swarms to delete aliens
     delete swarms;  // recursively deletes itself.
@@ -90,6 +96,11 @@ void GameDialog::keyPressEvent(QKeyEvent* event) {
     if (event->key() == Qt::Key_P) {
         pauseStart();
     }
+
+    if (controls)
+    {
+        remote->controlShip(event, ship, &bullets, &shipFiringSound);
+    }
 }
 
 // shows this game score
@@ -110,20 +121,21 @@ void GameDialog::nextFrame() {
         }
         QString ins = instruct[next_instruct];
         next_instruct++;
+        if (!controls)
+        {
+            if (ins == "Left") {
+                ship->move_left();
 
-        if (ins == "Left") {
-            ship->move_left();
+            } else if (ins == "Right") {
+                ship->move_right();
 
-        } else if (ins == "Right") {
-            ship->move_right();
-
-        } else if (ins == "Shoot") {
-            bullets.push_back(this->ship->shoot());
-            this->shipFiringSound.play();
+            } else if (ins == "Shoot") {
+                bullets.push_back(this->ship->shoot());
+                this->shipFiringSound.play();
+            }
         }
 
         updateBullets();
-        showScore();
         // loop through each alien swarm, move and calculated collisions
         swarms->move("");  // recursive.
         checkSwarmCollisions(swarms);
@@ -207,6 +219,7 @@ void GameDialog::paintEvent(QPaintEvent*) {
 
     // BULLETS last so they draw over everything
     paintBullets(painter);
+
 }
 
 // if this bullet is unfriendly, only check if it hits Ship

@@ -55,7 +55,8 @@ HEADERS  += \
     alienbuilder.h \
     hunter.h \
     menu.h \
-    alienbase.h
+    alienbase.h \
+    controllerstate.h
 
 FORMS    += dialog.ui
 
