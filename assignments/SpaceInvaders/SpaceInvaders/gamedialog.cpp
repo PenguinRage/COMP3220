@@ -3,7 +3,6 @@
 #include "ship.h"
 #include <QDebug>
 #include <QKeyEvent>
-#include <QMouseEvent>
 #include <QPainter>
 #include <QPixmap>
 #include <QSound>
@@ -20,6 +19,7 @@ GameDialog::GameDialog(QWidget* parent)
     SCALEDWIDTH = c->get_SCALEDWIDTH();
     SCALEDHEIGHT = c->get_SCALEDHEIGHT();
     this->frames = c->get_frames();
+    this->setMouseTracking(true);
 
     // MENU
     QList<QPair<QString, int>> dummy;
@@ -99,7 +99,21 @@ void GameDialog::keyPressEvent(QKeyEvent* event) {
 
     if (controls)
     {
-        remote->controlShip(event, ship, &bullets, &shipFiringSound);
+        remote->keyEvent(event, ship, &bullets, &shipFiringSound);
+    }
+}
+
+void GameDialog::mouseMoveEvent(QMouseEvent* event) {
+    if (controls)
+    {
+        remote->keyEvent(event, ship, &bullets, &shipFiringSound);
+    }
+}
+
+void GameDialog::mousePressEvent(QMouseEvent* event) {
+    if (controls)
+    {
+        remote->keyEvent(event, ship, &bullets, &shipFiringSound);
     }
 }
 

@@ -92,7 +92,7 @@ public:
     Controller(ControllerState* initState) : currState(initState) {};
     ~Controller() { delete currState; };
 
-    void controlShip(QKeyEvent* event, Ship* ship, std::vector<Bullet*>* bullets, QSoundEffect* shipFiringSound)
+    void keyEvent(QKeyEvent* event, Ship* ship, std::vector<Bullet*>* bullets, QSoundEffect* shipFiringSound)
     {
 
         currState->keyEvent(event, ship, bullets, shipFiringSound);

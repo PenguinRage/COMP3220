@@ -9,6 +9,7 @@
 #include "controllerstate.h"
 #include <QDialog>
 #include <QSoundEffect>
+#include <QMouseEvent>
 #include <QWidget>
 #include <vector>
 
@@ -28,6 +29,9 @@ protected:
     void updateBullets();
     void paintSwarm(QPainter& painter, AlienBase*& root);
     void checkSwarmCollisions(AlienBase*& root);
+    void mouseMoveEvent(QMouseEvent* event);
+    void mousePressEvent(QMouseEvent* event);
+
     // ship and swarms
     Ship* ship;
     std::vector<Bullet*> bullets;
