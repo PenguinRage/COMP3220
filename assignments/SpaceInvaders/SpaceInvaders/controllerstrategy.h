@@ -16,8 +16,8 @@ public:
     ControllerStrategy() {};
     virtual ~ControllerStrategy() {};
 
-    virtual void keyEvent(QKeyEvent* event, Ship* ship, std::vector<Bullet*>* bullets, QSoundEffect* shipFiringSound) {return; }
-    virtual void mouseEvent(QMouseEvent* event, Ship* ship, std::vector<Bullet*>* bullets, QSoundEffect* shipFiringSound) { return; }
+    virtual void keyEvent(QKeyEvent* event, Ship* ship, std::vector<Bullet*>* bullets, QSoundEffect* shipFiringSound) { return; }
+    virtual void keyEvent(QMouseEvent* event, Ship* ship, std::vector<Bullet*>* bullets, QSoundEffect* shipFiringSound) { return; }
 };
 
 
@@ -55,8 +55,12 @@ public:
     MouseStrategy() {};
     ~MouseStrategy() {};
 
-    virtual void mouseEvent(QMouseEvent* event, Ship* ship, std::vector<Bullet*>* bullets, QSoundEffect* shipFiringSound)
+    virtual void keyEvent(QMouseEvent* event, Ship* ship, std::vector<Bullet*>* bullets, QSoundEffect* shipFiringSound)
     {
+        if (event->button() == Qt::LeftButton) {
+            bullets->push_back(ship->shoot());
+            shipFiringSound->play();
+        }
         if (event->x() < ship->get_x()) {
             ship->move_left();
         }
@@ -93,7 +97,7 @@ public:
     virtual void keyEvent(QMouseEvent* event, Ship* ship, std::vector<Bullet*>* bullets, QSoundEffect* shipFiringSound)
     {
 
-        currState->mouseEvent(event, ship, bullets, shipFiringSound);
+        currState->keyEvent(event, ship, bullets, shipFiringSound);
     }
 
     void getKeyboard() {

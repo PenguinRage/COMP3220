@@ -220,7 +220,7 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		../SpaceInvaders/hunter.h \
 		../SpaceInvaders/menu.h \
 		../SpaceInvaders/alienbase.h \
-		../SpaceInvaders/controllerstate.h ../SpaceInvaders/main.cpp \
+		../SpaceInvaders/controllerstrategy.h ../SpaceInvaders/main.cpp \
 		../SpaceInvaders/base.cpp \
 		../SpaceInvaders/ship.cpp \
 		../SpaceInvaders/gamedialog.cpp \
@@ -528,7 +528,7 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../SpaceInvaders/resources.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/qt/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../SpaceInvaders/base.h ../SpaceInvaders/ship.h ../SpaceInvaders/gamedialog.h ../SpaceInvaders/bullet.h ../SpaceInvaders/config.h ../SpaceInvaders/bulletbuilderinterface.h ../SpaceInvaders/bulletbuilder.h ../SpaceInvaders/alien.h ../SpaceInvaders/swarminfo.h ../SpaceInvaders/swarm.h ../SpaceInvaders/diagonalbullet.h ../SpaceInvaders/alienbuilder.h ../SpaceInvaders/hunter.h ../SpaceInvaders/menu.h ../SpaceInvaders/alienbase.h ../SpaceInvaders/controllerstate.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../SpaceInvaders/base.h ../SpaceInvaders/ship.h ../SpaceInvaders/gamedialog.h ../SpaceInvaders/bullet.h ../SpaceInvaders/config.h ../SpaceInvaders/bulletbuilderinterface.h ../SpaceInvaders/bulletbuilder.h ../SpaceInvaders/alien.h ../SpaceInvaders/swarminfo.h ../SpaceInvaders/swarm.h ../SpaceInvaders/diagonalbullet.h ../SpaceInvaders/alienbuilder.h ../SpaceInvaders/hunter.h ../SpaceInvaders/menu.h ../SpaceInvaders/alienbase.h ../SpaceInvaders/controllerstrategy.h $(DISTDIR)/
 	$(COPY_FILE) --parents ../SpaceInvaders/main.cpp ../SpaceInvaders/base.cpp ../SpaceInvaders/ship.cpp ../SpaceInvaders/gamedialog.cpp ../SpaceInvaders/bullet.cpp ../SpaceInvaders/config.cpp ../SpaceInvaders/bulletbuilder.cpp ../SpaceInvaders/alien.cpp ../SpaceInvaders/swarminfo.cpp ../SpaceInvaders/swarm.cpp ../SpaceInvaders/diagonalbullet.cpp ../SpaceInvaders/alienbuilder.cpp ../SpaceInvaders/hunter.cpp ../SpaceInvaders/menu.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../SpaceInvaders/dialog.ui $(DISTDIR)/
 
@@ -596,6 +596,7 @@ moc_gamedialog.cpp: ../SpaceInvaders/config.h \
 		../SpaceInvaders/alienbase.h \
 		../SpaceInvaders/alienbuilder.h \
 		../SpaceInvaders/hunter.h \
+		../SpaceInvaders/controllerstrategy.h \
 		../SpaceInvaders/gamedialog.h \
 		moc_predefs.h \
 		/usr/bin/moc
@@ -633,7 +634,8 @@ main.o: ../SpaceInvaders/main.cpp ../SpaceInvaders/gamedialog.h \
 		../SpaceInvaders/alien.h \
 		../SpaceInvaders/alienbase.h \
 		../SpaceInvaders/alienbuilder.h \
-		../SpaceInvaders/hunter.h
+		../SpaceInvaders/hunter.h \
+		../SpaceInvaders/controllerstrategy.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../SpaceInvaders/main.cpp
 
 base.o: ../SpaceInvaders/base.cpp ../SpaceInvaders/base.h
@@ -661,7 +663,8 @@ gamedialog.o: ../SpaceInvaders/gamedialog.cpp ../SpaceInvaders/gamedialog.h \
 		../SpaceInvaders/alien.h \
 		../SpaceInvaders/alienbase.h \
 		../SpaceInvaders/alienbuilder.h \
-		../SpaceInvaders/hunter.h
+		../SpaceInvaders/hunter.h \
+		../SpaceInvaders/controllerstrategy.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o gamedialog.o ../SpaceInvaders/gamedialog.cpp
 
 bullet.o: ../SpaceInvaders/bullet.cpp ../SpaceInvaders/bullet.h \

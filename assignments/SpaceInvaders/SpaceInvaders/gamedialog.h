@@ -6,7 +6,7 @@
 #include "ship.h"
 #include "swarm.h"
 #include "swarminfo.h"
-#include "controllerstate.h"
+#include "controllerstrategy.h"
 #include <QDialog>
 #include <QSoundEffect>
 #include <QMouseEvent>
