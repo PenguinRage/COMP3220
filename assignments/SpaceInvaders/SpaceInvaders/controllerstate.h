@@ -11,21 +11,22 @@
 
 namespace game {
 
-class ControllerState {
+class ControllerStrategy {
 public:
-    ControllerState() {};
-    virtual ~ControllerState() {};
+    ControllerStrategy() {};
+    virtual ~ControllerStrategy() {};
 
-    virtual void keyEvent(QKeyEvent* event, Ship* ship, std::vector<Bullet*>* bullets, QSoundEffect* shipFiringSound) = 0;
+    virtual void keyEvent(QKeyEvent* event, Ship* ship, std::vector<Bullet*>* bullets, QSoundEffect* shipFiringSound) {return; }
+    virtual void mouseEvent(QMouseEvent* event, Ship* ship, std::vector<Bullet*>* bullets, QSoundEffect* shipFiringSound) { return; }
 };
 
 
 
 
-class KeyboardState : public ControllerState {
+class KeyboardStrategy : public ControllerStrategy {
 public:
-    KeyboardState() {};
-    ~KeyboardState() {};
+    KeyboardStrategy() {};
+    ~KeyboardStrategy() {};
 
     virtual void keyEvent(QKeyEvent* event, Ship* ship, std::vector<Bullet*>* bullets, QSoundEffect* shipFiringSound)
     {
@@ -43,36 +44,27 @@ public:
 
         }
     }
-
 };
 
 
 
 
 
-class MouseState : public ControllerState {
+class MouseStrategy : public ControllerStrategy {
 public:
-    MouseState() {};
-    ~MouseState() {};
+    MouseStrategy() {};
+    ~MouseStrategy() {};
 
-    virtual void keyEvent(QKeyEvent* event, Ship* ship, std::vector<Bullet*>* bullets, QSoundEffect* shipFiringSound)
+    virtual void mouseEvent(QMouseEvent* event, Ship* ship, std::vector<Bullet*>* bullets, QSoundEffect* shipFiringSound)
     {
-        if (event->key() == Qt::Key_Space) {
-            bullets->push_back(ship->shoot());
-            shipFiringSound->play();
-        }
-
-        if (event->key() == Qt::Key_Left) {
+        if (event->x() < ship->get_x()) {
             ship->move_left();
         }
 
-        if (event->key() == Qt::Key_Right) {
+        if (event->x() > ship->get_x()) {
             ship->move_right();
-
         }
-
     }
-
 };
 
 
@@ -82,42 +74,47 @@ public:
 class Controller {
 
 private:
-    void switchState(ControllerState* newState) {
+    void switchState(ControllerStrategy* newState) {
         //change current state to invinc if not already
         if (prevState!=nullptr) delete prevState;
         prevState = currState;
         currState = newState;
     }
 public:
-    Controller(ControllerState* initState) : currState(initState) {};
+    Controller(ControllerStrategy* initState) : currState(initState) {};
     ~Controller() { delete currState; };
 
-    void keyEvent(QKeyEvent* event, Ship* ship, std::vector<Bullet*>* bullets, QSoundEffect* shipFiringSound)
+    virtual void keyEvent(QKeyEvent* event, Ship* ship, std::vector<Bullet*>* bullets, QSoundEffect* shipFiringSound)
     {
 
         currState->keyEvent(event, ship, bullets, shipFiringSound);
     }
 
+    virtual void keyEvent(QMouseEvent* event, Ship* ship, std::vector<Bullet*>* bullets, QSoundEffect* shipFiringSound)
+    {
+
+        currState->mouseEvent(event, ship, bullets, shipFiringSound);
+    }
 
     void getKeyboard() {
-        auto x = dynamic_cast<KeyboardState*>(currState);
+        auto x = dynamic_cast<KeyboardStrategy*>(currState);
         if (!x) {
-            switchState(new KeyboardState());
+            switchState(new KeyboardStrategy());
         }
     }
 
 
     void getMouse() {
-        auto x = dynamic_cast<MouseState*>(currState);
+        auto x = dynamic_cast<MouseStrategy*>(currState);
         if (!x) {
-            switchState(new MouseState());
+            switchState(new MouseStrategy());
         }
     }
 
 
 private:
-    ControllerState* currState;
-    ControllerState* prevState = nullptr;
+    ControllerStrategy* currState;
+    ControllerStrategy* prevState = nullptr;
 };
 }
 #endif // CONTROLLERSTATE_H

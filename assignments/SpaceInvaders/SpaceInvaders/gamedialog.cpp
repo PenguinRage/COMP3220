@@ -24,9 +24,8 @@ GameDialog::GameDialog(QWidget* parent)
     // MENU
     QList<QPair<QString, int>> dummy;
     menu = new Menu(this, c->get_name(), this->gameScore, dummy);
-    remote = new Controller(new KeyboardState());
-    remote->getKeyboard();
-    remote->getMouse();
+    remote = new Controller(new KeyboardStrategy());
+
 
 
 
@@ -99,6 +98,7 @@ void GameDialog::keyPressEvent(QKeyEvent* event) {
 
     if (controls)
     {
+        remote->getKeyboard();
         remote->keyEvent(event, ship, &bullets, &shipFiringSound);
     }
 }
@@ -106,6 +106,7 @@ void GameDialog::keyPressEvent(QKeyEvent* event) {
 void GameDialog::mouseMoveEvent(QMouseEvent* event) {
     if (controls)
     {
+        remote->getMouse();
         remote->keyEvent(event, ship, &bullets, &shipFiringSound);
     }
 }
@@ -113,6 +114,7 @@ void GameDialog::mouseMoveEvent(QMouseEvent* event) {
 void GameDialog::mousePressEvent(QMouseEvent* event) {
     if (controls)
     {
+        remote->getMouse();
         remote->keyEvent(event, ship, &bullets, &shipFiringSound);
     }
 }
@@ -123,7 +125,7 @@ void GameDialog::showScore() {
     menu->openScore();
 }
 
-// FOLLOWING EACH INSTRUCTION TO FRAME - for PLAYER ship.
+// FOLLOWING EACH INSTRUCTION  TO FRAME - for PLAYER ship.
 void GameDialog::nextFrame() {
 
     if (!paused) {
