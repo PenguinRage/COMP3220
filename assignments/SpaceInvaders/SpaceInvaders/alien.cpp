@@ -71,4 +71,8 @@ void Alien::remove(AlienBase*) {
 void Alien::paint(QPainter& painter) {
     painter.drawPixmap(get_x(), get_y(), get_image());
 }
+
+void Alien::scaleDifficulty(int multi) {
+    this->velocity *= multi;
+}
 }

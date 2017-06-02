@@ -38,6 +38,7 @@ public:
     QList<AlienBase*> getAliens() const;
     QList<Bullet*> react();
     virtual void paint(QPainter& painter);
+    virtual void scaleDifficulty(int multi);
 };
 }
 #endif  // SWARM_H

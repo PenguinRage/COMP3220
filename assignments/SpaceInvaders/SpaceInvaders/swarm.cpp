@@ -141,4 +141,10 @@ void Swarm::paint(QPainter& painter) {
         child->paint(painter);
     }
 }
+
+void Swarm::scaleDifficulty(int multi) {
+    for (auto* child : aliens) {
+        child->scaleDifficulty(multi);
+    }
+}
 }

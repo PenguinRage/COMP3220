@@ -6,9 +6,11 @@
 #include <QPainter>
 #include <QPixmap>
 #include <QSound>
+#include <QPushButton>
 #include <QTimer>
 #include <QWidget>
 #include <vector>
+#include <string>
 
 namespace game {
 
@@ -20,17 +22,12 @@ GameDialog::GameDialog(QWidget* parent)
     SCALEDHEIGHT = c->get_SCALEDHEIGHT();
     this->frames = c->get_frames();
     this->setMouseTracking(true);
-    mouse = c->use_mouse();
-    keyboard = c->use_keyboard();
 
     // MENU
     QList<QPair<QString, int>> dummy;
-    menu = new Menu(this, c->get_name(), this->gameScore, dummy);
+    menu = new Menu(this, c->get_name(), this->gameScore, dummy, c->use_mouse(), c->use_keyboard());
+
     remote = new Input(new DefaultStrategy());
-    remote->getKeyboard();
-
-
-
 
     // EXTENSION STAGE 1 PART 1 - RESCALE GAME SCREEN FOR SHIP SIZE
     this->setFixedWidth(SCALEDWIDTH);
@@ -99,7 +96,7 @@ void GameDialog::keyPressEvent(QKeyEvent* event) {
         pauseStart();
     }
 
-    if (keyboard)
+    if (menu->useKeyboard())
     {
         QEvent *k = (QEvent *)event;
         remote->getKeyboard();
@@ -108,7 +105,7 @@ void GameDialog::keyPressEvent(QKeyEvent* event) {
 }
 
 void GameDialog::mouseMoveEvent(QMouseEvent* event) {
-    if (mouse)
+    if (menu->useMouse())
     {
         QEvent *k = (QEvent *)event;
         remote->getMouse();
@@ -117,13 +114,24 @@ void GameDialog::mouseMoveEvent(QMouseEvent* event) {
 }
 
 void GameDialog::mousePressEvent(QMouseEvent* event) {
-    if (mouse)
+    if (menu->useMouse())
     {
         QEvent *k = (QEvent *)event;
         remote->getMouse();
         remote->moveEvents(k, ship, &bullets, &shipFiringSound, "");
     }
 }
+
+// toggles the keyboard controls
+void GameDialog::toggleKeyboard() {
+    menu->toggleKeyboard();
+}
+
+// toggles the mouse controls
+void GameDialog::toggleMouse() {
+    menu->toggleMouse();
+}
+
 
 // shows this game score
 void GameDialog::showScore() {
@@ -133,7 +141,6 @@ void GameDialog::showScore() {
 
 // FOLLOWING EACH INSTRUCTION  TO FRAME - for PLAYER ship.
 void GameDialog::nextFrame() {
-
     if (!paused) {
         Config* c = Config::getInstance();
 
@@ -142,7 +149,7 @@ void GameDialog::nextFrame() {
             next_instruct = next_instruct % instruct.size();
         }
 
-        if (!keyboard && !mouse)
+        if (!menu->useKeyboard() && !menu->useMouse())
         {
             QString ins = instruct[next_instruct];
             next_instruct++;
@@ -157,8 +164,18 @@ void GameDialog::nextFrame() {
         checkSwarmCollisions(swarms);
         addBullets(swarms->shoot(""));
     }
+
+    new_level(swarms->getAliens().size());
     // prepare collisions and calculate score
     update();
+}
+
+void GameDialog::paintLevel(QPainter& painter) {
+    std::stringstream ss;
+    ss << "Level: " << level;
+    painter.setFont({"Helvetica", 18});
+    painter.setPen({255, 255, 255, 255});
+    painter.drawText(QPoint((this->width()-120), 50), ss.str().c_str());
 }
 
 void GameDialog::paintBullets(QPainter& painter) {
@@ -181,7 +198,7 @@ void GameDialog::updateBullets()
             i--;
         } else if (score == -1) {
             // DEAD SHIP!
-            close();
+           // close();
         } else
         {
             b->move();// we move at the end so that we can see collisions before the game ends
@@ -229,7 +246,8 @@ void GameDialog::paintEvent(QPaintEvent*) {
     QPainter painter(this);
 
     painter.drawPixmap(ship->get_x(), ship->get_y(), ship->get_image());
-
+    // paint level
+    paintLevel(painter);
     // loop through each alien swarm and draw
     paintSwarm(painter, swarms);
 
@@ -294,4 +312,18 @@ void GameDialog::addBullets(const QList<Bullet*>& list) {
         this->bullets.push_back(b);
     }
 }
+
+void GameDialog::new_level(int size) {
+    // If not alien count is not empty return
+    if (size) return;
+
+    level++;
+    Config* c = Config::getInstance();
+    generateAliens(c->getSwarmList());
+    timer->setInterval(this->frames-=5);
+
+}
+
+void GameDialog::toggleDifficulty() {}
+
 }

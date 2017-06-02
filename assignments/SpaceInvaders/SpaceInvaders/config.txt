@@ -4,7 +4,7 @@ name=Bobbetta
 x=200
 instructions=Right,Shoot,Right,Right,Right,Right,Shoot, Right, Left, Shoot,Left,Right,Right,Right,Left,Shoot, Left, Left, Shoot, Left,Left
 frames=60
-keyboard=off
+keyboard=on
 mouse=off
 
 [SWARM]

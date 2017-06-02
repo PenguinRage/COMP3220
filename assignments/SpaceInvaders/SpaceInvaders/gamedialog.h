@@ -12,6 +12,8 @@
 #include <QMouseEvent>
 #include <QWidget>
 #include <vector>
+#include <sstream>
+#include <QPainter>
 
 namespace game {
 class GameDialog : public QDialog {
@@ -25,12 +27,16 @@ public:
 protected:
     QTimer* timer;
     void paintEvent(QPaintEvent* event);
+    void paintLevel(QPainter& painter);
     void paintBullets(QPainter& painter);
     void updateBullets();
     void paintSwarm(QPainter& painter, AlienBase*& root);
     void checkSwarmCollisions(AlienBase*& root);
     void mouseMoveEvent(QMouseEvent* event);
     void mousePressEvent(QMouseEvent* event);
+    void new_level(int);
+    void toggleDifficulty();
+
 
     // ship and swarms
     Ship* ship;
@@ -46,8 +52,10 @@ protected:
     int frames;
     const int WIDTH = 800;
     const int HEIGHT = 600;
+    int level = 1;
     int SCALEDWIDTH;
     int SCALEDHEIGHT;
+    int multiplier = 1;
 
     // collision...
     int get_collided_swarm(Bullet*& b, AlienBase*& root);
@@ -61,8 +69,7 @@ protected:
 
     // keyboard & mouse
     Input * remote;
-    bool keyboard = false;
-    bool mouse = false;
+
 
     // score
     int gameScore;  // this run's score.
@@ -70,5 +77,7 @@ public slots:
     void nextFrame();
     // menus
     void showScore();
+    void toggleKeyboard();
+    void toggleMouse();
 };
 }

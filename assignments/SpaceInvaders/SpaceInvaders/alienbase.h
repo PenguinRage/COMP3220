@@ -22,5 +22,6 @@ public:
     virtual void remove(AlienBase* toDelete) = 0;
     virtual QList<Bullet*> react() = 0;
     virtual void paint(QPainter& painter) = 0;
+    virtual void scaleDifficulty(int multi) = 0;
 };
 }
