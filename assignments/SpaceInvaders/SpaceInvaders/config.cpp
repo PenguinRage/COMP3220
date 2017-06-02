@@ -142,6 +142,27 @@ void Config::processShip(QTextStream& in) {
                 name = name.toUpper();
             }
 
+        } else if (l.startsWith("mouse=")) {
+            l = l.split("=").last();
+            if (l.length() != 0) {
+                QString a = l.split("=").last();  // name can be anything, up to 5 char long.
+                a.chop(a.size() - MOUSE_LENGTH);
+                if (a.toUpper() == "ON")
+                {
+                    useMouse = true;
+                }
+            }
+
+        } else if (l.startsWith("keyboard=")) {
+            l = l.split("=").last();
+            if (l.length() != 0) {
+                QString a = l.split("=").last();  // name can be anything, up to 5 char long.
+                a.chop(a.size() - KEYBOARD_LENGTH);
+                if (a.toUpper() == "ON")
+                {
+                    useKeyboard = true;
+                }
+            }
         } else if (l.startsWith("instructions=")) {  // starts with movement INSTRUCTIONS
             l = l.split("=").last();
             QStringList copy = l.split(",");
@@ -331,6 +352,15 @@ int Config::get_SCALEDWIDTH() {
 
 int Config::get_SCALEDHEIGHT() {
     return this->SCALEDHEIGHT;
+}
+
+bool Config::use_keyboard() {
+    return this->useKeyboard;
+}
+
+
+bool Config::use_mouse() {
+    return this->useMouse;
 }
 
 }  // end namespace

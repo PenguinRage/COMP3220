@@ -20,11 +20,14 @@ GameDialog::GameDialog(QWidget* parent)
     SCALEDHEIGHT = c->get_SCALEDHEIGHT();
     this->frames = c->get_frames();
     this->setMouseTracking(true);
+    mouse = c->use_mouse();
+    keyboard = c->use_keyboard();
 
     // MENU
     QList<QPair<QString, int>> dummy;
     menu = new Menu(this, c->get_name(), this->gameScore, dummy);
-    remote = new Controller(new KeyboardStrategy());
+    remote = new Input(new DefaultStrategy());
+    remote->getKeyboard();
 
 
 
@@ -96,26 +99,29 @@ void GameDialog::keyPressEvent(QKeyEvent* event) {
         pauseStart();
     }
 
-    if (controls)
+    if (keyboard)
     {
+        QEvent *k = (QEvent *)event;
         remote->getKeyboard();
-        remote->keyEvent(event, ship, &bullets, &shipFiringSound);
+        remote->moveEvents(k, ship, &bullets, &shipFiringSound, "");
     }
 }
 
 void GameDialog::mouseMoveEvent(QMouseEvent* event) {
-    if (controls)
+    if (mouse)
     {
+        QEvent *k = (QEvent *)event;
         remote->getMouse();
-        remote->keyEvent(event, ship, &bullets, &shipFiringSound);
+        remote->moveEvents(k, ship, &bullets, &shipFiringSound, "");
     }
 }
 
 void GameDialog::mousePressEvent(QMouseEvent* event) {
-    if (controls)
+    if (mouse)
     {
+        QEvent *k = (QEvent *)event;
         remote->getMouse();
-        remote->keyEvent(event, ship, &bullets, &shipFiringSound);
+        remote->moveEvents(k, ship, &bullets, &shipFiringSound, "");
     }
 }
 
@@ -135,20 +141,14 @@ void GameDialog::nextFrame() {
         if (next_instruct >= instruct.size()) {
             next_instruct = next_instruct % instruct.size();
         }
-        QString ins = instruct[next_instruct];
-        next_instruct++;
-        if (!controls)
+
+        if (!keyboard && !mouse)
         {
-            if (ins == "Left") {
-                ship->move_left();
+            QString ins = instruct[next_instruct];
+            next_instruct++;
+            remote->getDefault();
+            remote->moveEvents(NULL, ship, &bullets, &shipFiringSound, ins);
 
-            } else if (ins == "Right") {
-                ship->move_right();
-
-            } else if (ins == "Shoot") {
-                bullets.push_back(this->ship->shoot());
-                this->shipFiringSound.play();
-            }
         }
 
         updateBullets();

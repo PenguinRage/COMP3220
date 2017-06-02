@@ -60,8 +60,9 @@ protected:
     Menu* menu;
 
     // keyboard & mouse
-    Controller * remote;
-    bool controls = true;
+    Input * remote;
+    bool keyboard = false;
+    bool mouse = false;
 
     // score
     int gameScore;  // this run's score.

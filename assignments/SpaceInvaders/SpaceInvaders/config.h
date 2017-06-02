@@ -6,6 +6,8 @@
 #include <QPair>
 #include <QTextStream>
 #define NAME_LENGTH 5
+#define KEYBOARD_LENGTH 3
+#define MOUSE_LENGTH 3
 
 namespace game {
 
@@ -24,7 +26,9 @@ private:
     void saveSwarm(QString type, QList<QPair<int, int>> positions, QStringList move, int shoot);
     void scalePositions();
     // SHIP values
-    QString name;  // this will be useful in Stage 3 ;)
+    QString name; // this will be useful in Stage 3 ;)
+    bool useKeyboard = false;
+    bool useMouse = false;
     double scale;
     int startpos;
     int frames;
@@ -53,6 +57,8 @@ public:
     static Config* getInstance();
     ~Config();
     QString get_name();
+    bool use_keyboard();
+    bool use_mouse();
 
     double get_scale();
     int get_startpos();
