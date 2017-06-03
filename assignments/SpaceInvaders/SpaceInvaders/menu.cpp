@@ -11,7 +11,7 @@ Menu::~Menu() {
     delete score;
     delete playerName;
     delete playerScoreLabel;
-    delete newgame_button;
+    delete fast_button;
     delete mouse_button;
     delete keyboard_button;
 }
@@ -25,13 +25,19 @@ void Menu::makeButtons(QWidget* parent, QString name) {
     score->setFocusPolicy(Qt::NoFocus);
     QObject::connect(score, SIGNAL(released()), parent, SLOT(showScore()));
 
-    newgame_button = new QPushButton("New Game", parent);
-    newgame_button->setGeometry(QRect(350, 100, 100, 30));
-    newgame_button->setVisible(false);
-    newgame_button->setStyleSheet("background-color: white");
-    newgame_button->setFocusPolicy(Qt::NoFocus);
-    QObject::connect(newgame_button, SIGNAL(released()), parent, SLOT(new_game()));
+    fast_button = new QPushButton("Faster", parent);
+    fast_button->setGeometry(QRect(450, 100, 100, 30));
+    fast_button->setVisible(false);
+    fast_button->setStyleSheet("background-color: white");
+    fast_button->setFocusPolicy(Qt::NoFocus);
+    QObject::connect(fast_button, SIGNAL(released()), parent, SLOT(setFastSpeed()));
 
+    slow_button = new QPushButton("Slower", parent);
+    slow_button->setGeometry(QRect(300, 100, 100, 30));
+    slow_button->setVisible(false);
+    slow_button->setStyleSheet("background-color: white");
+    slow_button->setFocusPolicy(Qt::NoFocus);
+    QObject::connect(slow_button, SIGNAL(released()), parent, SLOT(setSlowSpeed()));
 
     mouse_button = new QPushButton("Mouse", parent);
     mouse_button->setGeometry(QRect(300, 10, 100, 30));
@@ -77,7 +83,8 @@ void Menu::displayMenu(bool paused) {
         score->setVisible(true);
         mouse_button->setVisible(true);
         keyboard_button->setVisible(true);
-        newgame_button->setVisible(true);
+        fast_button->setVisible(true);
+        slow_button->setVisible(true);
     }
 }
 
@@ -86,8 +93,10 @@ void Menu::closeButtons() {
     score->setVisible(false);
     mouse_button->setVisible(false);
     keyboard_button->setVisible(false);
-    newgame_button->setVisible(false);
+    fast_button->setVisible(false);
+    slow_button->setVisible(false);
     revealPlayerScore(false);
+
 }
 
 // helper function for OpenScore
@@ -137,4 +146,6 @@ void Menu::toggleMouse()
     }
     colourButtons(mouse_button, mouse);
 }
+
+
 }

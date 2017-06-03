@@ -22,6 +22,7 @@ GameDialog::GameDialog(QWidget* parent)
     SCALEDHEIGHT = c->get_SCALEDHEIGHT();
     this->frames = c->get_frames();
     this->setMouseTracking(true);
+    this->setFocusPolicy(Qt::StrongFocus);
 
     // MENU
     QList<QPair<QString, int>> dummy;
@@ -83,7 +84,7 @@ void GameDialog::pauseStart() {
         // start game
         this->paused = false;
         this->menu->displayMenu(paused);
-        this->timer->start(frames);
+        this->timer->start(this->frames);
     } else {
         this->paused = true;
         this->menu->displayMenu(paused);
@@ -171,11 +172,14 @@ void GameDialog::nextFrame() {
 }
 
 void GameDialog::paintLevel(QPainter& painter) {
-    std::stringstream ss;
+    std::stringstream ss,ff;
     ss << "Level: " << level;
-    painter.setFont({"Helvetica", 18});
+    ff << "Frames: " << this->frames;
+    painter.setFont({"Helvetica", 12});
     painter.setPen({255, 255, 255, 255});
-    painter.drawText(QPoint((this->width()-120), 50), ss.str().c_str());
+    painter.drawText(QPoint((this->width()-130), 50), ss.str().c_str());
+    painter.drawText(QPoint((this->width()-130), 70), ff.str().c_str());
+
 }
 
 void GameDialog::paintBullets(QPainter& painter) {
@@ -320,10 +324,20 @@ void GameDialog::new_level(int size) {
     level++;
     Config* c = Config::getInstance();
     generateAliens(c->getSwarmList());
-    timer->setInterval(this->frames-=5);
+    setFastSpeed();
+    timer->setInterval(this->frames);
 
 }
 
-void GameDialog::toggleDifficulty() {}
+void GameDialog::setFastSpeed() {
+    if (this->frames > 10)
+        this->frames -= 5;
+
+}
+
+void GameDialog::setSlowSpeed() {
+    if (this->frames < 100)
+        this->frames += 5;
+}
 
 }

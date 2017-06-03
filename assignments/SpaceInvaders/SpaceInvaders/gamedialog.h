@@ -35,7 +35,6 @@ protected:
     void mouseMoveEvent(QMouseEvent* event);
     void mousePressEvent(QMouseEvent* event);
     void new_level(int);
-    void toggleDifficulty();
 
 
     // ship and swarms
@@ -79,5 +78,7 @@ public slots:
     void showScore();
     void toggleKeyboard();
     void toggleMouse();
+    void setFastSpeed();
+    void setSlowSpeed();
 };
 }

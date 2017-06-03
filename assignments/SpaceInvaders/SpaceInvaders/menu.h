@@ -23,10 +23,8 @@ private:
     QPushButton* score;
     QPushButton* mouse_button;
     QPushButton* keyboard_button;
-    QPushButton* newgame_button;
-    QPushButton* easy_button;
-    QPushButton* normal_button;
-    QPushButton* hard_button;
+    QPushButton* slow_button;
+    QPushButton* fast_button;
 
     bool keyboard = false;
     bool mouse = false;
@@ -34,6 +32,7 @@ private:
 
     QLabel* playerName;
     QLabel* playerScoreLabel;
+
     void revealPlayerScore(bool open);
     void colourButtons(QPushButton * input_button, bool cond);
 };
