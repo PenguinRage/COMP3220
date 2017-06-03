@@ -20,15 +20,18 @@ private:
     void makeButtons(QWidget* parent, QString name);
     void closeButtons();  // if any buttons are left open, close them
     int& gameScore;
+    QList<QPair<QString, int>> scoreboard;
+    QList<QLabel*> table = {};
+
     QPushButton* score;
     QPushButton* mouse_button;
     QPushButton* keyboard_button;
     QPushButton* slow_button;
     QPushButton* fast_button;
 
+
     bool keyboard = false;
     bool mouse = false;
-
 
     QLabel* playerName;
     QLabel* playerScoreLabel;

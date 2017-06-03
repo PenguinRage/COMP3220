@@ -1,11 +1,11 @@
 [SHIP]
 size=Large
-name=ian
+name=Bobbetta
 x=200
 instructions=Right,Shoot,Right,Right,Right,Right,Shoot, Right, Left, Shoot,Left,Right,Right,Right,Left,Shoot, Left, Left, Shoot, Left,Left
 frames=60
 keyboard=on
-mouse=on
+mouse=off
 
 [SWARM]
 position=400 200, 400 230, 400 300, 420 320, 440 340, 460 340, 480 320, 500 300, 500 230, 500 200
@@ -30,23 +30,3 @@ position=200 50
 type=dumb
 move=L,R,L,L,R,L,R,L,R,L,R,L
 shoot=30
-
-[SCOREBOARD]
-BOBBE=26
-IAN=50
-IAN=25
-IAN=8
-IAN=9
-IAN=15
-IAN=23
-IAN=32
-IAN=33
-IAN=89
-IAN=27
-IAN=32
-IAN=31
-IAN=38
-IAN=29
-IAN=37
-IAN=70
-IAN=144

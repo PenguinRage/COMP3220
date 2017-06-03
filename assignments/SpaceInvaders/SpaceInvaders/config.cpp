@@ -72,6 +72,7 @@ Config::Config() {
     this->SCALEDHEIGHT = HEIGHT * this->scale;
     // scales the alien positions based on the scale.
     scalePositions();
+
 }
 
 // loops through all the swarm info and edits positions.
@@ -182,9 +183,38 @@ void Config::processShip(QTextStream& in) {
                      // return
         } else if (l.startsWith("[SHIP]")) {
             // ignore [SHIP] line
+        } else if (l.startsWith("[SCOREBOARD]")) {
+            processScoreboard(in);
+            return;
         } else {
             std::cout << "Incorrect key, check [SHIP] usage" << std::endl;
             std::cout << "<" << l.toStdString() << ">" << std::endl;
+        }
+    }
+}
+
+void Config::processScoreboard(QTextStream& in) {
+    while (!in.atEnd()) {
+        QString l = in.readLine();
+        l = l.trimmed();
+        if (l.isEmpty()) {
+            continue;
+        } else if (l.startsWith("[SHIP]")) {
+            // reads the ship information, saves (possibly incomplete hence default)
+            processShip(in);
+            return;
+        }  else if (l.startsWith("[SCOREBOARD]")) {
+            // reads the scoreboard information, saves (possibly incomplete hence default)
+            processScoreboard(in);
+            return;
+        } else if (l.startsWith("[SWARM]")) {
+            processSwarm(in);
+            return;
+        } else {
+            QString leader = l.split("=").first();
+            int score = l.split("=").last().toInt();
+            QPair<QString, int> element = qMakePair(leader, score);
+            scoreboard.append(element);
         }
     }
 }
@@ -243,6 +273,12 @@ void Config::processSwarm(QTextStream& in) {
             // reads the ship information, saves (possibly incomplete hence default)
             // swarm info
             processShip(in);
+            saveSwarm(type, positions, move, shoot);
+            return;
+        }  else if (l.startsWith("[SCOREBOARD]")) {
+            // reads the scoreboard information, saves (possibly incomplete hence default)
+            // swarm info
+            processScoreboard(in);
             saveSwarm(type, positions, move, shoot);
             return;
         } else if (l.startsWith("[SWARM]")) {
@@ -322,6 +358,16 @@ void Config::processConfigSizeLine(QString l) {
     }
 }
 
+void Config::append_score(int score) {
+    QFile c_file("../SpaceInvaders/config.txt");
+    c_file.open(QIODevice::Append);
+    QTextStream outStream(&c_file);
+    outStream << '\n' << get_name() << "=" << score;
+    c_file.close();
+}
+
+
+
 // Getters
 QString Config::get_name() {
     return this->name;
@@ -344,6 +390,10 @@ int Config::get_frames() {
 
 QList<SwarmInfo> Config::getSwarmList() {
     return this->swarmList;
+}
+
+QList<QPair<QString, int>> Config::getScoreboard() {
+    return this->scoreboard;
 }
 
 int Config::get_SCALEDWIDTH() {

@@ -2,7 +2,7 @@
 
 namespace game {
 Menu::Menu(QWidget* parent, QString name, int& playerScore, QList<QPair<QString, int>> scores, bool m, bool k)
-        : gameScore(playerScore), mouse(m), keyboard(k) {
+        : gameScore(playerScore), mouse(m), keyboard(k), scoreboard(scores) {
     // Scores could be read in the future.
     makeButtons(parent, name);
 }
@@ -14,10 +14,14 @@ Menu::~Menu() {
     delete fast_button;
     delete mouse_button;
     delete keyboard_button;
+    for (int i = 0; i < scoreboard.size(); i++) {
+        delete table.at(i);
+    }
 }
 
+// Makes the buttons for the Menu UI
 void Menu::makeButtons(QWidget* parent, QString name) {
-
+    // Score Button
     score = new QPushButton("Score", parent);
     score->setGeometry(QRect(0, 0, 100, 30));
     score->setVisible(false);
@@ -25,6 +29,7 @@ void Menu::makeButtons(QWidget* parent, QString name) {
     score->setFocusPolicy(Qt::NoFocus);
     QObject::connect(score, SIGNAL(released()), parent, SLOT(showScore()));
 
+    // Faster Speed Button
     fast_button = new QPushButton("Faster", parent);
     fast_button->setGeometry(QRect(450, 100, 100, 30));
     fast_button->setVisible(false);
@@ -32,6 +37,7 @@ void Menu::makeButtons(QWidget* parent, QString name) {
     fast_button->setFocusPolicy(Qt::NoFocus);
     QObject::connect(fast_button, SIGNAL(released()), parent, SLOT(setFastSpeed()));
 
+    // Slower Speed Button
     slow_button = new QPushButton("Slower", parent);
     slow_button->setGeometry(QRect(300, 100, 100, 30));
     slow_button->setVisible(false);
@@ -39,6 +45,7 @@ void Menu::makeButtons(QWidget* parent, QString name) {
     slow_button->setFocusPolicy(Qt::NoFocus);
     QObject::connect(slow_button, SIGNAL(released()), parent, SLOT(setSlowSpeed()));
 
+    // Mouse Control Button
     mouse_button = new QPushButton("Mouse", parent);
     mouse_button->setGeometry(QRect(300, 10, 100, 30));
     mouse_button->setVisible(false);
@@ -46,6 +53,7 @@ void Menu::makeButtons(QWidget* parent, QString name) {
     mouse_button->setFocusPolicy(Qt::NoFocus);
     QObject::connect(mouse_button, SIGNAL(released()), parent, SLOT(toggleMouse()));
 
+    // Keyboard Control Button
     keyboard_button = new QPushButton("Keyboard", parent);
     keyboard_button->setGeometry(QRect(450, 10, 100, 30));
     keyboard_button->setVisible(false);
@@ -53,6 +61,7 @@ void Menu::makeButtons(QWidget* parent, QString name) {
     keyboard_button->setFocusPolicy(Qt::NoFocus);
     QObject::connect(keyboard_button, SIGNAL(released()), parent, SLOT(toggleKeyboard()));
 
+    // Labels for player and score
     playerName = new QLabel(parent);
     playerName->setGeometry(0, 30, 100, 30);
     playerName->setText(name);
@@ -64,8 +73,19 @@ void Menu::makeButtons(QWidget* parent, QString name) {
     playerScoreLabel->setText(QString::number(gameScore));
     playerScoreLabel->setVisible(false);
     playerScoreLabel->setStyleSheet("background-color: gray");
+    QString del = ": ";
+    for (int i = 0; i < scoreboard.size(); i++) {
+        QLabel * tmp = new QLabel(parent);
+        QString str = scoreboard.at(i).first + del  + QString::number(scoreboard.at(i).second);
+        tmp->setGeometry(parent->width()-120, i * 30, 100, 30);
+        tmp->setText(str);
+        tmp->setVisible(false);
+        tmp->setStyleSheet("background-color: white");
+        table.append(tmp);
+    }
 }
 
+// Toggles the color of the buttons when on and off
 void Menu::colourButtons(QPushButton * input_button, bool cond) {
     if (cond) {
         input_button->setStyleSheet("background-color: green");
@@ -85,6 +105,9 @@ void Menu::displayMenu(bool paused) {
         keyboard_button->setVisible(true);
         fast_button->setVisible(true);
         slow_button->setVisible(true);
+        for (int i = 0; i < scoreboard.size(); i++) {
+            table.at(i)->setVisible(true);
+        }
     }
 }
 
@@ -96,6 +119,9 @@ void Menu::closeButtons() {
     fast_button->setVisible(false);
     slow_button->setVisible(false);
     revealPlayerScore(false);
+    for (int i = 0; i < scoreboard.size(); i++) {
+        table.at(i)->setVisible(false);
+    }
 
 }
 
@@ -115,14 +141,17 @@ void Menu::openScore() {
     }
 }
 
+// returns wheither keyboard is in use
 bool Menu::useKeyboard() {
     return keyboard;
 }
 
+// returns wheither mouse is in use
 bool Menu::useMouse() {
     return mouse;
 }
 
+// toggles keyboardUI and functionality on and off
 void Menu::toggleKeyboard()
 {
     if (keyboard) {
@@ -136,6 +165,7 @@ void Menu::toggleKeyboard()
     colourButtons(keyboard_button, keyboard);
 }
 
+// toggles mouseUI and functionality on and off
 void Menu::toggleMouse()
 {
     if (mouse) {

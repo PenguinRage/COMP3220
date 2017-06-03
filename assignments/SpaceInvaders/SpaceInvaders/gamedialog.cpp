@@ -25,8 +25,8 @@ GameDialog::GameDialog(QWidget* parent)
     this->setFocusPolicy(Qt::StrongFocus);
 
     // MENU
-    QList<QPair<QString, int>> dummy;
-    menu = new Menu(this, c->get_name(), this->gameScore, dummy, c->use_mouse(), c->use_keyboard());
+    QList<QPair<QString, int>> scoreboard  = c->getScoreboard();
+    menu = new Menu(this, c->get_name(), this->gameScore, scoreboard, c->use_mouse(), c->use_keyboard());
 
     remote = new Input(new DefaultStrategy());
 
@@ -165,8 +165,8 @@ void GameDialog::nextFrame() {
         checkSwarmCollisions(swarms);
         addBullets(swarms->shoot(""));
     }
-
-    new_level(swarms->getAliens().size());
+    if ( swarms != NULL)
+        new_level(swarms->getAliens().size());
     // prepare collisions and calculate score
     update();
 }
@@ -202,7 +202,9 @@ void GameDialog::updateBullets()
             i--;
         } else if (score == -1) {
             // DEAD SHIP!
-           // close();
+            Config* c = Config::getInstance();
+            c->append_score(gameScore);
+            close();
         } else
         {
             b->move();// we move at the end so that we can see collisions before the game ends

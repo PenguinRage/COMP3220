@@ -19,7 +19,7 @@ private:
     void processShip(QTextStream& in);
     void processConfigSizeLine(QString l);
     void processInstructions(QStringList& instructs, QStringList& copy);
-
+    void processScoreboard(QTextStream& in);
     void processSwarm(QTextStream& in);
     void processPairs(QStringList list, QList<QPair<int, int>>& positions);
     void processMoves(QStringList& move, QStringList& list);
@@ -39,6 +39,7 @@ private:
 
     // Swarm Info Map
     QList<SwarmInfo> swarmList = {};
+    QList<QPair<QString, int>> scoreboard = {};
 
     // default Alien values
     QStringList alienTypes;
@@ -59,11 +60,13 @@ public:
     QString get_name();
     bool use_keyboard();
     bool use_mouse();
+    void append_score(int score);
 
     double get_scale();
     int get_startpos();
     QStringList get_instructs();
     QList<SwarmInfo> getSwarmList();
+    QList<QPair<QString, int>> getScoreboard();
     int get_frames();
 
     int get_SCALEDWIDTH();
