@@ -193,6 +193,10 @@ void Config::processShip(QTextStream& in) {
     }
 }
 
+bool sorting(const QPair<QString,int>& e1, const QPair<QString,int>& e2) {
+    if (e1.second > e2.second) return true;
+    return false;
+}
 void Config::processScoreboard(QTextStream& in) {
     while (!in.atEnd()) {
         QString l = in.readLine();
@@ -215,6 +219,7 @@ void Config::processScoreboard(QTextStream& in) {
             int score = l.split("=").last().toInt();
             QPair<QString, int> element = qMakePair(leader, score);
             scoreboard.append(element);
+            qSort(scoreboard.begin(), scoreboard.end(), sorting);
         }
     }
 }

@@ -76,8 +76,8 @@ void Menu::makeButtons(QWidget* parent, QString name) {
     QString del = ": ";
     for (int i = 0; i < scoreboard.size(); i++) {
         QLabel * tmp = new QLabel(parent);
-        QString str = scoreboard.at(i).first + del  + QString::number(scoreboard.at(i).second);
-        tmp->setGeometry(parent->width()-120, i * 30, 100, 30);
+        QString str = '\t' + scoreboard.at(i).first + del  +'\t' + '\t' + QString::number(scoreboard.at(i).second);
+        tmp->setGeometry(0,200+ i * 35, 200, 30);
         tmp->setText(str);
         tmp->setVisible(false);
         tmp->setStyleSheet("background-color: white");
