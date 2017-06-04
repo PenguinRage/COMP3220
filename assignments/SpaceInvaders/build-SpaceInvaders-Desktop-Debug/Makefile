@@ -61,7 +61,8 @@ SOURCES       = ../SpaceInvaders/main.cpp \
 		../SpaceInvaders/diagonalbullet.cpp \
 		../SpaceInvaders/alienbuilder.cpp \
 		../SpaceInvaders/hunter.cpp \
-		../SpaceInvaders/menu.cpp qrc_resources.cpp \
+		../SpaceInvaders/menu.cpp \
+		../SpaceInvaders/testingunit.cpp qrc_resources.cpp \
 		moc_gamedialog.cpp
 OBJECTS       = main.o \
 		base.o \
@@ -77,6 +78,7 @@ OBJECTS       = main.o \
 		alienbuilder.o \
 		hunter.o \
 		menu.o \
+		testingunit.o \
 		qrc_resources.o \
 		moc_gamedialog.o
 DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
@@ -220,7 +222,8 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		../SpaceInvaders/hunter.h \
 		../SpaceInvaders/menu.h \
 		../SpaceInvaders/alienbase.h \
-		../SpaceInvaders/controllerstrategy.h ../SpaceInvaders/main.cpp \
+		../SpaceInvaders/controllerstrategy.h \
+		../SpaceInvaders/testingunit.h ../SpaceInvaders/main.cpp \
 		../SpaceInvaders/base.cpp \
 		../SpaceInvaders/ship.cpp \
 		../SpaceInvaders/gamedialog.cpp \
@@ -233,7 +236,8 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		../SpaceInvaders/diagonalbullet.cpp \
 		../SpaceInvaders/alienbuilder.cpp \
 		../SpaceInvaders/hunter.cpp \
-		../SpaceInvaders/menu.cpp
+		../SpaceInvaders/menu.cpp \
+		../SpaceInvaders/testingunit.cpp
 QMAKE_TARGET  = SpaceInvaders
 DESTDIR       = 
 TARGET        = SpaceInvaders
@@ -528,8 +532,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../SpaceInvaders/resources.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/qt/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../SpaceInvaders/base.h ../SpaceInvaders/ship.h ../SpaceInvaders/gamedialog.h ../SpaceInvaders/bullet.h ../SpaceInvaders/config.h ../SpaceInvaders/bulletbuilderinterface.h ../SpaceInvaders/bulletbuilder.h ../SpaceInvaders/alien.h ../SpaceInvaders/swarminfo.h ../SpaceInvaders/swarm.h ../SpaceInvaders/diagonalbullet.h ../SpaceInvaders/alienbuilder.h ../SpaceInvaders/hunter.h ../SpaceInvaders/menu.h ../SpaceInvaders/alienbase.h ../SpaceInvaders/controllerstrategy.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../SpaceInvaders/main.cpp ../SpaceInvaders/base.cpp ../SpaceInvaders/ship.cpp ../SpaceInvaders/gamedialog.cpp ../SpaceInvaders/bullet.cpp ../SpaceInvaders/config.cpp ../SpaceInvaders/bulletbuilder.cpp ../SpaceInvaders/alien.cpp ../SpaceInvaders/swarminfo.cpp ../SpaceInvaders/swarm.cpp ../SpaceInvaders/diagonalbullet.cpp ../SpaceInvaders/alienbuilder.cpp ../SpaceInvaders/hunter.cpp ../SpaceInvaders/menu.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../SpaceInvaders/base.h ../SpaceInvaders/ship.h ../SpaceInvaders/gamedialog.h ../SpaceInvaders/bullet.h ../SpaceInvaders/config.h ../SpaceInvaders/bulletbuilderinterface.h ../SpaceInvaders/bulletbuilder.h ../SpaceInvaders/alien.h ../SpaceInvaders/swarminfo.h ../SpaceInvaders/swarm.h ../SpaceInvaders/diagonalbullet.h ../SpaceInvaders/alienbuilder.h ../SpaceInvaders/hunter.h ../SpaceInvaders/menu.h ../SpaceInvaders/alienbase.h ../SpaceInvaders/controllerstrategy.h ../SpaceInvaders/testingunit.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../SpaceInvaders/main.cpp ../SpaceInvaders/base.cpp ../SpaceInvaders/ship.cpp ../SpaceInvaders/gamedialog.cpp ../SpaceInvaders/bullet.cpp ../SpaceInvaders/config.cpp ../SpaceInvaders/bulletbuilder.cpp ../SpaceInvaders/alien.cpp ../SpaceInvaders/swarminfo.cpp ../SpaceInvaders/swarm.cpp ../SpaceInvaders/diagonalbullet.cpp ../SpaceInvaders/alienbuilder.cpp ../SpaceInvaders/hunter.cpp ../SpaceInvaders/menu.cpp ../SpaceInvaders/testingunit.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../SpaceInvaders/dialog.ui $(DISTDIR)/
 
 
@@ -664,7 +668,8 @@ gamedialog.o: ../SpaceInvaders/gamedialog.cpp ../SpaceInvaders/gamedialog.h \
 		../SpaceInvaders/alienbase.h \
 		../SpaceInvaders/alienbuilder.h \
 		../SpaceInvaders/hunter.h \
-		../SpaceInvaders/controllerstrategy.h
+		../SpaceInvaders/controllerstrategy.h \
+		../SpaceInvaders/testingunit.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o gamedialog.o ../SpaceInvaders/gamedialog.cpp
 
 bullet.o: ../SpaceInvaders/bullet.cpp ../SpaceInvaders/bullet.h \
@@ -736,6 +741,11 @@ hunter.o: ../SpaceInvaders/hunter.cpp ../SpaceInvaders/hunter.h \
 
 menu.o: ../SpaceInvaders/menu.cpp ../SpaceInvaders/menu.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o menu.o ../SpaceInvaders/menu.cpp
+
+testingunit.o: ../SpaceInvaders/testingunit.cpp ../SpaceInvaders/testingunit.h \
+		../SpaceInvaders/config.h \
+		../SpaceInvaders/swarminfo.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o testingunit.o ../SpaceInvaders/testingunit.cpp
 
 qrc_resources.o: qrc_resources.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_resources.o qrc_resources.cpp

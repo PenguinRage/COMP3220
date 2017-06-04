@@ -38,7 +38,8 @@ SOURCES += main.cpp\
     diagonalbullet.cpp \
     alienbuilder.cpp \
     hunter.cpp \
-    menu.cpp
+    menu.cpp \
+    testingunit.cpp
 
 HEADERS  += \
     base.h \
@@ -56,7 +57,8 @@ HEADERS  += \
     hunter.h \
     menu.h \
     alienbase.h \
-    controllerstrategy.h
+    controllerstrategy.h \
+    testingunit.h
 
 FORMS    += dialog.ui
 

@@ -1,23 +1,30 @@
 #ifndef TESTINGUNIT_H
 #define TESTINGUNIT_H
 
+#include "config.h"
+#include <QString>
+#include <iostream>
+#include <QSoundEffect>
+#include "ship.h"
+#include "controllerstrategy.h"
 
-#include <QtTest/QtTest>
+
 namespace game {
 class TestingUnit
 {
 public:
     TestingUnit(){}
     ~TestingUnit(){}
+    bool runTests();
 
-    Q_OBJECT
-public slots:
-    void toUpper();
+private:
+    int numberOfTestsFailed = 0;
+    bool configCaseTest();
+    bool shipCaseTest();
+    bool alienCaseTest();
+    bool strategyCaseTest();
+
 };
-
 }
-
-QTEST_MAIN(TestingUnit)
-#include "testingunit.moc"
 
 #endif // TESTINGUNIT_H

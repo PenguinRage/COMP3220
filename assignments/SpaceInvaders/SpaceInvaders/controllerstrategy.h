@@ -15,6 +15,7 @@ class InputStrategy {
 public:
     InputStrategy() {};
     virtual ~InputStrategy() {};
+    QString name;
 
     virtual void moveEvents(QEvent* event, Ship* ship, std::vector<Bullet*>* bullets, QSoundEffect* shipFiringSound, QString ins)=0;
 };
@@ -22,7 +23,7 @@ public:
 
 class DefaultStrategy : public InputStrategy {
 public:
-    DefaultStrategy() {};
+    DefaultStrategy() { name = "default"; };
     ~DefaultStrategy() {};
 
     virtual void moveEvents(QEvent* event, Ship* ship, std::vector<Bullet*>* bullets, QSoundEffect* shipFiringSound, QString ins)
@@ -43,7 +44,7 @@ public:
 
 class KeyboardStrategy : public InputStrategy {
 public:
-    KeyboardStrategy() {};
+    KeyboardStrategy() { name = "keyboard"; };
     ~KeyboardStrategy() {};
 
     virtual void moveEvents(QEvent* event, Ship* ship, std::vector<Bullet*>* bullets, QSoundEffect* shipFiringSound, QString ins)
@@ -71,7 +72,7 @@ public:
 
 class MouseStrategy : public InputStrategy {
 public:
-    MouseStrategy() {};
+    MouseStrategy() { name = "mouse"; };
     ~MouseStrategy() {};
 
     virtual void moveEvents(QEvent* event, Ship* ship, std::vector<Bullet*>* bullets, QSoundEffect* shipFiringSound, QString ins)
@@ -133,6 +134,10 @@ public:
         if (!x) {
             switchState(new MouseStrategy());
         }
+    }
+
+    QString getName() {
+        return currState->name;
     }
 
 

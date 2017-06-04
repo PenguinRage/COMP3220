@@ -60,6 +60,7 @@ public:
     QString get_name();
     bool use_keyboard();
     bool use_mouse();
+    bool usescoreboard = false;
     void append_score(int score);
 
     double get_scale();

@@ -198,6 +198,7 @@ bool sorting(const QPair<QString,int>& e1, const QPair<QString,int>& e2) {
     return false;
 }
 void Config::processScoreboard(QTextStream& in) {
+    usescoreboard = true;
     while (!in.atEnd()) {
         QString l = in.readLine();
         l = l.trimmed();

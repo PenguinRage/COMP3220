@@ -1,5 +1,6 @@
 #include "gamedialog.h"
 #include "bullet.h"
+#include "testingunit.h"
 #include "ship.h"
 #include <QDebug>
 #include <QKeyEvent>
@@ -16,6 +17,7 @@ namespace game {
 
 GameDialog::GameDialog(QWidget* parent)
         : QDialog(parent), bullets(), shipFiringSound(this), gameScore(0) {
+
     // SET UP GAME DIMENSIONS AND CONFIG
     Config* c = Config::getInstance();
     SCALEDWIDTH = c->get_SCALEDWIDTH();
@@ -27,17 +29,18 @@ GameDialog::GameDialog(QWidget* parent)
     // MENU
     QList<QPair<QString, int>> scoreboard  = c->getScoreboard();
     menu = new Menu(this, c->get_name(), this->gameScore, scoreboard, c->use_mouse(), c->use_keyboard());
-
     remote = new Input(new DefaultStrategy());
 
     // EXTENSION STAGE 1 PART 1 - RESCALE GAME SCREEN FOR SHIP SIZE
     this->setFixedWidth(SCALEDWIDTH);
     this->setFixedHeight(SCALEDHEIGHT);
+
     // SHIP
     QPixmap ship;
     ship.load(":/Images/ship.png");
     this->ship = new Ship(ship, c->get_scale(), c->get_startpos(), SCALEDHEIGHT);
     this->next_instruct = 0;
+
     // SHIP SOUND
     shipFiringSound.setSource(QUrl::fromLocalFile(":/Sounds/shoot.wav"));
     shipFiringSound.setVolume(0.3f);
@@ -52,6 +55,9 @@ GameDialog::GameDialog(QWidget* parent)
     connect(timer, SIGNAL(timeout()), this, SLOT(nextFrame()));
     timer->start(this->frames);
 
+    // Testing
+    TestingUnit tests;
+    tests.runTests();
     update();
 }
 
@@ -203,7 +209,9 @@ void GameDialog::updateBullets()
         } else if (score == -1) {
             // DEAD SHIP!
             Config* c = Config::getInstance();
-            c->append_score(gameScore);
+            if (c->usescoreboard) {
+                c->append_score(gameScore);
+            }
             close();
         } else
         {
@@ -238,6 +246,10 @@ void GameDialog::checkSwarmCollisions(AlienBase *&root)
         if (list.size() == 0) {  // leaf
             // check if it is crashing into the player ship
             if (child->collides(*this->ship)) {
+                Config* c = Config::getInstance();
+                if (c->usescoreboard) {
+                    c->append_score(gameScore);
+                }
                 close();  // DEAD SHIP AGAIN
             }
         } else {

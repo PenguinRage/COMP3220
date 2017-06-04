@@ -14,7 +14,7 @@ Menu::~Menu() {
     delete fast_button;
     delete mouse_button;
     delete keyboard_button;
-    for (int i = 0; i < scoreboard.size(); i++) {
+    for (int i = 0; i < 10; i++) {
         delete table.at(i);
     }
 }
@@ -22,7 +22,7 @@ Menu::~Menu() {
 // Makes the buttons for the Menu UI
 void Menu::makeButtons(QWidget* parent, QString name) {
     // Score Button
-    score = new QPushButton("Score", parent);
+    score = new QPushButton("Scores", parent);
     score->setGeometry(QRect(0, 0, 100, 30));
     score->setVisible(false);
     score->setStyleSheet("background-color: blue");
@@ -75,6 +75,7 @@ void Menu::makeButtons(QWidget* parent, QString name) {
     playerScoreLabel->setStyleSheet("background-color: gray");
     QString del = ": ";
     for (int i = 0; i < scoreboard.size(); i++) {
+        if (i == 10) break;
         QLabel * tmp = new QLabel(parent);
         QString str = '\t' + scoreboard.at(i).first + del  +'\t' + '\t' + QString::number(scoreboard.at(i).second);
         tmp->setGeometry(0,200+ i * 35, 200, 30);
@@ -105,9 +106,6 @@ void Menu::displayMenu(bool paused) {
         keyboard_button->setVisible(true);
         fast_button->setVisible(true);
         slow_button->setVisible(true);
-        for (int i = 0; i < scoreboard.size(); i++) {
-            table.at(i)->setVisible(true);
-        }
     }
 }
 
@@ -119,7 +117,7 @@ void Menu::closeButtons() {
     fast_button->setVisible(false);
     slow_button->setVisible(false);
     revealPlayerScore(false);
-    for (int i = 0; i < scoreboard.size(); i++) {
+    for (int i = 0; i < table.size(); i++) {
         table.at(i)->setVisible(false);
     }
 
@@ -136,8 +134,14 @@ void Menu::revealPlayerScore(bool open) {
 void Menu::openScore() {
     if (playerName->isVisible()) {
         revealPlayerScore(false);
+        for (int i = 0; i < table.size(); i++) {
+            table.at(i)->setVisible(false);
+        }
     } else {
         revealPlayerScore(true);
+        for (int i = 0; i < table.size(); i++) {
+            table.at(i)->setVisible(true);
+        }
     }
 }
 
