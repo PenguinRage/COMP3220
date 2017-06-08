@@ -39,7 +39,8 @@ SOURCES += main.cpp\
     alienbuilder.cpp \
     hunter.cpp \
     menu.cpp \
-    testingunit.cpp
+    testingunit.cpp \
+    heatseeker.cpp
 
 HEADERS  += \
     base.h \
@@ -57,8 +58,9 @@ HEADERS  += \
     hunter.h \
     menu.h \
     alienbase.h \
-    controllerstrategy.h \
-    testingunit.h
+    testingunit.h \
+    inputstrategy.h \
+    heatseeker.h
 
 FORMS    += dialog.ui
 

@@ -2,6 +2,7 @@
 
 #include "base.h"
 #include "bullet.h"
+#include <QString>
 #include <QPainter>
 
 // An abstract for the Swarm; note the move() function.
@@ -23,5 +24,6 @@ public:
     virtual QList<Bullet*> react() = 0;
     virtual void paint(QPainter& painter) = 0;
     virtual void scaleDifficulty(int multi) = 0;
+    virtual QString get_type(){return "";}
 };
 }

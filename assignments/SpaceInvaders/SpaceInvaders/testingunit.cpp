@@ -4,16 +4,18 @@
 
 namespace game {
 
+// Testing Unit for Config
 bool TestingUnit::configCaseTest()
 {
     int counter;
     Config* c = Config::getInstance();
-    if (c->get_name() != "ian") counter=1;
+    if (c->get_frames() == 80) counter++;
     QPair<QString, int> element = c->getScoreboard().at(0);
-    if (element.second != 1115) counter=1;
+    if (element.second != 1115) counter++;
     return counter;
 }
 
+// Testing Unit for ship and it's new weapon
 bool TestingUnit::shipCaseTest()
 {
     int counter;
@@ -28,10 +30,16 @@ bool TestingUnit::shipCaseTest()
     if (!ship->get_x() != x-15) counter=1;
     ship->move_right();
     if (!ship->get_x() != x) counter=1;
+
+    Bullet* b = ship->shootBackup();
+    b->setTarget(x);
+
+    delete b;
     delete ship;
     return counter;
 }
 
+// Testing Unit for strategy behavioural design pattern
 bool TestingUnit::strategyCaseTest()
 {
     int counter;
@@ -47,20 +55,23 @@ bool TestingUnit::strategyCaseTest()
     if (remote->getName() != "default") counter = 1;
 
     delete remote;
-
     return counter;
 }
 
-
-bool TestingUnit::alienCaseTest()
-{
+// Testing Unit for scoreboard
+bool TestingUnit::scoreboardCaseTest() {
     int counter;
     Config* c = Config::getInstance();
-    // SHIP
+    QList<QPair<QString, int>> scoreboard  = c->getScoreboard();
+    QString test1 = "";
+    int test2 = 1;
 
+    for (int i = 0; i < scoreboard.size(); i++) {
+        if (typeid(scoreboard.at(i).first) != typeid(test1)) counter++;
+        if (typeid(scoreboard.at(i).second) != typeid(test2)) counter++;
+    }
     return counter;
 }
-
 
 bool TestingUnit::runTests() {
     if (!configCaseTest()) {
@@ -72,6 +83,9 @@ bool TestingUnit::runTests() {
     if (!strategyCaseTest()) {
         numberOfTestsFailed++;
     }
+    if (!scoreboardCaseTest()) {
+        numberOfTestsFailed++;
+    }
     if (0 == numberOfTestsFailed)
     {
         std::cout << "All Tests Passed!" << std::endl;
@@ -80,6 +94,7 @@ bool TestingUnit::runTests() {
     {
         std::cout << numberOfTestsFailed << " Tests Failed" << std::endl;
     }
+    return true;
 }
 }
 

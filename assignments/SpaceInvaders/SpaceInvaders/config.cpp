@@ -192,11 +192,13 @@ void Config::processShip(QTextStream& in) {
         }
     }
 }
-
+// Sorting function for the qsort across the scoreboard
 bool sorting(const QPair<QString,int>& e1, const QPair<QString,int>& e2) {
     if (e1.second > e2.second) return true;
     return false;
 }
+
+// Process ScoreBoard processes the input from the Scoreboard part of the config
 void Config::processScoreboard(QTextStream& in) {
     usescoreboard = true;
     while (!in.atEnd()) {

@@ -6,7 +6,7 @@
 #include "ship.h"
 #include "swarm.h"
 #include "swarminfo.h"
-#include "controllerstrategy.h"
+#include "inputstrategy.h"
 #include <QDialog>
 #include <QSoundEffect>
 #include <QMouseEvent>
@@ -60,9 +60,11 @@ protected:
     int get_collided_swarm(Bullet*& b, AlienBase*& root);
     int get_collided(Bullet*& b, AlienBase*& root);
     void addBullets(const QList<Bullet*>& list);
+    int getClosest();
 
     // pausing & menu
     bool paused;
+    bool ship_alive = true;
     void pauseStart();
     Menu* menu;
 
@@ -80,5 +82,7 @@ public slots:
     void toggleMouse();
     void setFastSpeed();
     void setSlowSpeed();
+    void exit();
+    void reset();
 };
 }

@@ -24,6 +24,10 @@ Bullet* Ship::shoot() {
     return builder.build_bullet("laser");
 }
 
+Bullet* Ship::shootBackup() {
+    return builder.build_bullet("heatseeker");
+}
+
 // Setters
 void Ship::move_left() {
     set_x(get_x() - velocity);
@@ -31,6 +35,14 @@ void Ship::move_left() {
 
 void Ship::move_right() {
     set_x(get_x() + velocity);
+}
+
+void Ship::move_speed_left() {
+    set_x(get_x() - velocity*10);
+}
+
+void Ship::move_speed_right() {
+    set_x(get_x() + velocity*10);
 }
 
 Ship::~Ship() {}

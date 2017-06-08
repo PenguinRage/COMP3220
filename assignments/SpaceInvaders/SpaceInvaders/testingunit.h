@@ -6,8 +6,11 @@
 #include <iostream>
 #include <QSoundEffect>
 #include "ship.h"
-#include "controllerstrategy.h"
-
+#include "inputstrategy.h"
+#include "menu.h"
+#include "swarm.h"
+#include "swarminfo.h"
+#include <QPixmap>
 
 namespace game {
 class TestingUnit
@@ -21,7 +24,7 @@ private:
     int numberOfTestsFailed = 0;
     bool configCaseTest();
     bool shipCaseTest();
-    bool alienCaseTest();
+    bool scoreboardCaseTest();
     bool strategyCaseTest();
 
 };

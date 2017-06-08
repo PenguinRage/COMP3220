@@ -22,7 +22,7 @@ The extensions implemented were:
 
 
 
-######  STAGE TWO  ###### 
+######  STAGE TWO  ######
 Cool dogs.
 CONFIG FILE SHOWCASE:
  config - is the one used for demo demonstrating everything, however aliens shoot quite a bit so it may close.
@@ -41,10 +41,10 @@ Fixes:
 
 Information:
 - Config fixed s.t., it can read other [headers] (and can still read the old config). A bit confusing due to the assignment requirement of needing backward compatibility, but basically its like recursive.
-- Used composite structural design for swarms of aliens. 
-	Alien is a leaf, Swarm is a composite. 
+- Used composite structural design for swarms of aliens.
+	Alien is a leaf, Swarm is a composite.
 - Made the ship instructions loop so it moves forever until game close / lose (not necessary for Stage 3)
-- Aliens use the same bullet builder class as Ship, just different parameters 
+- Aliens use the same bullet builder class as Ship, just different parameters
 - Aliens have a builder. If you want to make more aliens, please look at AlienBuilder
 - Added 'friendliness' for bullets, used later for checking collision.
 	- if you want aliens to shoot "Player" bullets for some reason (e.g., kill other aliens) try passing a special "type" of bullet to its builder. See Hunter class.
@@ -61,7 +61,7 @@ Extensions:
 	- Randomised shooting times (with given range at config)
 		> Also shoots a random type of bullet
 		(BUT YOU MAY REMOVE THIS, It's just to showcase angles)
-	- Aliens that hunt the Player. 
+	- Aliens that hunt the Player.
 		> And, aliens that are not so good at hunting. [hunter, dumb]
 		> Normal, non hunting aliens are [red, blue]
 	- REACTIONS: Aliens can react before they die.
@@ -72,3 +72,19 @@ Extensions:
 		- score is opened with said button
 	- Made so ships can't go out of the canvas area.
 	- Player ship dies on contact with alien.
+
+  ######  STAGE THREE  ######
+CONFIG Updates:
+  - Added additional Flag in Config called [SCOREBOARD] which indicates that values underneath the scoreboard are all names and scores.
+  - Ship has potiential two more fields called keyboard and mouse. both can be turned on and off to allow control over the spaceship.
+  - new processing function for scoreboard has been added to allow such processing.
+
+Information:
+  - Game now contains levels which allow which add to the difficulty of the game by increasing the speed and extending the movements of the aliens.
+  - A small test unit has been implemented for checking the components of the game, testing and checking functionality of the ship, scoreboard, strategy.
+    The recently introduced strategy which switches between the fundamental controls of the ship between default config, keyboard and mouse.
+  - Menu has been expanded and with additional buttons to control the speed, and to adjust the controls, exit the game and reset the game.
+  
+Extensions:
+  - Added extra buttons to reset game and added a close button
+  - A new weapon has been added to the inventory to the ship otherwise known as a heatseeker.

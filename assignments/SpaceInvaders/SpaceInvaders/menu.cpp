@@ -17,10 +17,16 @@ Menu::~Menu() {
     for (int i = 0; i < 10; i++) {
         delete table.at(i);
     }
+    delete exit_button;
+    delete reset_button;
 }
 
 // Makes the buttons for the Menu UI
 void Menu::makeButtons(QWidget* parent, QString name) {
+    if (parent == NULL) return;
+
+
+
     // Score Button
     score = new QPushButton("Scores", parent);
     score->setGeometry(QRect(0, 0, 100, 30));
@@ -31,7 +37,7 @@ void Menu::makeButtons(QWidget* parent, QString name) {
 
     // Faster Speed Button
     fast_button = new QPushButton("Faster", parent);
-    fast_button->setGeometry(QRect(450, 100, 100, 30));
+    fast_button->setGeometry(QRect(450, 200, 100, 30));
     fast_button->setVisible(false);
     fast_button->setStyleSheet("background-color: white");
     fast_button->setFocusPolicy(Qt::NoFocus);
@@ -39,7 +45,7 @@ void Menu::makeButtons(QWidget* parent, QString name) {
 
     // Slower Speed Button
     slow_button = new QPushButton("Slower", parent);
-    slow_button->setGeometry(QRect(300, 100, 100, 30));
+    slow_button->setGeometry(QRect(300, 200, 100, 30));
     slow_button->setVisible(false);
     slow_button->setStyleSheet("background-color: white");
     slow_button->setFocusPolicy(Qt::NoFocus);
@@ -47,7 +53,7 @@ void Menu::makeButtons(QWidget* parent, QString name) {
 
     // Mouse Control Button
     mouse_button = new QPushButton("Mouse", parent);
-    mouse_button->setGeometry(QRect(300, 10, 100, 30));
+    mouse_button->setGeometry(QRect(300, 100, 100, 30));
     mouse_button->setVisible(false);
     colourButtons(mouse_button, mouse);
     mouse_button->setFocusPolicy(Qt::NoFocus);
@@ -55,7 +61,7 @@ void Menu::makeButtons(QWidget* parent, QString name) {
 
     // Keyboard Control Button
     keyboard_button = new QPushButton("Keyboard", parent);
-    keyboard_button->setGeometry(QRect(450, 10, 100, 30));
+    keyboard_button->setGeometry(QRect(450, 100, 100, 30));
     keyboard_button->setVisible(false);
     colourButtons(keyboard_button, keyboard);
     keyboard_button->setFocusPolicy(Qt::NoFocus);
@@ -73,6 +79,8 @@ void Menu::makeButtons(QWidget* parent, QString name) {
     playerScoreLabel->setText(QString::number(gameScore));
     playerScoreLabel->setVisible(false);
     playerScoreLabel->setStyleSheet("background-color: gray");
+
+    // Building the Scoreboard elements
     QString del = ": ";
     for (int i = 0; i < scoreboard.size(); i++) {
         if (i == 10) break;
@@ -84,6 +92,20 @@ void Menu::makeButtons(QWidget* parent, QString name) {
         tmp->setStyleSheet("background-color: white");
         table.append(tmp);
     }
+    // Exit Button
+    exit_button = new QPushButton("Exit", parent);
+    exit_button->setGeometry(QRect(800, 650, 100, 30));
+    exit_button->setVisible(false);
+    exit_button->setStyleSheet("background-color: red");
+    exit_button->setFocusPolicy(Qt::NoFocus);
+    QObject::connect(exit_button, SIGNAL(released()), parent, SLOT(exit()));
+
+    reset_button = new QPushButton("Reset", parent);
+    reset_button->setGeometry(QRect(800, 550, 100, 30));
+    reset_button->setVisible(false);
+    reset_button->setStyleSheet("background-color: green");
+    reset_button->setFocusPolicy(Qt::NoFocus);
+    QObject::connect(reset_button, SIGNAL(released()), parent, SLOT(reset()));
 }
 
 // Toggles the color of the buttons when on and off
@@ -106,6 +128,8 @@ void Menu::displayMenu(bool paused) {
         keyboard_button->setVisible(true);
         fast_button->setVisible(true);
         slow_button->setVisible(true);
+        reset_button->setVisible(true);
+        exit_button->setVisible(true);
     }
 }
 
@@ -116,6 +140,8 @@ void Menu::closeButtons() {
     keyboard_button->setVisible(false);
     fast_button->setVisible(false);
     slow_button->setVisible(false);
+    reset_button->setVisible(false);
+    exit_button->setVisible(false);
     revealPlayerScore(false);
     for (int i = 0; i < table.size(); i++) {
         table.at(i)->setVisible(false);
@@ -131,6 +157,7 @@ void Menu::revealPlayerScore(bool open) {
     playerScoreLabel->setVisible(open);
 }
 
+// Opens the player score and the scoreboard
 void Menu::openScore() {
     if (playerName->isVisible()) {
         revealPlayerScore(false);

@@ -2,6 +2,7 @@
 #include "base.h"
 #include "bullet.h"
 #include "diagonalbullet.h"
+#include "heatseeker.h"
 
 namespace game {
 // extended it s.t., there is a base bullet e.g., Ship has base of 'laser'
@@ -34,6 +35,11 @@ Bullet* BulletBuilder::build_bullet(QString type) {
         return new DiagonalBullet(currentImage,
                 ship.get_x() + ship.get_image().width() * 0.5 - (currentImage.width() * 0.5),
                 ship.get_y() + currentImage.height() * 0.5, this->velocity, currentFriendly, false);
+    } else if (type.contains("heatseeker")) {
+        return new HeatSeeker(currentImage,
+                    ship.get_x() + ship.get_image().width() * 0.5 - (currentImage.width() * 0.5),
+                    ship.get_y() + currentImage.height() * 0.5, this->velocity, currentFriendly);
+
     }
 
     // EXTENSION 4 - ALIGN BULLET ACCORDING TO SHIP SIZE REGARDLESS OF STARTING
@@ -48,7 +54,7 @@ QPixmap BulletBuilder::calculate_image(QString& type) {
     QPixmap currentImage;
     if (type.contains("red")) {
         currentImage.load(":/Images/redInvaderLaser.png");
-    } else if (type.contains("blue")) {
+    } else if (type.contains("blue") || type.contains("heatseeker")) {
         currentImage.load(":/Images/blueInvaderLaser.png");
     } else if (type.contains("dumb")) {
         currentImage.load(":/Images/dumbInvaderLaser.png");

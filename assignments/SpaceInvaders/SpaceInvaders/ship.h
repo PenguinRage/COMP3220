@@ -17,8 +17,11 @@ private:
 public:
     Ship(QPixmap image, double scale, int x, int y);
     Bullet* shoot();
+    Bullet* shootBackup();
     void move_left();
     void move_right();
+    void move_speed_left();
+    void move_speed_right();
 
     virtual ~Ship();
 };

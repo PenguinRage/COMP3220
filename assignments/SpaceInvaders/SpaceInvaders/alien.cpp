@@ -73,6 +73,7 @@ void Alien::paint(QPainter& painter) {
 }
 
 void Alien::scaleDifficulty(int multi) {
+
     this->velocity *= multi;
 }
 }

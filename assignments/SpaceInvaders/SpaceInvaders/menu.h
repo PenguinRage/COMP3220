@@ -3,6 +3,7 @@
 
 #include <QLabel>
 #include <QPushButton>
+
 namespace game {
 class Menu {
 public:
@@ -28,6 +29,9 @@ private:
     QPushButton* keyboard_button;
     QPushButton* slow_button;
     QPushButton* fast_button;
+    QPushButton* exit_button;
+    QPushButton* reset_button;
+
 
 
     bool keyboard = false;

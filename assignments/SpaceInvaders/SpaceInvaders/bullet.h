@@ -17,5 +17,6 @@ public:
     virtual ~Bullet();
     int get_bullet_velocity() const;
     bool isFriendly();
+    virtual void setTarget(int x){}
 };
 }

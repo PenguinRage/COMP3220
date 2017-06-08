@@ -12,6 +12,7 @@
 #include <QWidget>
 #include <vector>
 #include <string>
+#include <stdlib.h>
 
 namespace game {
 
@@ -58,6 +59,7 @@ GameDialog::GameDialog(QWidget* parent)
     // Testing
     TestingUnit tests;
     tests.runTests();
+
     update();
 }
 
@@ -98,6 +100,7 @@ void GameDialog::pauseStart() {
     }
 }
 
+// KeyPress events to Request Keyboard Strategy
 void GameDialog::keyPressEvent(QKeyEvent* event) {
     if (event->key() == Qt::Key_P) {
         pauseStart();
@@ -107,25 +110,27 @@ void GameDialog::keyPressEvent(QKeyEvent* event) {
     {
         QEvent *k = (QEvent *)event;
         remote->getKeyboard();
-        remote->moveEvents(k, ship, &bullets, &shipFiringSound, "");
+        remote->moveEvents(k, ship, &bullets, &shipFiringSound, "", getClosest());
     }
 }
 
+// MouseMovementEvents to Request Mouse Strategy
 void GameDialog::mouseMoveEvent(QMouseEvent* event) {
     if (menu->useMouse())
     {
         QEvent *k = (QEvent *)event;
         remote->getMouse();
-        remote->moveEvents(k, ship, &bullets, &shipFiringSound, "");
+        remote->moveEvents(k, ship, &bullets, &shipFiringSound, "", getClosest());
     }
 }
 
+// MousePressEvents to Request Mouse Strategy
 void GameDialog::mousePressEvent(QMouseEvent* event) {
     if (menu->useMouse())
     {
         QEvent *k = (QEvent *)event;
         remote->getMouse();
-        remote->moveEvents(k, ship, &bullets, &shipFiringSound, "");
+        remote->moveEvents(k, ship, &bullets, &shipFiringSound, "", getClosest());
     }
 }
 
@@ -161,7 +166,7 @@ void GameDialog::nextFrame() {
             QString ins = instruct[next_instruct];
             next_instruct++;
             remote->getDefault();
-            remote->moveEvents(NULL, ship, &bullets, &shipFiringSound, ins);
+            remote->moveEvents(NULL, ship, &bullets, &shipFiringSound, ins, 0);
 
         }
 
@@ -212,6 +217,7 @@ void GameDialog::updateBullets()
             if (c->usescoreboard) {
                 c->append_score(gameScore);
             }
+            ship_alive = false;
             close();
         } else
         {
@@ -250,6 +256,7 @@ void GameDialog::checkSwarmCollisions(AlienBase *&root)
                 if (c->usescoreboard) {
                     c->append_score(gameScore);
                 }
+                ship_alive =false;
                 close();  // DEAD SHIP AGAIN
             }
         } else {
@@ -331,27 +338,97 @@ void GameDialog::addBullets(const QList<Bullet*>& list) {
     }
 }
 
+// Adding movements and speed to the aliens for each level and uping difficulty
 void GameDialog::new_level(int size) {
     // If not alien count is not empty return
     if (size) return;
+    if (!ship_alive) return;
 
     level++;
     Config* c = Config::getInstance();
-    generateAliens(c->getSwarmList());
+    QList<SwarmInfo> new_aliens = c->getSwarmList();
+    // For each level change it up a bit
+    for (SwarmInfo info : new_aliens) {
+        if (level % 3 == 2)
+        {
+
+            info.move.prepend("L");
+            info.move.prepend("L");
+            info.move.prepend("R");
+            info.move.prepend("R");
+
+        }
+
+        if (level % 3 == 0)
+        {
+            info.move.append("R");
+            info.move.append("R");
+            info.move.append("D");
+            info.move.append("U");
+            info.move.append("L");
+            info.move.append("L");
+        }
+    }
+    generateAliens(new_aliens);
     setFastSpeed();
     timer->setInterval(this->frames);
-
+    // Scale the movement
+    for (AlienBase* child : swarms->getAliens()) {
+        child->scaleDifficulty(2) ;
+    }
 }
 
+// sets game to faster pace
 void GameDialog::setFastSpeed() {
     if (this->frames > 10)
         this->frames -= 5;
 
 }
 
+// sets game to slower pace
 void GameDialog::setSlowSpeed() {
     if (this->frames < 100)
         this->frames += 5;
+}
+
+// exits game
+void GameDialog::exit() {
+    close();
+}
+
+// resets game
+void GameDialog::reset() {
+    gameScore = 0;
+    level = 0;
+    Config* c = Config::getInstance();
+    QList<SwarmInfo> new_aliens = c->getSwarmList();
+    generateAliens(new_aliens);
+
+    for (int i = 0; i < bullets.size(); i++) {
+        Bullet* b = bullets[i];
+        delete b;
+        bullets.erase(bullets.begin() + i);
+        i--;
+    }
+}
+
+// Finds roughly the closest alien to our goal
+int GameDialog::getClosest() {
+    int a = ship->get_x();
+    int cx = 100000000;
+    int cdist = abs(cx - a);
+    for (AlienBase* child : swarms->getAliens()) {
+        for (AlienBase* alien : child->getAliens())
+        {
+            int dist = abs(alien->get_x() - a);
+            if (dist < cdist)
+            {
+                cdist = dist;
+                cx = alien->get_x();
+            }
+        }
+    }
+    return cx;
 }
 
 }
